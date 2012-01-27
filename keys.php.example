@@ -1,0 +1,14 @@
+<?php
+
+// Your Amazon public and private keys go here, along with an associate id
+$amazon_public_key = "";
+$amazon_private_key = "";
+$amazon_assoc_id = "";
+
+// Your WorldCat API key goes here
+$wskey = "";
+
+// Your Google Books API key goes here
+$gkey = "";
+
+?>

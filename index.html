@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Stack View</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+<!-- CSS just for this page -->
+<style type="text/css">
+h1, h2 {
+	margin: 5px 5px 10px 5px;
+	padding: 0;
+	color:#444;
+	font-weight:normal;
+}
+
+h3 {
+	margin: 10px 5px 0px 5px;
+	padding:0;
+	color:#444;
+	font-size:.9em;
+	font-weight:bold;
+}
+
+body {
+	font-family:'Helvetica', 'Arial', sans-serif;
+	background:#faf5f0;
+	min-width:845px;
+	max-width:1145px;
+	font-size: 1.1em;
+    color: #333333;
+    border: none;
+    line-height:normal;
+    margin:0px auto;
+}
+
+p {
+	margin: 5px 5px 15px 5px;
+	font-size: .8em;
+	line-height: 1.2em;
+}
+
+a {
+    color: #09F;
+    text-decoration: none;
+}
+
+.container {
+	float:left;
+	width:45%;
+	margin:15px 15px 15px 5px;
+	clear:both;
+}
+
+.explanation {
+	float:left;
+	width:48%;
+	margin:15px 15px 15px 25px;
+}
+
+.requirements {
+    float:left;
+    margin:15px 15px 15px 15px;
+    clear:both;
+}
+
+#doc-nav {
+	clear:both;
+	margin-left: 67px;
+	float:left;
+	width:23%;
+}
+
+#doc-nav ul{
+	list-style-type:none;
+	padding:0 10px 0 0;
+}
+
+#docs {
+	float:left;
+	width:70%;
+}
+
+h1 {
+	font-size:1.7em;
+	padding-top:15px;
+}
+
+h2 {
+	font-size:1.2em;	
+	color:#F60;
+}
+
+pre {
+	background-color: #fff;
+}
+
+#nav {
+	padding:0 10px 0 0;
+	margin:0;
+	list-style-type:none;
+	float:right;
+}
+
+#nav li {
+	display:block;
+	float:left;
+	padding:0 20px 0 0;
+}
+
+#nav li a {
+  display:block;
+  padding:25px 0 0 0;
+}
+
+.footer {
+  clear:both;
+  font-size:.7em;
+  float:right;
+  padding:25px 30px 25px 0;
+}
+</style>
+
+<!-- stackview.css to style the stack -->
+<link rel="stylesheet" href="css/stackview.css" type="text/css" />
+
+<!-- stackview.js and all js dependencies -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.infinitescroller.min.js"></script>
+<script type="text/javascript" src="js/jquery.mousewheel.pack.js"></script>
+<script type="text/javascript" src="js/jquery.stackview.js"></script>
+
+<!-- javascript just for this page -->
+<script type="text/javascript">
+$(function () { 
+  $('#intro-stack').stackView({url: 'intro.json'});
+});
+</script>
+
+</head>
+
+<body>	
+	<ul id="nav">
+		<li><a href="index.html">About</a></li>
+		<li><a href="documentation.html">Documentation</a></li>
+		<li><a href="examples.html">Examples</a></li>
+		<a href="http://www.librarylab.law.harvard.edu/"><img src="liblabstamp.png"></a>
+	</ul>
+	<h1>Stack View</h1>
+
+	<div class="container">
+		
+	  <div id="intro-stack"></div>
+		
+	</div>
+	
+	<div class="explanation">
+	  <h2>A virtual shelf</h2>
+		<p>Stack View is a book visualization and browsing tool.  This jQuery plugin turns metadata into a browsable stack of books.</p>
+		<p>Stack View is drawn with CSS. When possible, the height of the book is based on the actual height of the object and the width is calculated using the page count. The color can be based on any data from ratings and rankings to library checkouts or holdings.  The darker the color the higher the rating.</p>
+		<h3>JSON data<h3>
+		<pre class="code language-javascript">
+        {
+            "title": "Blankets",
+            "creator": [
+                "Craig Thompson"
+            ],
+            "measurement_page_numeric": 582,
+            "measurement_height_numeric": 25,
+            "shelfrank": 13,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638"
+        }
+		</pre>
+		<h3>Becomes a virtual object</h3>
+		<ul class="stack">
+      <div class="itemContainer">
+        <span class="cover heat2" style="width: 302px;"></span>
+        <span class="pages heat2" style="margin-left: 335px; margin-bottom: -70.4px; height: 64.4px;"></span>
+        <li class="heat2 spine" link="http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638" style="width: 300px; height: 59.4px;">
+          <p class="spine-text">
+            <span class="title">Blankets</span>
+            <span class="author">Craig Thompson</span>
+          </p>
+          <span class="spine-year">2003</span>
+        </li>
+      </div>
+		</ul>
+	</div>
+	<div class="footer">
+	  <a href="http://www.librarylab.law.harvard.edu/">The Harvard Library Innovation Lab</a>
+	</div>
+
+<!-- js just for this page -->
+<script type="text/javascript" src="http://balupton.github.com/jquery-syntaxhighlighter/scripts/jquery.syntaxhighlighter.min.js"></script>
+<script type="text/javascript">$.SyntaxHighlighter.init();</script>
+</body>
+</html>

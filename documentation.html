@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Stack View Documentation</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+<!-- CSS just for this page -->
+<style type="text/css">
+h1, h2 {
+	margin: 5px 5px 10px 5px;
+	padding: 0;
+	color:#444;
+	font-weight:normal;
+}
+
+h3 {
+	margin: 10px 5px 0px 5px;
+	padding:0;
+	color:#444;
+	font-size:.9em;
+	font-weight:bold;
+}
+
+body {
+	font-family:'Helvetica', 'Arial', sans-serif;
+	background:#faf5f0;
+	min-width:845px;
+	max-width:1145px;
+	font-size: 1.1em;
+    color: #333333;
+    border: none;
+    line-height:normal;
+    margin:0px auto;
+}
+
+p {
+	margin: 5px 5px 15px 5px;
+	font-size: .8em;
+	line-height: 1.2em;
+}
+
+a {
+    color: #09F;
+    text-decoration: none;
+}
+
+.container {
+	float:left;
+	width:45%;
+	margin:15px 15px 15px 5px;
+	clear:both;
+}
+
+.explanation {
+	float:left;
+	width:48%;
+	margin:15px 15px 15px 25px;
+}
+
+.requirements {
+    float:left;
+    margin:15px 15px 15px 15px;
+    clear:both;
+}
+
+#doc-nav {
+	clear:both;
+	margin-left: 5px;
+	float:left;
+	width:23%;
+}
+
+#doc-nav ul{
+	list-style-type:none;
+	padding:0 10px 0 0;
+}
+
+#docs {
+	float:left;
+	width:70%;
+}
+
+#docs li {
+	font-size: .8em;
+}
+
+h1 {
+	font-size:1.7em;
+	padding-top:15px;
+}
+
+h2 {
+	font-size:1.2em;	
+	color:#F60;
+}
+
+pre {
+	background-color: #fff;
+}
+
+#nav {
+	padding:0 10px 0 0;
+	margin:0;
+	list-style-type:none;
+	float:right;
+}
+
+#nav li {
+	display:block;
+	float:left;
+	padding:0 20px 0 0;
+}
+
+#nav li a {
+  display:block;
+  padding:25px 0 0 0;
+}
+
+.footer {
+  clear:both;
+  font-size:.7em;
+  float:right;
+  padding:25px 30px 25px 0;
+}
+</style>
+
+<!-- stackview.css to style the stack -->
+<link rel="stylesheet" href="css/stackview.css" type="text/css" />
+
+<!-- stackview.js and all js dependencies -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.infinitescroller.min.js"></script>
+<script type="text/javascript" src="js/jquery.mousewheel.pack.js"></script>
+<script type="text/javascript" src="js/jquery.stackview.js"></script>
+
+</head>
+
+<body>	
+	<ul id="nav">
+		<li><a href="index.html">About</a></li>
+		<li><a href="documentation.html">Documentation</a></li>
+		<li><a href="examples.html">Examples</a></li>
+		<a href="http://www.librarylab.law.harvard.edu/"><img src="liblabstamp.png"></a>
+	</ul>
+	<h1>Stack View Documentation</h1>
+
+	<div id="docs">
+	<div class="requirements">
+	    <h2>Requirements</h2>
+	    <p>Stack View requires <a href="http://jquery.com/">jQuery</a> and two additional plugins to enable further functionality.</p>
+	    <ul>
+	    	<li>The <a href="http://brandonaaron.net/code/mousewheel/docs">mousewheel plugin</a> adds mouse wheel support to stack scrolling.</li>  
+	    	<li>The infiniteScroller plugin enables on-call dynamic loading of new books.</li>
+	    </ul>
+	    
+	    <h2>How to Use</h2>
+	    <p>You can start by looking at the most <a href="basic.html">basic demo</a>.</p>
+	    <p>After including the required files, place a div in your html code where you would like Stack View to appear.</p>
+	    <pre class="code language-html">
+		&lt;div id="stackview"&gt;&lt;/div&gt;
+		</pre>
+		<p>In your javascript, create some data for Stack View to use.</p>
+		<pre class="code language-javascript">
+var data = {
+    "start": "0",
+    "limit": "0",
+    "num_found": "2",
+    "docs": [
+        {
+            "title": "Blankets",
+            "creator": [
+                "Craig Thompson"
+            ],
+            "measurement_page_numeric": 582,
+            "measurement_height_numeric": 25,
+            "shelfrank": 13,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638"
+        },
+        {
+            "title": "Persepolis",
+            "creator": [
+                "Marjane Satrapi"
+            ],
+            "measurement_page_numeric": 153,
+            "measurement_height_numeric": 24,
+            "shelfrank": 64,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009098946"
+        }
+    ]
+};
+		</pre>
+		<p>Then call the Stack View plugin using a jQuery selector.</p>
+		<pre class="code language-javascript">
+		$('#stackview').stackView({data: data});
+		</pre>
+		<p>Alternately, you can give Stack View a url.  The url should point to a JSON file with data formatted as above or a script that accepts a callback and a start parameter and returns a JSON object.  A script is useful for continually feeding Stack View new data as the user scrolls.  Basically Stack View's version of paging.</p>
+		<pre class="code language-javascript">
+		$('#stackview').stackView({url: 'data.php'});
+		</pre>
+		<p>This is the most basic example using PHP.
+		<pre class="code language-php">
+		$callback = $_GET['callback'];
+		$start = $_GET['start'];
+		
+		$docs = '[
+		    {
+            "title": "Blankets",
+            "creator": [
+                "Craig Thompson"
+            ],
+            "measurement_page_numeric": 582,
+            "measurement_height_numeric": 25,
+            "shelfrank": 13,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638"
+            }
+        ]';
+        
+        if($start > 0) {
+            echo "$callback({'start': '0', 'num_found': '0', 'limit': '0', 'docs': ''})";
+        }
+        else {
+            echo "$callback({'start': '0', 'limit': '0', 'num_found': '1', 'docs': $docs})"; 
+        }
+		</pre>
+		<h2>Available Stack View Options</h2>
+		<h3>data</h3>
+		<p>A JSON object used to construct a static stack. Stack View requires either a <b>data</b> object or a <b>url</b>, but not both.</p>
+		<h3>url</h3>
+		<p>The URL should point to a JSON file or a script that accepts a callback and start parameter and then provides Stack View with JSON formatted data. Stack View requires either a <b>data</b> object or a <b>url</b>, but not both.</p>
+		<h3>books_per_page</h3>
+		<p>How many books will be requested.  
+		<br />Default is 10.</p>
+		<h3>threshold</h3>
+		<p>How much screen space to fill with books.
+		<br />Default is 1000.</p>
+		<h3>page_multiple</h3>
+		<p>Pixels per page.
+		<br />Default is 0.11.</p>
+		<h3>height_multiple</h3>
+		<p>Pixels per centimeter.
+		<br />Default is 12.</p>
+		<h3>search_type</h3>
+		<p>The type of search that the script from your url parameter should perform if a search is necessary.
+		<br />Default is keyword.</p>
+		<h3>query</h3>
+		<p>The query that the script from your url should use if performing a search.
+		<br />Default is nothing.<p>
+		<h3>ribbon</h3>
+		<p>The text that will appear in the ribbon at the top of the stack.
+		<br />Default is Stack View.</p>
+	</div>
+	</div>
+	<div class="footer">
+	  <a href="http://www.librarylab.law.harvard.edu/">The Harvard Library Innovation Lab</a>
+	</div>
+
+<!-- js just for this page -->
+<script type="text/javascript" src="http://balupton.github.com/jquery-syntaxhighlighter/scripts/jquery.syntaxhighlighter.min.js"></script>
+<script type="text/javascript">$.SyntaxHighlighter.init();</script>
+</body>
+</html>
