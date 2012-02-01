@@ -23,10 +23,10 @@ body {
 	min-width:845px;
 	max-width:1145px;
 	font-size: 1.1em;
-    color: #333333;
-    border: none;
-    line-height:normal;
-    margin:0px auto;
+  color: #333333;
+  border: none;
+  line-height:normal;
+  margin:0px auto;
 }
 
 p {
@@ -48,8 +48,8 @@ p {
 }
 
 h1 {
-	font-size:1.7em;
-	padding-top:15px;
+	font-size:2.1em;
+	padding-top:9px;
 }
 
 h2 {
@@ -67,7 +67,7 @@ pre {
 }
 
 #nav {
-	padding:0 10px 0 0;
+	padding:0 150px 0 0;
 	margin:0;
 	list-style-type:none;
 	float:right;
@@ -76,7 +76,7 @@ pre {
 #nav li {
 	display:block;
 	float:left;
-	padding:0 20px 0 0;
+	padding:0 27px 0 0;
 }
 
 #nav li a {
@@ -110,6 +110,7 @@ pre {
 		<li><a href="examples.html">Examples</a></li>
 		<a href="http://www.librarylab.law.harvard.edu/"><img src="liblabstamp.png"></a>
 	</ul>
+	<a href="https://github.com/harvard-lil/stackview"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/30f550e0d38ceb6ef5b81500c64d970b7fb0f028/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub"></a>
 	<h1>Stack View Examples</h1>
 
 	<div class="container">
@@ -152,7 +153,7 @@ pre {
 	
 	<script type="text/javascript">
     $(function () { 
-		$('#worldcat-stack').stackView({url: 'worldcat.php', query: 'modern pirates', ribbon: 'WorldCat search for "modern pirates"'});
+		$('#worldcat-stack').stackView({url: 'worldcat.php', jsonp: true, query: 'modern pirates', ribbon: 'WorldCat search for "modern pirates"'});
     });
     </script>
     
@@ -168,10 +169,12 @@ pre {
 		<pre class="code language-javascript">
 		$('#worldcat-stack').stackView({
 			url: 'worldcat.php', 
+			jsonp: true,
 			query: 'modern pirates', 
 			ribbon: 'WorldCat search for "modern pirates"'
 		});
 		</pre>
+		<p>This example utilizes JSONP. See the associated <b>worldcat.php</b> script for code that will return a JSONP response.</p> 
 		<p>To use Stack View with the WorldCat API, save a copy of the file <b>keys.php.example</b> as <b>keys.php</b> and fill in the required API key.</p>
     </div>
     
@@ -198,11 +201,12 @@ pre {
 		<p>Then call the Stack View plugin using a jQuery selector.</p>
 		<pre class="code language-javascript">
 		$('#google-stack').stackView({
-			url: 'google.php', 
+			url: 'google.php',
 			query: 'time travel', 
 			ribbon: 'Google search for "time travel"'
 		});
 		</pre>
+		<p>Note that, according to Google Books API documentation, the <b>totalItems</b> count is an estimate. This causes the Stack View items count to change as the user scrolls.</p>
 		<p>To use Stack View with the Google API, save a copy of the file <b>keys.php.example</b> as <b>keys.php</b> and fill in the required API key.</p>
     </div>
 
@@ -236,7 +240,7 @@ pre {
 		<p>Example JSON</p>
 		<pre class="code language-javascript">
 {
-    "start": "0",
+    "start": "-1",
     "limit": "0",
     "num_found": "2",
     "docs": [
