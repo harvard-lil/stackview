@@ -93,13 +93,13 @@ pre {
 </style>
 
 <!-- stackview.css to style the stack -->
-<link rel="stylesheet" href="css/stackview.css" type="text/css" />
+<link rel="stylesheet" href="lib/jquery.stackview.css" type="text/css" />
 
 <!-- stackview.js and all js dependencies -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery.infinitescroller.min.js"></script>
-<script type="text/javascript" src="js/jquery.mousewheel.pack.js"></script>
-<script type="text/javascript" src="js/jquery.stackview.js"></script>
+<script type="text/javascript" src="src/js/jquery.infinitescroller.min.js"></script>
+<script type="text/javascript" src="src/js/jquery.mousewheel.pack.js"></script>
+<script type="text/javascript" src="src/js/jquery.stackview.js"></script>
 
 </head>
 
@@ -121,7 +121,7 @@ pre {
 	
 	<script type="text/javascript">
     $(function () { 
-		$('#amazon-stack').stackView({url: 'amazon.php', query: 'memory', ribbon: 'Amazon search for "memory"'});
+		$('#amazon-stack').stackView({url: 'php/amazon.php', query: 'memory', ribbon: 'Amazon search for "memory"'});
     });
     </script>
 	
@@ -136,7 +136,7 @@ pre {
 		<p>Then call the Stack View plugin using a jQuery selector.</p>
 		<pre class="code language-javascript">
 		$('#amazon-stack').stackView({
-			url: 'amazon.php', 
+			url: 'php/amazon.php', 
 			query: 'memory', 
 			ribbon: 'Amazon search for "memory"'
 		});
@@ -153,7 +153,7 @@ pre {
 	
 	<script type="text/javascript">
     $(function () { 
-		$('#worldcat-stack').stackView({url: 'worldcat.php', jsonp: true, query: 'modern pirates', ribbon: 'WorldCat search for "modern pirates"'});
+		$('#worldcat-stack').stackView({url: 'php/worldcat.php', jsonp: true, query: 'modern pirates', ribbon: 'WorldCat search for "modern pirates"'});
     });
     </script>
     
@@ -168,7 +168,7 @@ pre {
 		<p>Then call the Stack View plugin using a jQuery selector.</p>
 		<pre class="code language-javascript">
 		$('#worldcat-stack').stackView({
-			url: 'worldcat.php', 
+			url: 'php/worldcat.php', 
 			jsonp: true,
 			query: 'modern pirates', 
 			ribbon: 'WorldCat search for "modern pirates"'
@@ -186,7 +186,7 @@ pre {
 	
 	<script type="text/javascript">
     $(function () { 
-		$('#google-stack').stackView({url: 'google.php', query: 'time travel', ribbon: 'Google Books search for "time travel"'});
+		$('#google-stack').stackView({url: 'php/google.php', query: 'time travel', ribbon: 'Google Books search for "time travel"'});
     });
     </script>
     
@@ -201,7 +201,7 @@ pre {
 		<p>Then call the Stack View plugin using a jQuery selector.</p>
 		<pre class="code language-javascript">
 		$('#google-stack').stackView({
-			url: 'google.php',
+			url: 'php/google.php',
 			query: 'time travel', 
 			ribbon: 'Google search for "time travel"'
 		});
@@ -218,7 +218,7 @@ pre {
 	
 	<script type="text/javascript">
     $(function () { 
-		$('#dpla-stack').stackView({url: 'dpla.php', query: 'history', ribbon: 'DPLA search for "history"'});
+		$('#dpla-stack').stackView({url: 'php/dpla.php', query: 'history', ribbon: 'DPLA search for "history"'});
     });
     </script>
     
@@ -233,7 +233,7 @@ pre {
 		<p>Then call the Stack View plugin using a jQuery selector.</p>
 		<pre class="code language-javascript">
 		$('#dpla-stack').stackView({
-			url: 'dpla.php',
+			url: 'php/dpla.php',
 			query: 'history', 
 			ribbon: 'DPLA search for "history"'
 		});
@@ -249,7 +249,7 @@ pre {
 	
 	<script type="text/javascript">
     $(function () { 
-		$('#static-stack').stackView({url: 'static.json', ribbon: 'Static stack'});
+		$('#static-stack').stackView({url: 'json/static.json', ribbon: 'Static stack'});
     });
     </script>
     
@@ -264,7 +264,7 @@ pre {
 		<p>Then call the Stack View plugin using a jQuery selector.</p>
 		<pre class="code language-javascript">
 		$('#static-stack').stackView({
-			url: 'static.json', 
+			url: 'json/static.json', 
 			ribbon: 'Static stack'
 		});
 		</pre>

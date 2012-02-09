@@ -125,18 +125,18 @@ pre {
 </style>
 
 <!-- stackview.css to style the stack -->
-<link rel="stylesheet" href="css/stackview.css" type="text/css" />
+<link rel="stylesheet" href="lib/jquery.stackview.css" type="text/css" />
 
 <!-- stackview.js and all js dependencies -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery.infinitescroller.min.js"></script>
-<script type="text/javascript" src="js/jquery.mousewheel.pack.js"></script>
-<script type="text/javascript" src="js/jquery.stackview.js"></script>
+<script type="text/javascript" src="src/js/jquery.infinitescroller.min.js"></script>
+<script type="text/javascript" src="src/js/jquery.mousewheel.pack.js"></script>
+<script type="text/javascript" src="src/js/jquery.stackview.js"></script>
 
 <!-- javascript just for this page -->
 <script type="text/javascript">
 $(function () { 
-  $('#intro-stack').stackView({url: 'intro.json'});
+  $('#intro-stack').stackView({url: 'json/intro.json'});
 });
 </script>
 
