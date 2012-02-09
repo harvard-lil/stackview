@@ -1,4 +1,4 @@
-/*
+/*!
 	Stack View - The jQuery virutal stack plugin
 	by The Harvard Library Innovation Lab
 	
