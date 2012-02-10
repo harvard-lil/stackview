@@ -1,4 +1,4 @@
-/*
+/*!
 	Stack View - The jQuery virutal stack plugin
 	by The Harvard Library Innovation Lab
 	
@@ -19,6 +19,7 @@
       options = $.extend({
         url: 'basic.json',
         data: '',
+        jsonp: false,
         books_per_page: 10,
         threshold: 1000,
         page_multiple: 0.11,
@@ -105,12 +106,16 @@
             var ext = options.url.split('.').pop();
             if(options.data !== '') {
               render_page(options.data);
-            } else if(ext === 'json') {
-                $.getJSON(options.url, function(data) {
+            } else if(options.jsonp && ext !== 'json') {
+                var geturl = options.url;
+                if(geturl.indexOf("?") != -1) geturl += '&callback=?';
+                else geturl += '?callback=?';
+                $.getJSON(geturl, params, render_page);
+                
+            } else {
+                $.getJSON(options.url, params, function(data) {
                     render_page(data);
                 });
-            } else {
-              $.getJSON(options.url + '?callback=?', params, render_page);
             }
         }
 
@@ -217,7 +222,7 @@
           elem.empty().attr('id', 'stackview' + uid++) // stack-view.js workaround
           .data('scroller', data).append($stack);
 
-          if(parseInt(data.limit) === 0) {
+          if(parseInt(data.start) < 0) {
             $('#' + scrollerId).find('.scroller-page ul:last').after('<div class="book-end" />');
             $('#' + scrollerId).find('.scroller-loading-next').remove();
             scroller.infiniteScroller();

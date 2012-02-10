@@ -74,7 +74,7 @@ foreach($wxml->xpath('//wc:record') as $record) {
 $last = $offset + 10;
 	
 if(count($json) == 0 || $offset == -1) {
-	echo $callback . ' ({"start": "0", "num_found": "0", "limit": "0", "docs": ""})'; 
+	echo $callback . '({"start": "-1", "num_found": "0", "limit": "0", "docs": ""})'; 
 }
 else {
 	echo $callback . '({"start": ' . $last. ', "limit": "' . $count . '", "num_found": "' . $hits . '", "docs": ' . json_encode($json) . '})'; 
