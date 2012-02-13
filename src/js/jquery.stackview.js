@@ -7,7 +7,8 @@
 (function($, window, document, undefined) {
 	var plugin = 'stackview',
 	    StackView,
-	    uid = +new Date();
+	    uid = +new Date(),
+	    offset = 0;
 	
 	StackView = function(elem, opts) {
 		this.element = elem;
@@ -246,6 +247,52 @@
 						done(elem);
 					}
 				}
+			}
+			
+			if(this.options.search_type === 'loc_sort_order') {
+				get_page(this.$element.find('.scroller-page'), parseFloat(this.options.loc_sort_order), 'center', 0, '', function () {
+
+					that.$element.infiniteScroller({
+						search_type: that.options.search_type,
+						axis: that.options.axis,
+						threshold: that.options.threshold,
+						fetch: function (dir, done) {
+							var data = this.data('scroller'),
+							mode = dir === 1 ? 'downstream' : 'upstream',
+							loc_sort_order = data.docs[dir === 1 ? data.docs.length - 1 : 0].loc_sort_order[0] + 1;
+
+							get_page(
+								$('<div/>').appendTo('body'), // appendTo is a stack-view.js workaround
+								loc_sort_order, mode, offset, that.options.query, done
+							);
+						},
+						pagechange: function (prev) {
+							var books = this.data('scroller').docs;
+							data.loc_sort_order = books[parseInt(books.length / 2)].loc_sort_order[0];
+						}
+					});
+				});
+			} else {
+				get_page(that.$element.find('.scroller-page'), that.options.id, 'downstream', 0, that.options.query, function () {
+
+					that.$element.infiniteScroller({
+						search_type: that.options.search_type,
+						axis: that.options.axis,
+						threshold: that.options.threshold,
+						fetch: function (dir, done) {
+							var data = this.data('scroller'),
+							mode = 'downstream',
+							id = that.options.id,
+							query = that.options.query,
+							offset = data.start;
+
+							get_page(
+								$('<div/>').appendTo('body'), // appendTo is a stack-view.js workaround
+								id, mode, offset, query, done
+							);
+						}
+					});
+				});
 			}
 		}
 	});
