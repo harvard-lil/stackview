@@ -10,7 +10,9 @@
 		navigation: '\
 			<div class="navigation">\
 				<div class="upstream" />\
-				<div class="num-found" />\
+				<div class="num-found" />
+					<span></span><br />items
+				</div>\
 				<div class="downstream" />\
 			</div>',
 		
@@ -21,7 +23,7 @@
 			</div>',
 		
 		book: '\
-			<div class="itemContainer<%= home %>">\
+			<div class="itemContainer<%=(anchor ? " anchorbook" : "")%>">\
 				<span class="cover heat<%= heat %>" style="width:<%= bookHeight+2 %>;" />\
 				<span class="pages heat<%= heat %>" style="margin-left:<%= bookHeight+35 %>; margin-bottom:<%= -bookWidth-11 %>; height:<%= bookWidth+5 %>;" />\
 				<li link="<%= link %>" class="heat<%= heat %> spine" style="width:<%= bookHeight %>; height:<%= bookWidth %>;">
@@ -32,6 +34,9 @@
 					<span class="spine-year"><%= year %></span>
 				</li>
 			</div>
-			<div style="clear:both;" />'
+			<div style="clear:both;" />',
+		
+		bookEnd: '<div class="book-end" />',
+		emptyStack: '<ul class="stack" />'
 	}
 })();

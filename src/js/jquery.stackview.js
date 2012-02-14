@@ -14,6 +14,7 @@
 		this.element = elem;
 		this.$element = $(elem);
 		this.$wrapper = $('<div id="' + $.element.id + '-wrapper" />');
+		this.options = $.extend({}, this.defaults, opts);
 		this.init();
 	};
 	
@@ -28,21 +29,40 @@
 			height_multiple: 12,
 			search_type: 'keyword',
 			query: '',
-			ribbon: 'Stack View'
+			ribbon: 'Stack View',
+			
+			mousewheel_multiple: 75,
+			stream_height: 475,
+			min_pages: 200,
+			max_pages: 540,
+			min_height: 20,
+			max_height: 39,
+			cache_ttl: 60,
+			
+			classes: {
+				scroller: 'scroller',
+				empty: 'empty'
+			},
+			
+			selectors: {
+				upstream: '.upstream',
+				downstream: '.downstream',
+				scrollerPage: '.scroller-page',
+				numFound: '.num-found span',
+				scrollerLoadingNext: '.scroller-loading-next'
+			}
 		},
 		
-		init: function(opts) {
+		init: function() {
 			var that = this,
 			    data = this.$element.data('scroller');
 			
-			this.options = $.extend({}, this.defaults, opts);
-			
 			this.$element
-				.addClass('scroller')
+				.addClass(this.options.classes.scroller)
 				.html(tmpl(StackView.templates.scroller, {}))
 				.wrap(this.$wrapper)
 				.bind('mousewheel', function(event, delta) {
-					$(this).trigger('move-by', -delta * 75);
+					$(this).trigger('move-by', -delta * this.options.mousewhel_multiple);
 					return false;
 				});
 
@@ -51,11 +71,11 @@
 					ribbon: this.options.ribbon
 				}))
 				.prepend(tmpl(StackView.templates.navigation, {}))
-				.delegate('.upstream', 'click', function() {
-					that.$element.trigger('move-by', -475);
+				.delegate(this.options.selectors.upstream, 'click', function() {
+					that.$element.trigger('move-by', that.options.);
 					return false;
 				})
-				.delegate('.downstream', 'click', function() {
+				.delegate(this.options.selectors.downstream, 'click', function() {
 					that.$element.trigger('move-by', 475);
 					return false;
 				});
@@ -128,17 +148,20 @@
 						roffset = -1;
 					}
 					if((!data.docs || !data.docs.length) && data.start !== 0) {
-						that.$element.find('.scroller-page ul:last').after('<div class="book-end" />');
+						that.$element
+							.find(this.options.selectors.scrollerPage)
+							.find('ul:last')
+							.after(tmpl(StackView.templates.bookEnd, {}));
 						done(false);
 						return;
 					}
 
 					data.start = rstart;
 
-					stackCache.set(params, data, 60); // cache set to 60 seconds, increase for production use!
+					stackCache.set(params, data, that.options.cache_ttl); // cache set to 60 seconds, increase for production use!
 					var books = $.extend([], data.docs);
 
-					var $stack = $('<ul class="stack" />');
+					var $stack = $(tmpl(StackView.templates.emptyStack, {}));
 
 					function get_heat(scaled_value) {
 						if(scaled_value >= 0 && scaled_value < 10) {
@@ -174,9 +197,13 @@
 					}
 
 					if(that.options.search_type !== 'loc_sort_order') {
-						that.$wrapper.find('.num-found').html(data.num_found + '<br />items').removeClass('empty');
+						that.$wrapper.find(that.options.selectors.numFound)
+							.html(data.num_found)
+							.removeClass(that.options.classes.empty);
 					} else {
-						that.$wrapper.find('.num-found').html('').addClass('empty');
+						that.$wrapper.find(that.options.selectors.numFound)
+							.html('')
+							.addClass(that.options.classes.empty);
 					}
 
 					// This probably shouldn't be necessary!
@@ -189,22 +216,22 @@
 						if(v.measurement_page_numeric) {
 							pages = v.measurement_page_numeric;
 						}
-						if(pages === "" || pages < 200 || !pages) {
-							pages = 200;
+						if(pages === "" || pages < that.options.min_pages || !pages) {
+							pages = that.options.min_pages;
 						}
-						if(pages > 540) {
-							pages = 540;
+						if(pages > that.options.max_pages) {
+							pages = that.options.max_pages;
 						}
 
 						var height = '';
 						if(v.measurement_height_numeric) {
 							height = v.measurement_height_numeric;
 						}
-						if(height === "" || height < 20 || !height) {
-							height = 20;
+						if(height === "" || height < that.options.min_height || !height) {
+							height = that.options.min_height;
 						}
-						if(height > 39) {
-							height = 39;
+						if(height > that.options.max_height) {
+							height = that.options.max_height;
 						}
 
 						var pub_date = '';
@@ -212,10 +239,10 @@
 							pub_date = v.pub_date;
 						}
 
-						var home = '';
+						var anchor = false;
 
 						if(parseInt(v.loc_sort_order, 10) === parseInt(that.options.loc_sort_order, 10) && mode === 'center') {
-							home = ' anchorbook';
+							anchor = true;
 						}
 
 						var creator = '';
@@ -232,7 +259,7 @@
 						}
 
 						$stack.append(tmpl(StackView.templates.book, {
-							home: home,
+							anchor: anchor,
 							heat: get_heat(v.shelfrank),
 							bookHeight: height * that.options.height_multiple,
 							bookWidth: pages * that.options.page_multiple,
@@ -248,8 +275,13 @@
 						.data('scroller', data).append($stack);
 
 					if(parseInt(data.start, 10) < 0) {
-						that.$element.find('.scroller-page ul:last').after('<div class="book-end" />');
-						that.$element.find('.scroller-loading-next').remove();
+						that.$element
+							.find(that.options.selectors.scrollerPage)
+							.find('ul:last')
+							.after(tmpl(StackView.templates.bookEnd, {}));
+						that.$element
+							.find(that.options.selectors.scrollerLoadingNext)
+							.remove();
 						that.$element.infiniteScroller();
 						return;
 					}else {
@@ -282,7 +314,7 @@
 					});
 				});
 			} else {
-				get_page(that.$element.find('.scroller-page'), that.options.id, 'downstream', 0, that.options.query, function () {
+				get_page(that.$element.find(that.options.selectors.scrollerPage), that.options.id, 'downstream', 0, that.options.query, function () {
 
 					that.$element.infiniteScroller({
 						search_type: that.options.search_type,
