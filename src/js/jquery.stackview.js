@@ -39,7 +39,7 @@
 			
 			this.$element
 				.addClass('scroller')
-				.html('<div class="scroller-content"><div class="scroller-loading scroller-loading-prev" /><div class="scroller-page" /><div class="scroller-loading scroller-loading-next" /></div>')
+				.html(tmpl(StackView.templates.scroller, {}))
 				.wrap(this.$wrapper)
 				.bind('mousewheel', function(event, delta) {
 					$(this).trigger('move-by', -delta * 75);
@@ -47,7 +47,10 @@
 				});
 
 			this.$wrapper
-				.prepend('<div class="navigation"><div class="upstream" /><div class="num-found" /><div class="downstream" /></div><div class="ribbon"><div class="ribbonBody" /><div class="ribbonBehind" /></div>')
+				.prepend(tmpl(StackView.templates.ribbon, {
+					ribbon: this.options.ribbon
+				}))
+				.prepend(tmpl(StackView.templates.navigation, {}))
 				.delegate('.upstream', 'click', function() {
 					that.$element.trigger('move-by', -475);
 					return false;
@@ -55,8 +58,7 @@
 				.delegate('.downstream', 'click', function() {
 					that.$element.trigger('move-by', 475);
 					return false;
-				})
-				.find('.ribbonBody').text(this.options.ribbon);
+				});
 			
 			if(opts === false) {
 				// Destroy!
@@ -172,9 +174,9 @@
 					}
 
 					if(that.options.search_type !== 'loc_sort_order') {
-						that.$wrapper.html(data.num_found + '<br />items').removeClass('empty');
+						that.$wrapper.find('.num-found').html(data.num_found + '<br />items').removeClass('empty');
 					} else {
-						that.$wrapper.html('').addClass('empty');
+						that.$wrapper.find('.num-found').html('').addClass('empty');
 					}
 
 					// This probably shouldn't be necessary!
@@ -229,9 +231,16 @@
 							v.link = '../shelflife/book/' + v.title_link_friendly + '/' + v.id;
 						}
 
-						$stack.append($('<div class="itemContainer' + home + '" />').html($('<span class="cover heat' + get_heat(v.shelfrank) + '" />').css('width', height * that.options.height_multiple + 2)).append($('<span class="pages heat' + get_heat(v.shelfrank) + '" />').css('margin-left', height * that.option.height_multiple + 35).css('margin-bottom', -pages * that.option.page_multiple - 11).css('height', pages * that.option.page_multiple + 5)).append($('<li link="' + v.link + '" class="heat' + get_heat(v.shelfrank) + ' spine" />').html('<p class="spine-text"><span class="title">' + v.title + '</span><span class="author">' + creator + '</span></p><span class="spine-year">' + pub_date + '</span>').css('width', height * that.option.height_multiple).css('height', pages * that.option.page_multiple)));
-
-						$stack.append($('<div style="clear:both;" />'));
+						$stack.append(tmpl(StackView.templates.book, {
+							home: home,
+							heat: get_heat(v.shelfrank),
+							bookHeight: height * that.options.height_multiple,
+							bookWidth: pages * that.options.page_multiple,
+							link: v.link,
+							title: v.title,
+							author: creator,
+							year: pub_date
+						}));
 
 					});
 
@@ -329,4 +338,6 @@
 		
 		return response === undefined ? this : response;
 	};
+	
+	window.StackView = StackView;
 })(jQuery, window, document);
