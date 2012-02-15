@@ -1,11 +1,11 @@
 (function($, undefined) {
 	StackView.templates = {
-		scroller: '\
-			<div class="scroller-content">\
-				<div class="scroller-loading scroller-loading-prev" />\
-				<div class="scroller-page" />\
-				<div class="scroller-loading scroller-loading-next" />\
-			</div>',
+		scaffold: '\
+			<div class="ribbon">\
+				<div class="ribbonBody"><%= ribbon %></div>\
+				<div class="ribbonBehind" />\
+			</div>\
+			<ul class="stack-items" />',
 		
 		navigation: '\
 			<div class="navigation">\
@@ -16,27 +16,15 @@
 				<div class="downstream" />\
 			</div>',
 		
-		ribbon: '\
-			<div class="ribbon">\
-				<div class="ribbonBody"><%= ribbon %></div>\
-				<div class="ribbonBehind" />\
-			</div>',
-		
 		book: '\
-			<div class="itemContainer<%=(anchor ? " anchorbook" : "")%>">\
-				<span class="cover heat<%= heat %>" style="width:<%= bookHeight+2 %>;" />\
-				<span class="pages heat<%= heat %>" style="margin-left:<%= bookHeight+35 %>; margin-bottom:<%= -bookWidth-11 %>; height:<%= bookWidth+5 %>;" />\
-				<li link="<%= link %>" class="heat<%= heat %> spine" style="width:<%= bookHeight %>; height:<%= bookWidth %>;">\
-					<p class="spine-text">\
-						<span class="title"><%= title %></span>\
-						<span class="author"><%= author %></span>\
-					</p>\
+			<li class="stack-book heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;">\
+				<a href="<%= link %>" target="_newtab">\
+					<span class="spine-title"><%= title %></span>\
+					<span class="spine-author"><%= author %></span>\
 					<span class="spine-year"><%= year %></span>\
-				</li>\
-			</div>\
-			<div style="clear:both;" />',
+				</a>\
+			</li>',
 		
-		bookEnd: '<div class="book-end" />',
-		emptyStack: '<ul class="stack" />'
+		bookEnd: '<div class="book-end" />'
 	}
 })();

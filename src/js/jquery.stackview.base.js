@@ -6,7 +6,13 @@
 */
 (function($, window, document, undefined) {
 	var plugin = 'stackview',
-	    StackView;
+	    StackView,
+	    events;
+	
+	events = {
+		init: 'stackview.init',
+		page_load: 'stackview.pageload'
+	};
 	
 	/*
 	   PRIVATE
@@ -48,9 +54,14 @@
 			
 			min_pages: 200,
 			max_pages: 540,
-			min_height: 20,
-			max_height: 39,
+			min_book_height: 20,
+			max_book_height: 39,
 			cache_ttl: 60,
+			
+			selectors: {
+				item_list: '.stack-items',
+				ribbon: '.ribbon-body'
+			}
 		}
 	});
 	
