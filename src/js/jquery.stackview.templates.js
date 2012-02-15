@@ -26,14 +26,14 @@
 			<div class="itemContainer<%=(anchor ? " anchorbook" : "")%>">\
 				<span class="cover heat<%= heat %>" style="width:<%= bookHeight+2 %>;" />\
 				<span class="pages heat<%= heat %>" style="margin-left:<%= bookHeight+35 %>; margin-bottom:<%= -bookWidth-11 %>; height:<%= bookWidth+5 %>;" />\
-				<li link="<%= link %>" class="heat<%= heat %> spine" style="width:<%= bookHeight %>; height:<%= bookWidth %>;">
-					<p class="spine-text">
-						<span class="title"><%= title %></span>
-						<span class="author"><%= author %></span>
-					</p>
-					<span class="spine-year"><%= year %></span>
-				</li>
-			</div>
+				<li link="<%= link %>" class="heat<%= heat %> spine" style="width:<%= bookHeight %>; height:<%= bookWidth %>;">\
+					<p class="spine-text">\
+						<span class="title"><%= title %></span>\
+						<span class="author"><%= author %></span>\
+					</p>\
+					<span class="spine-year"><%= year %></span>\
+				</li>\
+			</div>\
 			<div style="clear:both;" />',
 		
 		bookEnd: '<div class="book-end" />',
