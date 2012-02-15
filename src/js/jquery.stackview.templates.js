@@ -10,8 +10,8 @@
 		navigation: '\
 			<div class="navigation">\
 				<div class="upstream" />\
-				<div class="num-found" />
-					<span></span><br />items
+				<div class="num-found" />\
+					<span></span><br />items\
 				</div>\
 				<div class="downstream" />\
 			</div>',
