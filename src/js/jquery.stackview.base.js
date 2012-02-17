@@ -164,6 +164,15 @@
 	
 	/* StackView public methods */
 	$.extend(true, StackView.prototype, {
+		
+		/*
+		   #init()
+		
+		   Sets up the initial states of a stack.  Including:
+		     - Creating the HTML skeleton.
+		     - Loading the first page.
+		     - Firing the init event.
+		*/
 		init: function() {
 			this.$element.html(tmpl(StackView.templates.scaffold, {
 				ribbon: this.options.ribbon
@@ -173,12 +182,20 @@
 			this.$element.trigger(events.init);
 		},
 		
-		next_page: function() {
+		/*
+		   #next_page()
+		
+		   Loads the next page of stack items.  If we've already hit the
+		   last page, this function does nothing.
+		*/
+		next_page: function(arg) {
+			if (this.finished) return;
+			
 			if (this.options.data) {
 				utils.render_items(this, this.options.data.docs);
+				this.finished = true;
+				this.$element.trigger(events.page_load);
 			}
-			
-			this.$element.trigger(events.page_load);
 		}
 	});
 	
@@ -190,21 +207,19 @@
 	   element in the jQuery set will be returned, the same as other getters
 	   in jQuery.
 	*/
-	$.fn[plugin] = function(arg) {
-		var response;
+	$.fn[plugin] = function(method) {
+		var response,
+		    args = Array.prototype.slice.call(arguments, 1);
 		
 		this.each(function(i, el) {
 			var $el = $(el),
 			    obj = $el.data('stackviewObject');
 			
 			if (!obj) {
-				$el.data('stackviewObject', new StackView(el, arg));
+				$el.data('stackviewObject', new StackView(el, method));
 			}
-			else if (obj[arg]) {
-				var methodResponse = obj[arg].apply(
-					obj,
-					Array.prototype.slice.call(arguments, 1)
-				);
+			else if (obj[method]) {
+				var methodResponse = obj[method](args);
 				
 				if (response === undefined && methodResponse !== undefined) {
 					response = methodResponse;
@@ -215,5 +230,6 @@
 		return response === undefined ? this : response;
 	};
 	
+	/* Expose the StackView class for extension */
 	window.StackView = StackView;
 })(jQuery, window, document);

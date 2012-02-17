@@ -1,4 +1,5 @@
 var opts = StackView.defaults;
+// "inlineData" defined in mocks/static.js
 
 describe('StackView Base', function() {
 	var $stack,
@@ -7,19 +8,23 @@ describe('StackView Base', function() {
 	beforeEach(function() {
 		loadFixtures('default.html');
 		$stack = $('#stack');
-		spyOnEvent($stack, 'stackview.init');
 	});
 	
 	describe('#init()', function() {
 		beforeEach(function() {
 			spyOnEvent($stack, 'stackview.init');
-			spyOnEvent($stack, 'stackview.pageload');
 		});
 		
 		describe('data source independent behaviors', function() {
+			var pageload_fired;
+			
 			beforeEach(function() {
+				pageload_fired = false;
+				$stack.bind('stackview.pageload', function() {
+					pageload_fired = true;
+				});
 				returned = $stack.stackview({
-					data: inlineData // defined in mocks/static.js
+					data: inlineData
 				});
 			});
 			
@@ -35,8 +40,10 @@ describe('StackView Base', function() {
 				expect('stackview.init').toHaveBeenTriggeredOn($stack);
 			});
 			
-			it('should fire a pageloaded event', function() {
-				expect('stackview.pageload').toHaveBeenTriggeredOn($stack);
+			it('should fire a pageload event (async)', function() {
+				waitsFor(function() {
+					return pageload_fired;
+				}, 'pageload event not firing', 5000);
 			});
 
 			it('should return the jQuery object for chaining', function() {
@@ -46,8 +53,7 @@ describe('StackView Base', function() {
 		
 		describe('with static inline data', function() {
 			beforeEach(function() {
-				
-				returned = $stack.stackview({
+				$stack.stackview({
 					data: inlineData // defined in mocks/static.js
 				});
 			});
@@ -55,6 +61,12 @@ describe('StackView Base', function() {
 			it('should render all the items in the docs array', function() {
 				var stackLength = $stack.find(opts.selectors.item).length;
 				expect(stackLength).toEqual(inlineData.docs.length);
+			});
+		});
+		
+		describe('with AJAX loaded data', function() {
+			it('needs specs', function() {
+				expect('implemented').toBeFalsy();
 			});
 		});
 	});
@@ -67,8 +79,16 @@ describe('StackView Base', function() {
 		});
 		
 		describe('with static inline data', function() {
-			it('needs specs', function() {
-				expect('implemented').toBeFalsy();
+			beforeEach(function() {
+				$stack.stackview({
+					data: inlineData
+				});
+				spyOnEvent($stack, 'stackview.pageload');
+			});
+			
+			it('should do nothing', function() {
+				$stack.stackview('next_page');
+				expect('stackview.pageload').not.toHaveBeenTriggeredOn($stack);
 			});
 		});
 	});
