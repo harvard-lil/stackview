@@ -23,6 +23,8 @@
 					<span class="spine-author"><%= author %></span>\
 					<span class="spine-year"><%= year %></span>\
 				</a>\
-			</li>'
+			</li>',
+		
+		placeholder: '<li class="stackview-placeholder"></li>'
 	}
 })();

@@ -93,12 +93,19 @@
 	};
 	
 	/*
-	   Takes a StackView instance and array of result items.  Renders a
-	   DOM element for each of the items and appends it to the stack's
-	   item list.
+	   #render_items(StackView, array [, jQuery])
+	
+	   Takes a StackView instance, an array of result items, and an optional
+	   jQuery object.  Renders a DOM element for each of the items and
+	   appends it to the stack's item list. If [placeholder] is passed in the
+	   items take the its spot in the DOM.
 	*/
-	utils.render_items = function(stack, docs) {
-		var $list = stack.$element.find(stack.options.selectors.item_list);
+	utils.render_items = function(stack, docs, $placeholder) {
+		var action = $placeholder ? 'after' : 'append',
+		    $pivot = $placeholder ?
+		             $placeholder :
+		             stack.$element.find(stack.options.selectors.item_list);
+		    
 		
 		$.each(docs, function(i, item) {
 			var $item = $(tmpl(StackView.templates.book, {
@@ -112,8 +119,47 @@
 			}));
 			
 			$item.data('stackviewItem', item);
-			$list.append($item);
+			$pivot[action]($item);
 		});
+		
+		if ($placeholder) {
+			$placeholder.remove();
+		}
+	};
+
+	/*
+	   #fetch_page(StackView, function)
+	
+	   Takes a StackView instance and a callback function.  Retrieves the
+	   next page according to the URL and other options of the StackView
+	   instance.  When the page is finished fetching, the callback is
+	   invoked, passing in the array of items.
+	*/
+	utils.fetch_page = function(stack, callback) {
+		var params,
+		    cachedResult,
+				querystring;
+		
+		params = {
+			start: stack.page * stack.options.items_per_page,
+			limit: stack.options.items_per_page,
+			search_type: stack.options.search_type,
+			query: stack.options.query
+		};
+		if (stack.options.jsonp) {
+			params.callback = '?';
+		}
+		querystring = $.param(params);
+
+		stack.page++;
+		cachedResult = window.stackCache.get(stack.options.url + params);
+		
+		if (cachedResult) {
+			callback(cachedResult);
+		}
+		else {
+			$.getJSON(stack.options.url, querystring, callback);
+		}
 	};
 
 
@@ -188,13 +234,30 @@
 		   Loads the next page of stack items.  If we've already hit the
 		   last page, this function does nothing.
 		*/
-		next_page: function(arg) {
-			if (this.finished) return;
+		next_page: function() {
+			var $placeholder = $(tmpl(StackView.templates.placeholder, {})),
+			    that = this;
+			
+			if (this.finished) {
+				return;
+			}
 			
 			if (this.options.data) {
 				utils.render_items(this, this.options.data.docs);
 				this.finished = true;
 				this.$element.trigger(events.page_load);
+			}
+			else if (this.options.url) {
+				this.$element
+					.find(this.options.selectors.item_list)
+					.append($placeholder);
+				utils.fetch_page(this, function(data) {
+					utils.render_items(that, data.docs, $placeholder);
+					if (parseInt(data.start, 10) === -1) {
+						that.finished = true;
+					}
+					that.$element.trigger(events.page_load);
+				});
 			}
 		}
 	});
