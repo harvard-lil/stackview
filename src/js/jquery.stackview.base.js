@@ -15,12 +15,9 @@
 		page_load: 'stackview.pageload'
 	};
 	
+
 	/*
-	   PRIVATE
-	*/
-	
-	/*
-	   #get_heat(number)
+	   #get_heat(number) - Private
 	
 	   Takes a value between 0 and 100 and returns a number to be used with
 	   heat classes to indicate popularity.
@@ -30,7 +27,7 @@
 	};
 	
 	/*
-	   #get_height(StackView, object)
+	   #get_height(StackView, object) - Private
 	
 	   Takes a StackView instance and a book object. Returns a normalized
 	   book height, taking into account the minimum height, maximum height,
@@ -38,8 +35,8 @@
 	*/
 	utils.get_height = function(stack, book) {
 		var height = parseInt(book.measurement_height_numeric, 10),
-		    min = stack.options.min_book_height,
-		    max = stack.options.max_book_height,
+		    min = stack.options.min_item_height,
+		    max = stack.options.max_item_height,
 		    multiple = stack.options.height_multiple;
 		
 		height = Math.min(Math.max(height, min), max) * multiple;
@@ -47,7 +44,7 @@
 	};
 	
 	/*
-	   #get_thickness(StackView, object)
+	   #get_thickness(StackView, object) - Private
 	
 	   Takes a StackView instance and a book object. Returns a normalized
 	   book thickness using the number of book pages, taking into account
@@ -57,14 +54,14 @@
 		var thickness = parseInt(book.measurement_page_numeric, 10),
 		    min = stack.options.min_pages,
 		    max = stack.options.max_pages,
-		    multiple = stack.options.pages_multiple;
+		    multiple = stack.options.page_multiple;
 		
 		thickness = Math.min(Math.max(thickness, min), max) * multiple;
 		return thickness + 'px';
 	};
 	
 	/*
-	   #normalize_link(object)
+	   #normalize_link(object) - Private
 	
 	   Takes an item and returns the item's link, taking into account
 	   workarounds that may come from inconsistent data structure.
@@ -77,7 +74,7 @@
 	};
 	
 	/*
-	   #get_author(object)
+	   #get_author(object) - Private
 	
 	   Takes an item and returns the item's author, taking the first
 	   author if an array of authors is defined.
@@ -93,7 +90,7 @@
 	};
 	
 	/*
-	   #render_items(StackView, array [, jQuery])
+	   #render_items(StackView, array [, jQuery]) - Private
 	
 	   Takes a StackView instance, an array of result items, and an optional
 	   jQuery object.  Renders a DOM element for each of the items and
@@ -128,7 +125,7 @@
 	};
 
 	/*
-	   #fetch_page(StackView, function)
+	   #fetch_page(StackView, function) - Private
 	
 	   Takes a StackView instance and a callback function.  Retrieves the
 	   next page according to the URL and other options of the StackView
@@ -166,9 +163,6 @@
 
 
 
-	/*
-	   PUBLIC
-	*/
 	
 	/* StackView constructor, set up instance properties and call init. */
 	StackView = function(elem, opts) {

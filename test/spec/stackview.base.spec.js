@@ -45,6 +45,24 @@ describe('StackView Base', function() {
 					return pageload_fired;
 				}, 'pageload event to fire', 5000);
 			});
+			
+			it('should give heights to the items', function() {
+				var height = $stack.find(opts.selectors.item).height(),
+				    min = opts.min_pages * opts.page_multiple - 1,
+				    max = opts.max_pages * opts.page_multiple + 1;
+				
+				expect(height).toBeGreaterThan(min);
+				expect(height).toBeLessThan(max);
+			});
+			
+			it('should give widths to the items', function() {
+				var width = $stack.find(opts.selectors.item).width(),
+				    min = opts.min_item_height * opts.height_multiple - 1,
+				    max = opts.max_item_height * opts.height_multiple + 1;
+				
+				expect(width).toBeGreaterThan(min);
+				expect(width).toBeLessThan(max);
+			});
 
 			it('should return the jQuery object for chaining', function() {
 				expect(returned).toEqual($stack);
@@ -85,7 +103,12 @@ describe('StackView Base', function() {
 	
 	describe('#next_page()', function() {
 		describe('data source independent behavior', function() {
-			// NONE, YET
+			it('should return the jQuery object for chaining', function() {
+				$stack.stackview({
+					data: inlineData
+				});
+				expect($stack.stackview('next_page')).toEqual($stack);
+			});
 		});
 		
 		describe('with static inline data', function() {

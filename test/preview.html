@@ -16,11 +16,13 @@
 		<script>
 			$(function() {
 				$('.static').stackview({
-					data: inlineData
+					data: inlineData,
+					ribbon: 'Inline Static Data'
 				});
 
 				$('.dynamic').stackview({
-					url: 'mocks/json.php'
+					url: 'mocks/json.php',
+					ribbon: 'Dynamic Data from json.php'
 				});
 			});
 		</script>
