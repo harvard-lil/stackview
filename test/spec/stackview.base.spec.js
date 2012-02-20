@@ -63,6 +63,10 @@ describe('StackView Base', function() {
 				expect(width).toBeGreaterThan(min);
 				expect(width).toBeLessThan(max);
 			});
+			
+			it('should add a stackview class to the element for style scoping', function() {
+				expect($stack).toHaveClass(opts.classes.stackview);
+			});
 
 			it('should return the jQuery object for chaining', function() {
 				expect(returned).toEqual($stack);

@@ -158,8 +158,22 @@
 			$.getJSON(stack.options.url, querystring, callback);
 		}
 	};
-
-
+	
+	/*
+	   #reverse_flow(StackView) - Private
+	
+	   Takes all items in a StackView instance and gives them a descending
+	   z-index.This makes them overlap in the reverse order of normal page
+	   flow. Items that appear first in source (higher on the stack) overlap
+	   those that appear later.
+	*/
+	utils.reverse_flow = function(stack) {
+		var $items = stack.$element.find(stack.options.selectors.item);
+		
+		for (var i = $items.length - 1, z = 0; i >= 0; i--, z++) {
+			$items.eq(i).css('z-index', z);
+		}
+	};
 
 
 
@@ -182,8 +196,8 @@
 			jsonp: false,
 			items_per_page: 10,
 			threshold: 1000,
-			page_multiple: 0.11,
-			height_multiple: 12,
+			page_multiple: 0.20,
+			height_multiple: 12.5,
 			search_type: 'keyword',
 			query: '',
 			ribbon: 'Stack View',
@@ -194,10 +208,14 @@
 			max_item_height: 39,
 			cache_ttl: 60,
 			
+			classes: {
+				stackview: 'stackview'
+			},
+			
 			selectors: {
 				item: '.stack-item',
 				item_list: '.stack-items',
-				ribbon: '.ribbon-body'
+				ribbon: '.ribbon'
 			}
 		}
 	});
@@ -210,14 +228,22 @@
 		
 		   Sets up the initial states of a stack.  Including:
 		     - Creating the HTML skeleton.
+		     - Binding reverse_flow to the pageload event.
 		     - Loading the first page.
 		     - Firing the init event.
 		*/
 		init: function() {
-			this.$element.html(tmpl(StackView.templates.scaffold, {
-				ribbon: this.options.ribbon
-			}));
+			var that = this;
 			
+			this.$element
+				.html(tmpl(StackView.templates.scaffold, {
+					ribbon: this.options.ribbon
+				}))
+				.addClass(this.options.classes.stackview)
+				.bind(events.page_load, function() {
+					utils.reverse_flow(that);
+				});
+
 			this.next_page();
 			this.$element.trigger(events.init);
 		},
