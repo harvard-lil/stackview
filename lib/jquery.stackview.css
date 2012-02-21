@@ -11,18 +11,14 @@
 .stackview {
 	font-family:"Helvetica Neue", sans-serif;
 	position:relative;
-	width:480px;
+	width:440px;
 	padding:0 0 0 55px;
+	overflow:hidden;
 }
 
 .stackview * {
 	margin:0;
 	padding:0;
-}
-
-.scroll-mask {
-	width:440px;
-	overflow:hidden;
 }
 
 .stack-items {
@@ -358,7 +354,7 @@
 	position:absolute;
 	z-index:99999; /* Must be bigger than the # of elements in stack */
 	left:45px;
-	right:40px;
+	right:10px;
 	top:52px;
 	padding:8px 10px 8px 22px;
 	min-height:25px;

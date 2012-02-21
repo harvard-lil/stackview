@@ -2,9 +2,7 @@
 	StackView.templates = {
 		scaffold: '\
 			<div class="ribbon"><%= ribbon %></div>\
-			<div class="scroll-mask">\
-				<ul class="stack-items" />\
-			</div>',
+			<ul class="stack-items" />',
 		
 		navigation: '\
 			<div class="navigation">\
