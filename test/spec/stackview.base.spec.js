@@ -65,7 +65,7 @@ describe('StackView Base', function() {
 			});
 			
 			it('should add a stackview class to the element for style scoping', function() {
-				expect($stack).toHaveClass(opts.classes.stackview);
+				expect($stack).toHaveClass('stackview');
 			});
 
 			it('should return the jQuery object for chaining', function() {

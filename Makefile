@@ -1,7 +1,6 @@
-JS_SOURCES = src/js/jquery.infinitescroller.min.js \
-             src/js/jquery.mousewheel.pack.js \
-             src/js/microtemplating.js\
+JS_SOURCES = src/js/microtemplating.js\
              src/js/jquery.stackview.base.js \
+             src/js/jquery.stackview.infinite.js\
              src/js/jquery.stackview.stackcache.js\
              src/js/jquery.stackview.templates.js
 

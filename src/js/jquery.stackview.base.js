@@ -208,10 +208,6 @@
 			max_item_height: 39,
 			cache_ttl: 60,
 			
-			classes: {
-				stackview: 'stackview'
-			},
-			
 			selectors: {
 				item: '.stack-item',
 				item_list: '.stack-items',
@@ -239,13 +235,13 @@
 				.html(tmpl(StackView.templates.scaffold, {
 					ribbon: this.options.ribbon
 				}))
-				.addClass(this.options.classes.stackview)
+				.addClass(plugin)
 				.bind(events.page_load, function() {
 					utils.reverse_flow(that);
 				});
 
-			this.next_page();
 			this.$element.trigger(events.init);
+			this.next_page();
 		},
 		
 		/*
