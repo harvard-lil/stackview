@@ -182,14 +182,14 @@
 		var params = utils.calculate_params(stack),
 		    cachedResult,
 				querystring;
-		
+
 		if (stack.options.jsonp) {
 			params.callback = '?';
 		}
 		querystring = $.param(params);
 
 		stack.page++;
-		cachedResult = window.stackCache.get(stack.options.url + params);
+		cachedResult = window.stackCache.get(stack.options.url + querystring);
 		
 		if (cachedResult) {
 			callback(cachedResult);
@@ -201,6 +201,7 @@
 					data,
 					stack.options.cache_ttl
 				);
+				
 				callback(data);
 			});
 		}
@@ -328,6 +329,7 @@
 					if (parseInt(data.start, 10) === -1) {
 						that.finished.down = true;
 					}
+					console.log(events.page_load);
 					that.$element.trigger(events.page_load, [data]);
 				});
 			}

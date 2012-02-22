@@ -35,7 +35,8 @@
 		
 		$items.bind('scroll.stackview', downCheck);
 		$items.bind('scroll.stackview', upCheck);
-		scrollCheck();
+		downCheck();
+		upCheck();
 	};
 	
 	$d.delegate('.stackview', 'stackview.pageload', infinite);
