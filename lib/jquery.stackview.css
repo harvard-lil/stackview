@@ -13,7 +13,7 @@
 	position:relative;
 	width:440px;
 	height:520px;
-	padding:0 0 0 55px;
+	padding:0 0 0 65px;
 	overflow:hidden;
 }
 
@@ -354,7 +354,7 @@
 .stackview .ribbon {
 	position:absolute;
 	z-index:99999; /* Must be bigger than the # of elements in stack */
-	left:45px;
+	left:55px;
 	right:10px;
 	top:52px;
 	padding:8px 10px 8px 22px;
@@ -379,4 +379,54 @@
 	background:url('images/ribbonTab.png') no-repeat 0 0;
 	width:10px;
 	height:10px;
+}
+
+
+/**************
+   NAVIGATION
+***************/
+.stack-navigation {
+	position:absolute;
+	left:5px;
+	top:5px;
+	width:41px;
+	text-align:center;
+}
+
+.stack-navigation .upstream, .stack-navigation .downstream {
+	height:43px;
+	text-indent:-999em;
+	overflow:hidden;
+}
+
+.stack-navigation .upstream {
+	background:url('images/nav.png') 0 -87px no-repeat;
+}
+
+.stack-navigation .upstream:hover, .stack-navigation .upstream:focus {
+	background-position:0 -44px;
+}
+
+.stack-navigation .upstream:active {
+	background-position:0 -1px;
+}
+
+.stack-navigation .downstream {
+	background:url('images/nav.png') 0 -130px no-repeat;
+}
+
+.stack-navigation .downstream:hover, .stack-navigation .downstream:focus {
+	background-position:0 -173px;
+}
+
+.stack-navigation .downstream:active {
+	background-position:0 -216px;
+}
+
+.stack-navigation .num-found {
+	font-size:15px;
+	line-height:16px;
+	margin:10px 0;
+	color:#09f;
+	text-shadow: 0 1px 0 #ddd;
 }

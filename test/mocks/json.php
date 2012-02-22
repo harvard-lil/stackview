@@ -12,7 +12,7 @@ $numfound = count($slice);
 
 $json['start'] = $numfound < $limit ? -1 : $offset;
 $json['limit'] = $limit;
-$json['num_found'] = $numfound;
+$json['num_found'] = 50;
 $json['docs'] = array_reverse($slice);
 $results = json_encode($json);
 

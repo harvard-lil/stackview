@@ -5,12 +5,12 @@
 			<ul class="stack-items" />',
 		
 		navigation: '\
-			<div class="navigation">\
-				<div class="upstream" />\
-				<div class="num-found" />\
+			<div class="stack-navigation">\
+				<div class="upstream">Up</div>\
+				<div class="num-found">\
 					<span></span><br />items\
 				</div>\
-				<div class="downstream" />\
+				<div class="downstream">Down</div>\
 			</div>',
 		
 		book: '\

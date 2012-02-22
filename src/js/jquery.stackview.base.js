@@ -239,7 +239,8 @@
 				.bind(events.page_load, function() {
 					utils.reverse_flow(that);
 				});
-
+			
+			this.$element.data('stackviewObject', this);
 			this.$element.trigger(events.init);
 			this.next_page();
 		},
@@ -252,27 +253,28 @@
 		*/
 		next_page: function() {
 			var $placeholder = $(tmpl(StackView.templates.placeholder, {})),
-			    that = this;
+			    that = this,
+			    opts = this.options;
 			
 			if (this.finished) {
 				return;
 			}
 			
-			if (this.options.data) {
-				utils.render_items(this, this.options.data.docs);
+			if (opts.data) {
+				utils.render_items(this, opts.data.docs ? opts.data.docs : opts.data);
 				this.finished = true;
-				this.$element.trigger(events.page_load);
+				this.$element.trigger(events.page_load, [opts.data]);
 			}
-			else if (this.options.url) {
+			else if (opts.url) {
 				this.$element
-					.find(this.options.selectors.item_list)
+					.find(opts.selectors.item_list)
 					.append($placeholder);
 				utils.fetch_page(this, function(data) {
 					utils.render_items(that, data.docs, $placeholder);
 					if (parseInt(data.start, 10) === -1) {
 						that.finished = true;
 					}
-					that.$element.trigger(events.page_load);
+					that.$element.trigger(events.page_load, [data]);
 				});
 			}
 		}
@@ -295,7 +297,7 @@
 			    obj = $el.data('stackviewObject');
 			
 			if (!obj) {
-				$el.data('stackviewObject', new StackView(el, method));
+				new StackView(el, method);
 			}
 			else if (obj[method]) {
 				var methodResponse = obj[method](args);
