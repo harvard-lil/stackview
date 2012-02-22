@@ -123,6 +123,52 @@
 			$placeholder.remove();
 		}
 	};
+	
+	utils.calculate_params = function(stack) {
+		var params = {
+			start: stack.page * stack.options.items_per_page,
+			limit: stack.options.items_per_page,
+			search_type: stack.options.search_type,
+			query: stack.options.query
+		}, $pivot, id;
+		
+		if (params.search_type === 'loc_sort_order') {
+			params.start = '-1';
+			if (stack.page === 0) {
+				params.query = [
+					'[',
+					stack.options.id - Math.floor(stack.options.items_per_page / 2),
+					'%20TO%20',
+					stack.options.id + Math.floor(stack.options.items_per_page / 2),
+					']'
+				].join('');
+			}
+			else if (stack.direction === 'down') {
+				$pivot = stack.$element.find(stack.options.selectors.item).last();
+				id = $pivot.data('stackviewItem').loc_sort_order[0] + 1;
+				params.query = [
+					'[',
+					id,
+					'%20TO%20',
+					id + stack.options.items_per_page,
+					']'
+				].join('');
+			}
+			else if (stack.direction === 'up') {
+				$pivot = stack.$element.find(stack.options.selectors.item).first();
+				id = $pivot.data('stackviewItem').loc_sort_order[0] + 1;
+				params.query = [
+					'[',
+					id - stack.options.items_per_page,
+					'%20TO%20',
+					id,
+					']'
+				].join('');
+			}
+		}
+		
+		return params;
+	};
 
 	/*
 	   #fetch_page(StackView, function) - Private
@@ -133,16 +179,10 @@
 	   invoked, passing in the array of items.
 	*/
 	utils.fetch_page = function(stack, callback) {
-		var params,
+		var params = utils.calculate_params(stack),
 		    cachedResult,
 				querystring;
 		
-		params = {
-			start: stack.page * stack.options.items_per_page,
-			limit: stack.options.items_per_page,
-			search_type: stack.options.search_type,
-			query: stack.options.query
-		};
 		if (stack.options.jsonp) {
 			params.callback = '?';
 		}
@@ -155,7 +195,14 @@
 			callback(cachedResult);
 		}
 		else {
-			$.getJSON(stack.options.url, querystring, callback);
+			$.getJSON(stack.options.url, querystring, function(data) {
+				window.stackCache.set(
+					stack.options.url + params,
+					data,
+					stack.options.cache_ttl
+				);
+				callback(data);
+			});
 		}
 	};
 	
@@ -184,7 +231,12 @@
 		this.$element = $(elem);
 		this.options = $.extend({}, StackView.defaults, opts);
 		this.page = 0;
-		this.finished = false;
+		this.finished = {
+			up: false,
+			down: false
+		};
+		this.loc_sort_order = undefined;
+		this.direction = 'down';
 		this.init();
 	};
 	
@@ -201,6 +253,7 @@
 			search_type: 'keyword',
 			query: '',
 			ribbon: 'Stack View',
+			id: null,
 			
 			min_pages: 200,
 			max_pages: 540,
@@ -256,13 +309,14 @@
 			    that = this,
 			    opts = this.options;
 			
-			if (this.finished) {
+			if (this.finished.down) {
 				return;
 			}
 			
+			this.direction = 'down';
 			if (opts.data) {
 				utils.render_items(this, opts.data.docs ? opts.data.docs : opts.data);
-				this.finished = true;
+				this.finished.down = true;
 				this.$element.trigger(events.page_load, [opts.data]);
 			}
 			else if (opts.url) {
@@ -272,11 +326,45 @@
 				utils.fetch_page(this, function(data) {
 					utils.render_items(that, data.docs, $placeholder);
 					if (parseInt(data.start, 10) === -1) {
-						that.finished = true;
+						that.finished.down = true;
 					}
 					that.$element.trigger(events.page_load, [data]);
 				});
 			}
+		},
+		
+		/*
+		   #prev_page()
+		
+		   Loads the previous page of stack items.  If we've already hit the
+		   first page this function does nothing.  This function only works
+		   for stacks using the loc_sort_order search type.
+		*/
+		prev_page: function() {
+			var $placeholder = $(tmpl(StackView.templates.placeholder, {})),
+			    opts = this.options,
+			    that = this;
+			
+			if (opts.search_type !== 'loc_sort_order' || this.finished.up) {
+				return;
+			}
+			
+			this.direction = 'up';
+			this.$element.find(opts.selectors.item_list).prepend($placeholder);
+			utils.fetch_page(this, function(data) {
+				var $oldMarker = that.$element.find(opts.selectors.item).first();
+				
+				utils.render_items(that, data.docs, $placeholder);
+				if (page > 1) {
+					that.$element.find(opts.selectors.item_list).animate({
+						'scrollTop': '+=' + $oldMarker.position().top
+					}, 0);
+				}
+				if (parseInt(data.start, 10) === -1) {
+					that.finished.up = true;
+				}
+				that.$element.trigger(events.page_load, [data]);
+			});
 		}
 	});
 	

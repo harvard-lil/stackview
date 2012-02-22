@@ -9,7 +9,7 @@
 	infinite = function(event) {
 		var $stack = $(event.target),
 		    stack = $stack.data('stackviewObject'),
-		    $items, opts, lastItemTop, triggerPoint, scrollCheck;
+		    $items, opts, lastItemTop, triggerPoint, downCheck, upCheck;
 		
 		if (!stack) return;
 		
@@ -19,14 +19,22 @@
 		lastItemTop += $items.scrollTop();
 		triggerPoint = lastItemTop - $stack.height() - opts.infiniteScrollDistance;
 		
-		scrollCheck = function() {
+		downCheck = function() {
 			if ($items.scrollTop() >= triggerPoint) {
-				$items.unbind('scroll.stackview', scrollCheck);
+				$items.unbind('scroll.stackview', downCheck);
 				$stack.stackview('next_page');
 			}
 		};
 		
-		$items.bind('scroll.stackview', scrollCheck);
+		upCheck = function() {
+			if ($items.scrollTop() <= opts.infiniteScrollDistance) {
+				$items.unbind('scroll.stackview', upCheck);
+				$stack.stackview('prev_page');
+			}
+		}
+		
+		$items.bind('scroll.stackview', downCheck);
+		$items.bind('scroll.stackview', upCheck);
 		scrollCheck();
 	};
 	
