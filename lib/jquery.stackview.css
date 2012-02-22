@@ -24,7 +24,7 @@
 
 /* for graphical control, fonts are in px instead of em in the stacks*/
 ul.stack li:hover {  
-   	background: url('../images/highGloss.png') repeat-x 0 47%;
+   	background: url('images/highGloss.png') repeat-x 0 47%;
 }
 
 
@@ -34,7 +34,7 @@ ul.stack li:hover {
 /*/////////////////////////////////////////////////////////*/
 
 ul.stack li.heat1, .heat1 {
-	background:  #ccebff url('../images/superGloss.png') repeat-x 0 47%;
+	background:  #ccebff url('images/superGloss.png') repeat-x 0 47%;
 	color: #222;
 	text-shadow: 0px 1px 0px #fff;
 	border-color:#adf;
@@ -48,7 +48,7 @@ ul.stack li.heat1 span.author{
 /*--------------------------------*/
 
 ul.stack li.heat2, .heat2 {
-	background: #adf url('../images/superGloss.png') repeat-x 0 47%;
+	background: #adf url('images/superGloss.png') repeat-x 0 47%;
 	color: #222;
 	text-shadow: 0px 1px 0px #ddf1ff;
 	border-color:#88cfff;
@@ -60,7 +60,7 @@ ul.stack li.heat2 span.author{
 /*--------------------------------*/
 
 ul.stack li.heat3, .heat3 {
-	background: #77c9ff url('../images/highGloss.png') repeat-x 0 47%;
+	background: #77c9ff url('images/highGloss.png') repeat-x 0 47%;
 	color: #111;
 	text-shadow: 0px 1px 0px #adf;
 	border-color:#59B6EF;
@@ -167,7 +167,7 @@ ul.stack li {
 	list-style-type: none;
 	display:block;
 	padding:1px 3px 8px 3px;
-	background: url('../images/gloss.png') repeat-x 0 47%;
+	background: url('images/gloss.png') repeat-x 0 47%;
     border-width: 1px 2px;
 	border-style:solid;
 
@@ -211,7 +211,7 @@ ul.stack li {
 .anchorbook {
  	margin: 4px 0 -4px -5px;
  	z-index:100;
-   	background: url('../images/highGloss.png') repeat-x 0 47%;	/*//*/
+   	background: url('images/highGloss.png') repeat-x 0 47%;	/*//*/
    	position:relative;
 }
 
@@ -285,7 +285,7 @@ li.spine {
 
 .scroller-loading-prev{
 	color:#f7f7f7;
-	background-image: url('../images/bookEnd-prev.png');
+	background-image: url('images/bookEnd-prev.png');
 	height:114px;
 	width:212px;
 	margin-top: -111px; !important
@@ -298,7 +298,7 @@ li.spine {
 
 .scroller-loading-next, .book-end{
 	color:#f7f7f7;
-	background-image: url('../images/bookEnd-next.png');
+	background-image: url('images/bookEnd-next.png');
 	height:114px;
 	width:212px;
 	margin:-6px 0px 0px 27px;
@@ -340,7 +340,7 @@ li.spine {
 }
 
 .ribbonBehind {
-	background-image:url('../images/ribbonTab.png');
+	background-image:url('images/ribbonTab.png');
 	background-repeat:no-repeat;
 	display:block;
 	width:10px;
@@ -504,7 +504,7 @@ ul.stack .pages:after {
 	position:relative;
 	width:41px;
 	height:43px;
-	background-image: url('../images/nav.png');
+	background-image: url('images/nav.png');
 	background-repeat:no-repeat;
 	background-position: 0 -87px;
    -webkit-user-select: none;
@@ -525,7 +525,7 @@ ul.stack .pages:after {
 	position:relative;
 	width:41px;
 	height:43px;
-	background-image:url('../images/nav.png');
+	background-image:url('images/nav.png');
 	background-repeat:no-repeat;
 	background-position: 0 -130px;
    -webkit-user-select: none;
