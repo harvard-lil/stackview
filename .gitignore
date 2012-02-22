@@ -1,2 +1,4 @@
 # Ignore file containing API keys
 keys.php
+.DS_Store
+.sass-cache/

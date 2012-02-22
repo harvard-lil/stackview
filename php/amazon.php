@@ -5,7 +5,6 @@ require_once('keys.php');
 $q = $_GET['query'];
 $offset = $_GET['start'];
 $count = $_GET['limit'];
-$callback = $_GET['callback'];
 	
 $json = array();
 	
@@ -54,10 +53,10 @@ foreach($pxml->Items->Item as $item) {
 $last = $offset;
 	
 if(count($json) == 0 || $offset == -1) {
-	echo $callback . ' ({"start": "0", "num_found": "0", "limit": "0", "docs": ""})'; 
+	echo '{"start": "-1", "num_found": "0", "limit": "0", "docs": ""}'; 
 }
 else {
-	echo $callback . '({"start": ' . $last. ', "limit": "' . $count . '", "num_found": "' . $hits . '", "docs": ' . json_encode($json) . '})'; 
+	echo '{"start": ' . $last. ', "limit": "' . $count . '", "num_found": "' . $hits . '", "docs": ' . json_encode($json) . '}'; 
 }
 
 function salesRank_to_shelfrank($scaled_value) {
