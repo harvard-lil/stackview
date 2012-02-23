@@ -1,7 +1,14 @@
+/*
+   Stack View infinite scroll module:
+
+   This module uses the scroll position of a stack to determine when
+   to fire the base methods of next_page and prev_page.
+*/
 (function($, undefined) {
 	var $d = $(document),
 	    infinite;
 	
+	/* Extend defaults */
 	$.extend(StackView.defaults, {
 		infiniteScrollDistance: 100
 	});
@@ -11,7 +18,7 @@
 		    stack = $stack.data('stackviewObject'),
 		    $items, opts, lastItemTop, triggerPoint, downCheck, upCheck;
 		
-		if (!stack) return;
+		if (!stack) return; // See if this can be removed now
 		
 		opts = stack.options;
 		$items = $stack.find(opts.selectors.item_list);

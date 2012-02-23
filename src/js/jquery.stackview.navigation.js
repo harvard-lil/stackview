@@ -1,3 +1,9 @@
+/*
+   Stack View navigation module
+
+   Adds clickable navigation to scroll through the stack, as well as
+   a # of items indicator.
+*/
 (function($, undefined) {
 	var $d = $(document),
 	    StackView = window.StackView;

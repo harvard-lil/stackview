@@ -1,5 +1,5 @@
 /*!
-	Stack View - The jQuery virutal stack plugin
+	Stack View - The jQuery virtual stack plugin
 	by The Harvard Library Innovation Lab
 	
 	Dual licensed under MIT and GPL.
@@ -124,6 +124,13 @@
 		}
 	};
 	
+	/*
+	   #calculate_params(StackView) - Private
+	
+	   Takes a StackView instance and returns the parameters for the next page.
+	   If the Stack uses loc_sort_order, this adjusts the query for that case.
+	   Returns a plain object with key:value params to be used by $.param.
+	*/
 	utils.calculate_params = function(stack) {
 		var params = {
 			start: stack.page * stack.options.items_per_page,
@@ -236,32 +243,75 @@
 			up: false,
 			down: false
 		};
-		this.loc_sort_order = undefined;
 		this.direction = 'down';
 		this.init();
 	};
 	
-	/* The defaults are a static property of the class. */
+	/*
+	   The default options for a StackView instance.
+	
+	   url
+	      The URL to send requests to for item data.
+	   data
+	      An alternative to URL, used for static data. Accepts a typical
+	      URL response object or a simple array of item objects.
+	   jsonp
+	      If true, the URL will expect a JSONP request. callback=? will be
+	      added to the request parameters.
+	   items_per_page
+	      The number of items to request each page.
+	   page_multiple
+	      A number that when multiplied by the number of pages in a book
+	      gives us the total pixel height to be rendered.
+	   height_multiple
+	      A number that when multiplied by the height of the book gives us
+	      the total pixel width of the book to be rendered.
+	   search_type
+	      The type of search to be performed by the script at URL. This is
+	      passed to the script as the search_type parameter.
+	   query
+	      The query passed to the script at URL.  Passed as the
+	      query parameter.
+	   ribbon
+	      The text of the ribbon at the top of the stack.
+	   id
+	      When using a search type of loc_sort_order, this is the id of
+	      the item that the search centers around.
+	   min_pages
+	      The minimum number of pages that a book will render as,
+	      regardless of the true number of pages.
+	   max_pages
+	      The maximum number of pages that a book will render as,
+	      regardless of the true number of pages.
+	   min_item_height
+	      The minimum height in centimeters that an item will render as,
+	      regardless of the true height of the item.
+	   max_item_height
+	      The maximum height in centimeters that an item will render as,
+	      regardless of the true height of the item.
+	   cache_ttl
+	      How long a request will stay in cache.
+	   selectors
+	      A number of selectors that are frequently used by the code to
+	      identify key structures
+	*/
 	$.extend(StackView, {
 		defaults: {
 			url: 'basic.json',
 			data: '',
 			jsonp: false,
 			items_per_page: 10,
-			threshold: 1000,
 			page_multiple: 0.20,
 			height_multiple: 12.5,
 			search_type: 'keyword',
 			query: '',
 			ribbon: 'Stack View',
 			id: null,
-			
 			min_pages: 200,
 			max_pages: 540,
 			min_item_height: 20,
 			max_item_height: 39,
 			cache_ttl: 60,
-			
 			selectors: {
 				item: '.stack-item',
 				item_list: '.stack-items',
@@ -270,7 +320,9 @@
 		}
 	});
 	
-	/* StackView public methods */
+	/*
+	   StackView public methods
+	*/
 	$.extend(true, StackView.prototype, {
 		
 		/*
