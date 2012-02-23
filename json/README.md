@@ -1,6 +1,6 @@
 # /json
 
-The files in this directory serve as examples of the JSON format used by StackView.  This JSON can be passed directly to StackView as `data`:
+The files in this directory serve as examples of the JSON format used by Stack View.  This JSON can be passed directly to Stack View as `data`:
 
 ```js
 var data = {
@@ -33,7 +33,7 @@ var data = {
   ]
 };
 
-$('#stackview').stackview({ data: data });
+$('#stackview').stackView({ data: data });
 ```
 
 ...or passed as a URL to a static file...

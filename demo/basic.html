@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>StackView Basic</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+<!-- stackview.css to style the stack -->
+<link rel="stylesheet" href="../lib/jquery.stackview.css" type="text/css" />
+
+<!-- stackview.js and all js dependencies -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/jquery.stackview.min.js"></script>
+
+</head>
+
+<body>
+		
+<div id="basic-stack"></div>
+	
+<script type="text/javascript">
+    $(function () { 
+    	var data = 
+    	{"start": "-1", "limit": "0", "num_found": "2", "docs": 
+    	[
+        {
+            "title": "Blankets",
+            "creator": [
+                "Craig Thompson"
+            ],
+            "measurement_page_numeric": 582,
+            "measurement_height_numeric": 25,
+            "shelfrank": 13,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638"
+        },
+        {
+            "title": "Persepolis",
+            "creator": [
+                "Marjane Satrapi"
+            ],
+            "measurement_page_numeric": 153,
+            "measurement_height_numeric": 24,
+            "shelfrank": 64,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009098946"
+        }
+    	]
+    	};
+    	
+			$('#basic-stack').stackView({data: data});
+    });
+</script>
+
+</body>
+</html>
