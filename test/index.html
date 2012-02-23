@@ -5,19 +5,28 @@
 	
 	<!-- jQuery, Jasmine, and  jasmine-jQuery -->
 	<link rel="stylesheet" type="text/css" href="lib/jasmine-1.1.0/jasmine.css">
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="lib/jasmine-1.1.0/jasmine.js"></script>
 	<script src="lib/jasmine-1.1.0/jasmine-html.js"></script>
 	<script src="lib/jasmine-jquery-1.3.1/jasmine-jquery-1.3.1.js"></script>
 
 	<!-- StackView source files -->
-	<script src="../src/js/jquery.infinitescroller.min.js"></script>
-	<script src="../src/js/jquery.mousewheel.pack.js"></script>
-	<script src="../src/js/jquery.stackview.js"></script>
+	<link rel="stylesheet" href="../lib/jquery.stackview.css">
+	<script src="../src/js/microtemplating.js"></script>
+	<script src="../src/js/jquery.stackview.base.js"></script>
+	<script src="../src/js/jquery.stackview.infinite.js"></script>
+	<script src="../src/js/jquery.stackview.navigation.js"></script>
+	<script src="../src/js/jquery.stackview.stackcache.js"></script>
+	<script src="../src/js/jquery.stackview.templates.js"></script>
 
+	<!-- Mocks -->
+	<script src="mocks/static.js"></script>
+	
 	<!-- Spec scripts -->
 	<script src="spec/settings.js"></script>
-	
+	<script src="spec/stackview.base.spec.js"></script>
+	<script src="spec/stackview.infinite.spec.js"></script>
+	<script src="spec/stackview.navigation.spec.js"></script>
 </head>
 <body>
 

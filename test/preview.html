@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>Stack View Preview</title>
+        
+		<link rel="stylesheet" href="../lib/jquery.stackview.css">
+		<style type="text/css">
+			.static, .dynamic { float:left; }
+		</style>
+    </head>
+    <body>
+        <div class="static"></div>
+		<div class="dynamic"></div>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="../lib/jquery.stackview.min.js"></script>
+		<script src="mocks/static.js"></script>
+		<script>
+			$(function() {
+				$('.static').stackView({
+					data: inlineData,
+					ribbon: 'Inline Static Data'
+				});
+
+				$('.dynamic').stackView({
+					url: 'mocks/json.php',
+					ribbon: 'Dynamic Data from json.php'
+				});
+			});
+		</script>
+    </body>
+</html>
