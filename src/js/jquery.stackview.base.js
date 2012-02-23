@@ -140,7 +140,6 @@
 		}, $pivot, id;
 		
 		if (params.search_type === 'loc_sort_order') {
-			params.start = '-1';
 			if (stack.page === 0) {
 				params.query = [
 					'[',
