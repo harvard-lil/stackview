@@ -1,7 +1,7 @@
 var opts = StackView.defaults;
 // "inlineData" defined in mocks/static.js
 
-describe('StackView Base', function() {
+describe('Stack View Base', function() {
 	var $stack,
 	    returned;
 	
