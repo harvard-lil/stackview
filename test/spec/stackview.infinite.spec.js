@@ -15,7 +15,7 @@ describe('Stack View Infinite Scroll', function() {
 				.bind('stackview.pageload', function() {
 					loadCount++;
 				})
-				.stackview({
+				.stackView({
 					url: 'mocks/json.php'
 				});
 			$items = $stack.find(opts.selectors.item_list);

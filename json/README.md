@@ -33,7 +33,7 @@ var data = {
   ]
 };
 
-$('#stackview').stackview({ data: data });
+$('#stackview').stackView({ data: data });
 ```
 
 ...or passed as a URL to a static file...

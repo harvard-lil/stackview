@@ -23,7 +23,7 @@ describe('Stack View Base', function() {
 				$stack.bind('stackview.pageload', function() {
 					pageload_fired = true;
 				});
-				returned = $stack.stackview({
+				returned = $stack.stackView({
 					data: inlineData
 				});
 			});
@@ -75,7 +75,7 @@ describe('Stack View Base', function() {
 		
 		describe('with static inline data', function() {
 			beforeEach(function() {
-				$stack.stackview({
+				$stack.stackView({
 					data: inlineData // defined in mocks/static.js
 				});
 			});
@@ -88,7 +88,7 @@ describe('Stack View Base', function() {
 		
 		describe('with AJAX/PHP loaded data', function() {
 			beforeEach(function() {
-				$stack.stackview({
+				$stack.stackView({
 					url: 'mocks/json.php'
 				});
 			});
@@ -108,16 +108,16 @@ describe('Stack View Base', function() {
 	describe('#next_page()', function() {
 		describe('data source independent behavior', function() {
 			it('should return the jQuery object for chaining', function() {
-				$stack.stackview({
+				$stack.stackView({
 					data: inlineData
 				});
-				expect($stack.stackview('next_page')).toEqual($stack);
+				expect($stack.stackView('next_page')).toEqual($stack);
 			});
 		});
 		
 		describe('with static inline data', function() {
 			beforeEach(function() {
-				$stack.stackview({
+				$stack.stackView({
 					data: inlineData
 				});
 				spyOnEvent($stack, 'stackview.pageload');
@@ -126,7 +126,7 @@ describe('Stack View Base', function() {
 			it('should do nothing', function() {
 				var oldLength = $stack.find(opts.selectors.item);
 				
-				$stack.stackview('next_page');
+				$stack.stackView('next_page');
 				expect($stack.find(opts.selectors.item)).toEqual(oldLength);
 				expect('stackview.pageload').not.toHaveBeenTriggeredOn($stack);
 			});
@@ -138,7 +138,7 @@ describe('Stack View Base', function() {
 			
 			beforeEach(function() {
 				loadCount = 0;
-				$stack.stackview({
+				$stack.stackView({
 					url: 'mocks/json.php',
 					items_per_page: ipp
 				});
@@ -148,7 +148,7 @@ describe('Stack View Base', function() {
 			});
 			
 			it('should fire the pageload event', function() {
-				$stack.stackview('next_page');
+				$stack.stackView('next_page');
 				waitsFor(function() {
 					return loadCount === 2;
 				}, 'pageload event to fire', 5000);
@@ -156,7 +156,7 @@ describe('Stack View Base', function() {
 			
 			it('should load the next page of items', function() {
 				runs(function() {
-					$stack.stackview('next_page');
+					$stack.stackView('next_page');
 				});
 				
 				waitsFor(function() {
@@ -171,9 +171,9 @@ describe('Stack View Base', function() {
 			it('should stop at the end', function() {
 				runs(function() {
 					$stack.data('stackviewObject').options.beacon = true;
-					$stack.stackview('next_page'); // 26
-					$stack.stackview('next_page'); // 39
-					$stack.stackview('next_page'); // end (50)
+					$stack.stackView('next_page'); // 26
+					$stack.stackView('next_page'); // 39
+					$stack.stackView('next_page'); // end (50)
 				});
 				
 				waitsFor(function() {
@@ -182,7 +182,7 @@ describe('Stack View Base', function() {
 				
 				runs(function() {
 					expect($stack.find(opts.selectors.item).length).toEqual(50);
-					$stack.stackview('next_page'); // do nothing!
+					$stack.stackView('next_page'); // do nothing!
 				});
 				
 				waits(1500);
@@ -198,7 +198,7 @@ describe('Stack View Base', function() {
 				}, 'init load to finish');
 				
 				runs(function() {
-					$stack.stackview('next_page');
+					$stack.stackView('next_page');
 					expect($('.stackview-placeholder')).toExist();
 				});
 				

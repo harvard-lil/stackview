@@ -22,14 +22,14 @@
 		downCheck = function() {
 			if ($items.scrollTop() >= triggerPoint) {
 				$items.unbind('scroll.stackview', downCheck);
-				$stack.stackview('next_page');
+				$stack.stackView('next_page');
 			}
 		};
 		
 		upCheck = function() {
 			if ($items.scrollTop() <= opts.infiniteScrollDistance) {
 				$items.unbind('scroll.stackview', upCheck);
-				$stack.stackview('prev_page');
+				$stack.stackView('prev_page');
 			}
 		}
 		

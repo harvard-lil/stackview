@@ -5,7 +5,7 @@ describe('Stack View Navigation', function() {
 	
 	beforeEach(function() {
 		loadFixtures('default.html');
-		$stack = $('#stack').stackview({
+		$stack = $('#stack').stackView({
 			data: inlineData
 		});
 		$up = $stack.find(opts.selectors.upstream);

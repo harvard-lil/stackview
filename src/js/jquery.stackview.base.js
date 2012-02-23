@@ -6,7 +6,7 @@
 */
 (function($, window, document, undefined) {
 	var events,
-	    plugin = 'stackview',
+	    plugin = 'stackView',
 	    StackView,
 	    utils = {};
 	
@@ -98,7 +98,7 @@
 	   items take the its spot in the DOM.
 	*/
 	utils.render_items = function(stack, docs, $placeholder) {
-		var action = $placeholder ? 'after' : 'append',
+		var action = $placeholder ? 'before' : 'append',
 		    $pivot = $placeholder ?
 		             $placeholder :
 		             stack.$element.find(stack.options.selectors.item_list);
@@ -289,7 +289,7 @@
 				.html(tmpl(StackView.templates.scaffold, {
 					ribbon: this.options.ribbon
 				}))
-				.addClass(plugin)
+				.addClass('stackview')
 				.bind(events.page_load, function() {
 					utils.reverse_flow(that);
 				});
@@ -329,7 +329,6 @@
 					if (parseInt(data.start, 10) === -1) {
 						that.finished.down = true;
 					}
-					console.log(events.page_load);
 					that.$element.trigger(events.page_load, [data]);
 				});
 			}
@@ -371,7 +370,7 @@
 	});
 	
 	/*
-	   If .stackview has not been called on an element, the first call will
+	   If .stackView has not been called on an element, the first call will
 	   initialize the plugin. Subsequent calls expect a method from the
 	   StackView class. Any method that returns undefined is assumed to
 	   chain. If the method returns a value, only the value from the first
