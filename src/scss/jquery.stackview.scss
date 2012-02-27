@@ -27,6 +27,9 @@
 	overflow:auto;
 	width:440px;
 	padding-right:40px;
+	position:relative;
+	z-index:2;
+	-webkit-overflow-scrolling:touch;
 	
 	&:before {
 		background:url('images/bookEnd-prev.png');
@@ -34,8 +37,6 @@
 		display:block;
 		width:212px;
 		height:114px;
-		position:relative;
-		z-index:99998; /* Must be bigger than the # of elements in stack */
 	}
 	
 	&:after {
@@ -62,6 +63,7 @@
 	position:relative;
 	display:block;
 	margin:0 0 2px 0;
+	-webkit-transform:translate3d(0,0,0);
 	
 	a {
 		display:block;
@@ -179,7 +181,7 @@
 
 .stackview .ribbon {
 	position:absolute;
-	z-index:99999; /* Must be bigger than the # of elements in stack */
+	z-index:3;
 	left:55px;
 	right:10px;
 	top:52px;

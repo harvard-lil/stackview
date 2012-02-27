@@ -39,3 +39,8 @@
 	-ms-user-select:$val;
 	user-select:$val;
 }
+
+@mixin tap-highlight-color($val) {
+	-webkit-tap-highlight-color:$val;
+	tap-highlight-color:$val;
+}
