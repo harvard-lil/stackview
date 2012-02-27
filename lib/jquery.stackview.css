@@ -189,6 +189,36 @@
   transform: skew(-70deg, 0deg);
 }
 
+.stackview .ribbon {
+  position: absolute;
+  z-index: 99999;
+  /* Must be bigger than the # of elements in stack */
+  left: 55px;
+  right: 10px;
+  top: 52px;
+  padding: 8px 10px 8px 22px;
+  min-height: 25px;
+  font-size: 20px;
+  line-height: 1.25;
+  background: rgba(252, 221, 94, 0.85);
+  color: #035;
+  border: 1px solid #fe4;
+  border-radius: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.stackview .ribbon:after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  background: url("images/ribbonTab.png") no-repeat 0 0;
+  width: 10px;
+  height: 10px;
+}
+
 /******************
    HEATMAP
 
@@ -320,39 +350,6 @@
 .stackview .heat10 .stack-cover {
   border-color: #001522;
   background: #004777;
-}
-
-/**********
-   RIBBON
-***********/
-.stackview .ribbon {
-  position: absolute;
-  z-index: 99999;
-  /* Must be bigger than the # of elements in stack */
-  left: 55px;
-  right: 10px;
-  top: 52px;
-  padding: 8px 10px 8px 22px;
-  min-height: 25px;
-  font-size: 20px;
-  line-height: 1.25;
-  background: rgba(252, 221, 94, 0.85);
-  color: #035;
-  border: 1px solid #fe4;
-  border-radius: 2px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.stackview .ribbon:after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 0;
-  background: url("images/ribbonTab.png") no-repeat 0 0;
-  width: 10px;
-  height: 10px;
 }
 
 /**************
