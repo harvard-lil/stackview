@@ -37,6 +37,8 @@
 		display:block;
 		width:212px;
 		height:114px;
+		position:relative;
+		z-index:9999; // Needs to be bigger than # of books.
 	}
 	
 	&:after {
@@ -165,7 +167,7 @@
 
 .stack-cover {
 	position:absolute;
-	z-index:3;
+	z-index:4;
 	height:2px;
 	border-width:1px;
 	border-style:solid;
@@ -174,7 +176,6 @@
 	left:0;
 	right:5px;
 	border-radius:4px 0 0 50px;
-	overflow:visible;
 	@include transform-origin(0 100%);
 	@include skew(-70deg, 0deg);
 }

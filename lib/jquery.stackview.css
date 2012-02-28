@@ -33,6 +33,8 @@
   display: block;
   width: 212px;
   height: 114px;
+  position: relative;
+  z-index: 9999;
 }
 .stack-items:after {
   content: "";
@@ -168,7 +170,7 @@
 
 .stack-cover {
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   height: 2px;
   border-width: 1px;
   border-style: solid;
@@ -177,7 +179,6 @@
   left: 0;
   right: 5px;
   border-radius: 4px 0 0 50px;
-  overflow: visible;
   -o-transform-origin: 0 100%;
   -ms-transform-origin: 0 100%;
   -moz-transform-origin: 0 100%;
