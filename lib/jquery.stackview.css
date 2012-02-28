@@ -70,7 +70,7 @@
   overflow: hidden;
   border-radius: 3px/20px;
 }
-.stack-item:hover, .stack-item:focus {
+.stack-item a:hover, .stack-item a:focus {
   background-image: url("images/highGloss.png");
   text-decoration: none;
 }

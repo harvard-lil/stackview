@@ -74,11 +74,11 @@
 		white-space:nowrap;
 		overflow:hidden;
 		border-radius:3px / 20px;
-	}
-	
-	&:hover, &:focus {
-		background-image:url('images/highGloss.png');
-		text-decoration:none;
+		
+		&:hover, &:focus {
+			background-image:url('images/highGloss.png');
+			text-decoration:none;
+		}
 	}
 }
 
