@@ -7,7 +7,6 @@
 .stackview {
   font-family: "Helvetica Neue", sans-serif;
   position: relative;
-  width: 440px;
   height: 520px;
   padding: 0 0 0 65px;
   overflow: hidden;
@@ -21,7 +20,7 @@
   list-style: none;
   height: 100%;
   overflow: auto;
-  width: 440px;
+  width: 100%;
   padding-right: 40px;
   position: relative;
   z-index: 2;
