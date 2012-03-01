@@ -16,7 +16,7 @@
 	infinite = function(event) {
 		var $stack = $(event.target),
 		    stack = $stack.data('stackviewObject'),
-		    $items, opts, lastItemTop, triggerPoint, downCheck, upCheck;
+		    $items, opts, lastItemTop, triggerPoint, scrollCheck;
 		
 		if (!stack) return; // See if this can be removed now
 		
@@ -26,24 +26,20 @@
 		lastItemTop += $items.scrollTop();
 		triggerPoint = lastItemTop - $stack.height() - opts.infiniteScrollDistance;
 		
-		downCheck = function() {
-			if ($items.scrollTop() >= triggerPoint) {
-				$items.unbind('scroll.stackview', downCheck);
+		scrollCheck = function() {
+			if (opts.search_type === 'loc_sort_order' &&
+			    $items.scrollTop() <= opts.infiniteScrollDistance) {
+				$items.unbind('scroll.stackview');
+				$stack.stackView('prev_page');
+			}
+			else if ($items.scrollTop() >= triggerPoint) {
+				$items.unbind('scroll.stackview');
 				$stack.stackView('next_page');
 			}
 		};
 		
-		upCheck = function() {
-			if ($items.scrollTop() <= opts.infiniteScrollDistance) {
-				$items.unbind('scroll.stackview', upCheck);
-				$stack.stackView('prev_page');
-			}
-		}
-		
-		$items.bind('scroll.stackview', downCheck);
-		$items.bind('scroll.stackview', upCheck);
-		downCheck();
-		upCheck();
+		$items.bind('scroll.stackview', scrollCheck);
+		scrollCheck();
 	};
 	
 	$d.delegate('.stackview', 'stackview.pageload', infinite);

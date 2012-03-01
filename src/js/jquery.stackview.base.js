@@ -158,44 +158,51 @@
 	   Returns a plain object with key:value params to be used by $.param.
 	*/
 	utils.calculate_params = function(stack) {
-		var params = {
+		var opts = stack.options,
+		    params;
+		
+		params = {
 			start: stack.page * stack.options.items_per_page,
 			limit: stack.options.items_per_page,
 			search_type: stack.options.search_type,
 			query: stack.options.query
-		}, $pivot, id;
+		};
 		
 		if (params.search_type === 'loc_sort_order') {
+			params.start = 0;
+			
 			if (stack.page === 0) {
+				stack.loc = {
+					low: opts.id - Math.floor(opts.items_per_page / 2),
+					high: opts.id + Math.floor(opts.items_per_page / 2)
+				};
 				params.query = [
 					'[',
-					stack.options.id - Math.floor(stack.options.items_per_page / 2),
+					stack.loc.low,
 					'%20TO%20',
-					stack.options.id + Math.floor(stack.options.items_per_page / 2),
+					stack.loc.high,
 					']'
 				].join('');
 			}
 			else if (stack.direction === 'down') {
-				$pivot = stack.$element.find(stack.options.selectors.item).last();
-				id = $pivot.data('stackviewItem').loc_sort_order[0] + 1;
 				params.query = [
 					'[',
-					id,
+					stack.loc.high + 1,
 					'%20TO%20',
-					id + stack.options.items_per_page,
+					stack.loc.high + opts.items_per_page + 1,
 					']'
 				].join('');
+				stack.loc.high = stack.loc.high + opts.items_per_page + 1;
 			}
 			else if (stack.direction === 'up') {
-				$pivot = stack.$element.find(stack.options.selectors.item).first();
-				id = $pivot.data('stackviewItem').loc_sort_order[0] + 1;
 				params.query = [
 					'[',
-					id - stack.options.items_per_page,
+					stack.loc.low - opts.items_per_page - 1,
 					'%20TO%20',
-					id,
+					stack.loc.low - 1,
 					']'
 				].join('');
+				stack.loc.low = stack.loc.low - opts.items_per_page - 1;
 			}
 		}
 		
@@ -212,13 +219,8 @@
 	*/
 	utils.fetch_page = function(stack, callback) {
 		var params = utils.calculate_params(stack),
-		    cachedResult,
-				querystring;
-
-		if (stack.options.jsonp) {
-			params.callback = '?';
-		}
-		querystring = $.param(params);
+				querystring = $.param(params),
+				cachedResult;
 
 		stack.page++;
 		cachedResult = window.stackCache.get(stack.options.url + querystring);
@@ -227,14 +229,18 @@
 			callback(cachedResult);
 		}
 		else {
-			$.getJSON(stack.options.url, querystring, function(data) {
-				window.stackCache.set(
-					stack.options.url + params,
-					data,
-					stack.options.cache_ttl
-				);
-				
-				callback(data);
+			$.ajax({
+				url: stack.options.url,
+				data: querystring,
+				dataType: stack.options.jsonp ? 'jsonp' : 'json',
+				success: function(data) {
+					window.stackCache.set(
+						stack.options.url + params,
+						data,
+						stack.options.cache_ttl
+					);	
+					callback(data);
+				}
 			});
 		}
 	};
@@ -267,6 +273,10 @@
 		this.finished = {
 			up: false,
 			down: false
+		};
+		this.loc = {
+			low: null,
+			high: null
 		};
 		this.direction = 'down';
 		this.init();
@@ -426,7 +436,8 @@
 		prev_page: function() {
 			var $placeholder = $(tmpl(StackView.templates.placeholder, {})),
 			    opts = this.options,
-			    that = this;
+			    that = this,
+			    $oldMarker = that.$element.find(opts.selectors.item).first();
 			
 			if (opts.search_type !== 'loc_sort_order' || this.finished.up) {
 				return;
@@ -435,12 +446,12 @@
 			this.direction = 'up';
 			this.$element.find(opts.selectors.item_list).prepend($placeholder);
 			utils.fetch_page(this, function(data) {
-				var $oldMarker = that.$element.find(opts.selectors.item).first();
+				var oldTop = $oldMarker.position().top;
 				
 				utils.render_items(that, data.docs, $placeholder);
-				if (page > 1) {
+				if (that.page > 1) {
 					that.$element.find(opts.selectors.item_list).animate({
-						'scrollTop': '+=' + $oldMarker.position().top
+						'scrollTop': '+=' + ($oldMarker.position().top - oldTop)
 					}, 0);
 				}
 				if (parseInt(data.start, 10) === -1) {
