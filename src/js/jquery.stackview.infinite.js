@@ -16,11 +16,9 @@
 	infinite = function(event) {
 		var $stack = $(event.target),
 		    stack = $stack.data('stackviewObject'),
+		    opts = stack.options,
 		    $items, opts, lastItemTop, triggerPoint, scrollCheck;
-		
-		if (!stack) return; // See if this can be removed now
-		
-		opts = stack.options;
+
 		$items = $stack.find(opts.selectors.item_list);
 		lastItemTop = $items.find(opts.selectors.item).last().position().top;
 		lastItemTop += $items.scrollTop();
