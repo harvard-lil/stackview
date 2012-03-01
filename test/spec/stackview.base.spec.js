@@ -1,6 +1,16 @@
 var opts = StackView.defaults;
 // "inlineData" defined in mocks/static.js
 
+// Helper, adapted from:
+// http://jdsharp.us/jQuery/minute/calculate-scrollbar-width.php
+function scrollbarWidth() { 
+	var div = $('<div style="width:50px;height:50px;overflow:scroll;position:absolute;top:-200px;left:-200px;"><div style="height:10px;"></div>');
+	$('body').append(div); 
+	var x = div.innerWidth() - $('div', div).innerWidth();
+	div.remove(); 
+	return x; 
+}
+
 describe('Stack View Base', function() {
 	var $stack,
 	    returned;
@@ -56,9 +66,10 @@ describe('Stack View Base', function() {
 			});
 			
 			it('should give widths to the items', function() {
-				var width = $stack.find(opts.selectors.item).width(),
-				    min = opts.min_item_height * opts.height_multiple - 1,
-				    max = opts.max_item_height * opts.height_multiple + 1;
+				var listWidth = $stack.find(opts.selectors.item_list).width() - scrollbarWidth(),
+				    width = $stack.find(opts.selectors.item).width(),
+				    min = Math.floor(listWidth * opts.min_height_percentage / 100) - 1,
+				    max = Math.floor(listWidth * opts.max_height_percentage / 100) + 1;
 				
 				expect(width).toBeGreaterThan(min);
 				expect(width).toBeLessThan(max);
