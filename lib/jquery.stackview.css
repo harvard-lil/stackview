@@ -226,7 +226,7 @@
    coldest = heat1
 *******************/
 .stackview .heat1 a {
-  backround-color: #ccebff;
+  background-color: #ccebff;
   background-image: url("images/superGloss.png");
   color: #222;
   text-shadow: 0 1px 0 #fff;
