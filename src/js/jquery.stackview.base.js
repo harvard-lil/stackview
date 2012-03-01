@@ -60,6 +60,9 @@
 		    min = opts.min_item_height,
 		    max = opts.max_item_height;
 		
+		if (isNaN(height)) {
+			height = min;
+		}
 		height = Math.min(Math.max(height, min), max);
 		height = utils.translate(
 			height,
@@ -82,6 +85,9 @@
 		    max = stack.options.max_pages,
 		    multiple = stack.options.page_multiple;
 		
+		if (isNaN(thickness)) {
+			thickness = min;
+		}
 		thickness = Math.min(Math.max(thickness, min), max) * multiple;
 		return thickness + 'px';
 	};
