@@ -45,4 +45,8 @@
 		color:#09f;
 		text-shadow: 0 1px 0 #ddd;
 	}
+	
+	&.empty .num-found {
+		visibility:hidden;
+	}
 }

@@ -10,7 +10,6 @@
 .stackview {
 	font-family:"Helvetica Neue", sans-serif;
 	position:relative;
-	width:440px;
 	height:520px;
 	padding:0 0 0 65px;
 	overflow:hidden;
@@ -25,8 +24,11 @@
 	list-style:none;
 	height:100%;
 	overflow:auto;
-	width:440px;
+	width:100%;
 	padding-right:40px;
+	position:relative;
+	z-index:2;
+	-webkit-overflow-scrolling:touch;
 	
 	&:before {
 		background:url('images/bookEnd-prev.png');
@@ -35,7 +37,7 @@
 		width:212px;
 		height:114px;
 		position:relative;
-		z-index:99998; /* Must be bigger than the # of elements in stack */
+		z-index:9999; // Needs to be bigger than # of books.
 	}
 	
 	&:after {
@@ -55,13 +57,14 @@
 	border-radius:3px;
 	height:40px;
 	position:relative;
-	z-index:2;
+	z-index:9997;
 }
 
 .stack-item {
 	position:relative;
 	display:block;
 	margin:0 0 2px 0;
+	-webkit-transform:translate3d(0,0,0);
 	
 	a {
 		display:block;
@@ -163,7 +166,7 @@
 
 .stack-cover {
 	position:absolute;
-	z-index:3;
+	z-index:4;
 	height:2px;
 	border-width:1px;
 	border-style:solid;
@@ -172,14 +175,13 @@
 	left:0;
 	right:5px;
 	border-radius:4px 0 0 50px;
-	overflow:visible;
 	@include transform-origin(0 100%);
 	@include skew(-70deg, 0deg);
 }
 
 .stackview .ribbon {
 	position:absolute;
-	z-index:99999; /* Must be bigger than the # of elements in stack */
+	z-index:3;
 	left:55px;
 	right:10px;
 	top:52px;
