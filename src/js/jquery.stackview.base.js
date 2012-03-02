@@ -15,6 +15,26 @@
 		page_load: 'stackview.pageload'
 	};
 	
+	/*
+	   #translate(number, number, number, number, number) - Private
+	
+	   Takes a value (the first argument) and two ranges of numbers. Translates
+	   this value from the first range to the second range.  E.g.:
+	
+	   translate(0, 0, 10, 50, 100) returns 50.
+	   translate(10, 0, 10, 50, 100) returns 100.
+	   translate(5, 0, 10, 50, 100) returns 75.
+	
+	   http://stackoverflow.com/questions/1969240/mapping-a-range-of-values-to-another
+	*/
+	utils.translate = function(value, start_min, start_max, end_min, end_max) {
+		var start_range = start_max - start_min,
+		    end_range = end_max - end_min,
+		    scale = (value - start_min) / (start_range);
+		
+		return end_min + scale * end_range;
+	};
+	
 
 	/*
 	   #get_heat(number) - Private
@@ -30,17 +50,26 @@
 	   #get_height(StackView, object) - Private
 	
 	   Takes a StackView instance and a book object. Returns a normalized
-	   book height, taking into account the minimum height, maximum height,
-	   and height multiple.
+	   book height percentage, taking into account the minimum height,
+	   maximum height, height multiple, and translating them onto the
+	   percentage range specified in the stack options.
 	*/
 	utils.get_height = function(stack, book) {
-		var height = parseInt(book.measurement_height_numeric, 10),
-		    min = stack.options.min_item_height,
-		    max = stack.options.max_item_height,
-		    multiple = stack.options.height_multiple;
+		var opts = stack.options,
+		    height = parseInt(book.measurement_height_numeric, 10),
+		    min = opts.min_item_height,
+		    max = opts.max_item_height;
 		
-		height = Math.min(Math.max(height, min), max) * multiple;
-		return height + 'px';
+		if (isNaN(height)) {
+			height = min;
+		}
+		height = Math.min(Math.max(height, min), max);
+		height = utils.translate(
+			height,
+			opts.min_item_height, opts.max_item_height,
+			opts.min_height_percentage, opts.max_height_percentage
+		);
+		return height + '%';
 	};
 	
 	/*
@@ -56,6 +85,9 @@
 		    max = stack.options.max_pages,
 		    multiple = stack.options.page_multiple;
 		
+		if (isNaN(thickness)) {
+			thickness = min;
+		}
 		thickness = Math.min(Math.max(thickness, min), max) * multiple;
 		return thickness + 'px';
 	};
@@ -132,44 +164,51 @@
 	   Returns a plain object with key:value params to be used by $.param.
 	*/
 	utils.calculate_params = function(stack) {
-		var params = {
+		var opts = stack.options,
+		    params;
+		
+		params = {
 			start: stack.page * stack.options.items_per_page,
 			limit: stack.options.items_per_page,
 			search_type: stack.options.search_type,
 			query: stack.options.query
-		}, $pivot, id;
+		};
 		
 		if (params.search_type === 'loc_sort_order') {
+			params.start = 0;
+			
 			if (stack.page === 0) {
+				stack.loc = {
+					low: opts.id - Math.floor(opts.items_per_page / 2),
+					high: opts.id + Math.floor(opts.items_per_page / 2)
+				};
 				params.query = [
 					'[',
-					stack.options.id - Math.floor(stack.options.items_per_page / 2),
+					stack.loc.low,
 					'%20TO%20',
-					stack.options.id + Math.floor(stack.options.items_per_page / 2),
+					stack.loc.high,
 					']'
 				].join('');
 			}
 			else if (stack.direction === 'down') {
-				$pivot = stack.$element.find(stack.options.selectors.item).last();
-				id = $pivot.data('stackviewItem').loc_sort_order[0] + 1;
 				params.query = [
 					'[',
-					id,
+					stack.loc.high + 1,
 					'%20TO%20',
-					id + stack.options.items_per_page,
+					stack.loc.high + opts.items_per_page + 1,
 					']'
 				].join('');
+				stack.loc.high = stack.loc.high + opts.items_per_page + 1;
 			}
 			else if (stack.direction === 'up') {
-				$pivot = stack.$element.find(stack.options.selectors.item).first();
-				id = $pivot.data('stackviewItem').loc_sort_order[0] + 1;
 				params.query = [
 					'[',
-					id - stack.options.items_per_page,
+					stack.loc.low - opts.items_per_page - 1,
 					'%20TO%20',
-					id,
+					stack.loc.low - 1,
 					']'
 				].join('');
+				stack.loc.low = stack.loc.low - opts.items_per_page - 1;
 			}
 		}
 		
@@ -186,13 +225,8 @@
 	*/
 	utils.fetch_page = function(stack, callback) {
 		var params = utils.calculate_params(stack),
-		    cachedResult,
-				querystring;
-
-		if (stack.options.jsonp) {
-			params.callback = '?';
-		}
-		querystring = $.param(params);
+				querystring = $.param(params),
+				cachedResult;
 
 		stack.page++;
 		cachedResult = window.stackCache.get(stack.options.url + querystring);
@@ -201,14 +235,18 @@
 			callback(cachedResult);
 		}
 		else {
-			$.getJSON(stack.options.url, querystring, function(data) {
-				window.stackCache.set(
-					stack.options.url + params,
-					data,
-					stack.options.cache_ttl
-				);
-				
-				callback(data);
+			$.ajax({
+				url: stack.options.url,
+				data: querystring,
+				dataType: stack.options.jsonp ? 'jsonp' : 'json',
+				success: function(data) {
+					window.stackCache.set(
+						stack.options.url + params,
+						data,
+						stack.options.cache_ttl
+					);	
+					callback(data);
+				}
 			});
 		}
 	};
@@ -242,6 +280,10 @@
 			up: false,
 			down: false
 		};
+		this.loc = {
+			low: null,
+			high: null
+		};
 		this.direction = 'down';
 		this.init();
 	};
@@ -262,9 +304,6 @@
 	   page_multiple
 	      A number that when multiplied by the number of pages in a book
 	      gives us the total pixel height to be rendered.
-	   height_multiple
-	      A number that when multiplied by the height of the book gives us
-	      the total pixel width of the book to be rendered.
 	   search_type
 	      The type of search to be performed by the script at URL. This is
 	      passed to the script as the search_type parameter.
@@ -288,11 +327,17 @@
 	   max_item_height
 	      The maximum height in centimeters that an item will render as,
 	      regardless of the true height of the item.
+	   min_height_percentage
+	      Books with the minimum height will render as this percentage
+	      width in the stack.
+	   max_height_percentage
+	      Books with the maximum height will render as this percentage
+	      width in the stack.
 	   cache_ttl
 	      How long a request will stay in cache.
 	   selectors
 	      A number of selectors that are frequently used by the code to
-	      identify key structures
+	      identify key structures.
 	*/
 	$.extend(StackView, {
 		defaults: {
@@ -310,6 +355,8 @@
 			max_pages: 540,
 			min_item_height: 20,
 			max_item_height: 39,
+			min_height_percentage: 59,
+			max_height_percentage: 100,
 			cache_ttl: 60,
 			selectors: {
 				item: '.stack-item',
@@ -395,7 +442,8 @@
 		prev_page: function() {
 			var $placeholder = $(tmpl(StackView.templates.placeholder, {})),
 			    opts = this.options,
-			    that = this;
+			    that = this,
+			    $oldMarker = that.$element.find(opts.selectors.item).first();
 			
 			if (opts.search_type !== 'loc_sort_order' || this.finished.up) {
 				return;
@@ -404,12 +452,12 @@
 			this.direction = 'up';
 			this.$element.find(opts.selectors.item_list).prepend($placeholder);
 			utils.fetch_page(this, function(data) {
-				var $oldMarker = that.$element.find(opts.selectors.item).first();
+				var oldTop = $oldMarker.position().top;
 				
 				utils.render_items(that, data.docs, $placeholder);
-				if (page > 1) {
+				if (that.page > 1) {
 					that.$element.find(opts.selectors.item_list).animate({
-						'scrollTop': '+=' + $oldMarker.position().top
+						'scrollTop': '+=' + ($oldMarker.position().top - oldTop)
 					}, 0);
 				}
 				if (parseInt(data.start, 10) === -1) {

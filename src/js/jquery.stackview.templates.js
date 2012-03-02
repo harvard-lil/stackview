@@ -5,7 +5,7 @@
 			<ul class="stack-items" />',
 		
 		navigation: '\
-			<div class="stack-navigation">\
+			<div class="stack-navigation<%= empty ? " empty" : ""%>">\
 				<div class="upstream">Up</div>\
 				<div class="num-found">\
 					<span></span><br />items\

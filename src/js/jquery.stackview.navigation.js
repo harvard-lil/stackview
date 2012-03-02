@@ -24,7 +24,9 @@
 		    $items = $stack.find(stack.options.selectors.item_list),
 		    delta = $stack.height() * stack.options.navigationPercent / 100;
 		
-		$stack.prepend(tmpl(StackView.templates.navigation, {}));
+		$stack.prepend(tmpl(StackView.templates.navigation, {
+			empty: stack.options.search_type === 'loc_sort_order'
+		}));
 		
 		$stack
 			.delegate(stack.options.selectors.downstream, 'click', function() {
