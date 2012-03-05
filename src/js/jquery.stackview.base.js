@@ -519,6 +519,21 @@
 			$pivot[action]($item);
 			utils.reverse_flow(this);
 			this.$element.trigger(events.item_added);
+		},
+		
+		/*
+		   #getData()
+		
+		   Returns an array of all the item objects currently in the stack.
+		*/
+		getData: function() {
+			var data = [];
+			
+			this.$element.find(this.options.selectors.item).each(function() {
+				data.push($(this).data('stackviewItem'));
+			});
+			
+			return data;
 		}
 	});
 	

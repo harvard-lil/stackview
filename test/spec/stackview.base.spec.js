@@ -278,4 +278,17 @@ describe('Stack View Base', function() {
 			expect($stack.find(opts.selectors.item).length).toEqual(50);
 		});
 	});
+	
+	describe('#getData()', function() {
+		beforeEach(function() {
+				$stack = $('#stack').stackView({ data: inlineData });
+				$stack.stackView('add', item);
+		});
+		
+		it('should return an array of all the item objects', function() {
+			var data = $stack.stackView('getData');
+			expect(data.length).toEqual(inlineData.docs.length + 1);
+			expect(data[data.length - 1]).toEqual(item);
+		});
+	});
 });
