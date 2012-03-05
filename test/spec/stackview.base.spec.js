@@ -190,7 +190,6 @@ describe('Stack View Base', function() {
 			
 			it('should stop at the end', function() {
 				runs(function() {
-					$stack.data('stackviewObject').options.beacon = true;
 					$stack.stackView('next_page'); // 26
 					$stack.stackView('next_page'); // 39
 					$stack.stackView('next_page'); // end (50)
@@ -242,7 +241,7 @@ describe('Stack View Base', function() {
 		
 		it('render the item at the end (bottom) of the stack', function() {
 			var $last = $stack.find(opts.selectors.item).last();
-			expect($last.data('stackviewItem')).toEqual(item);
+			expect($last).toHaveData('stackviewItem', item);
 		});
 		
 		it('should fire the item-added event', function() {
@@ -262,14 +261,14 @@ describe('Stack View Base', function() {
 		it('should add the item at the specified index', function() {
 			$stack.stackView('add', 8, item);
 			var $element = $stack.find(opts.selectors.item).eq(8);
-			expect($element.data('stackviewItem')).toEqual(item);
+			expect($element).toHaveData('stackviewItem', item);
 		});
 
 		it('should add to the end if index === item-list length', function() {
 			var length = $stack.find(opts.selectors.item).length;
 			$stack.stackView('add', length, item);
 			var $element = $stack.find(opts.selectors.item).eq(length);
-			expect($element.data('stackviewItem')).toEqual(item);
+			expect($element).toHaveData('stackviewItem', item);
 		});
 		
 		it('should do nothing if index is negative or too large', function() {
@@ -281,14 +280,41 @@ describe('Stack View Base', function() {
 	
 	describe('#getData()', function() {
 		beforeEach(function() {
-				$stack = $('#stack').stackView({ data: inlineData });
-				$stack.stackView('add', item);
+			$stack = $('#stack').stackView({ data: inlineData });
+			$stack.stackView('add', item);
 		});
 		
 		it('should return an array of all the item objects', function() {
 			var data = $stack.stackView('getData');
 			expect(data.length).toEqual(inlineData.docs.length + 1);
 			expect(data[data.length - 1]).toEqual(item);
+		});
+	});
+	
+	describe('#zIndex(reverse?)', function() {
+		beforeEach(function() {
+			$stack = $('#stack').stackView({ data: inlineData });
+		});
+		
+		it('should give items a z-index in descending order', function() {
+			$stack.find(opts.selectors.item).eq(1).remove();
+			$stack.stackView('zIndex');
+			var $items = $stack.find(opts.selectors.item);
+			for (var i = $items.length - 1, z = 0; i >= 0; i--, z++) {
+				expect(parseInt($items.eq(i).css('z-index'), 10)).toEqual(z);
+			}
+		});
+
+		it('should give items a z-index in ascending order if passed true', function() {
+			$stack.stackView('zIndex', true);
+			var $items = $stack.find(opts.selectors.item);
+			for (var i = 0, len = $items.length; i < $items.length; i++) {
+				expect(parseInt($items.eq(i).css('z-index'), 10)).toEqual(i);
+			}
+		});
+
+		it('should return the jQuery object for chaining', function() {
+			expect($stack.stackView('zIndex')).toEqual($stack);
 		});
 	});
 });

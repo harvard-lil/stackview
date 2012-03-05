@@ -263,22 +263,6 @@
 			});
 		}
 	};
-	
-	/*
-	   #reverse_flow(StackView) - Private
-	
-	   Takes all items in a StackView instance and gives them a descending
-	   z-index.This makes them overlap in the reverse order of normal page
-	   flow. Items that appear first in source (higher on the stack) overlap
-	   those that appear later.
-	*/
-	utils.reverse_flow = function(stack) {
-		var $items = stack.$element.find(stack.options.selectors.item);
-		
-		for (var i = $items.length - 1, z = 0; i >= 0; i--, z++) {
-			$items.eq(i).css('z-index', z);
-		}
-	};
 
 
 
@@ -389,7 +373,7 @@
 		
 		   Sets up the initial states of a stack.  Including:
 		     - Creating the HTML skeleton.
-		     - Binding reverse_flow to the pageload event.
+		     - Binding zIndex ordering to the pageload event.
 		     - Loading the first page.
 		     - Firing the init event.
 		*/
@@ -402,7 +386,7 @@
 				}))
 				.addClass('stackview')
 				.bind(events.page_load, function() {
-					utils.reverse_flow(that);
+					that.zIndex();
 				});
 			
 			this.$element.data('stackviewObject', this);
@@ -481,9 +465,9 @@
 		},
 		
 		/*
-		   #add([index,] item)
+		   #add([number,] object)
 		
-		   Adds the specified item to the stack, at the given index if
+		   Adds the specified item object to the stack, at the given index if
 		   provided or at the end (bottom) of the stack if index is not given.
 		*/
 		add: function() {
@@ -517,7 +501,7 @@
 			));
 			$item.data('stackviewItem', item);
 			$pivot[action]($item);
-			utils.reverse_flow(this);
+			this.zIndex();
 			this.$element.trigger(events.item_added);
 		},
 		
@@ -534,6 +518,26 @@
 			});
 			
 			return data;
+		},
+		
+		/*
+		   #zIndex(boolean)
+		
+		   Reverses the natural flow order of the stack items by giving those
+		   earlier in the source (higher on the stack) a higher z-index.  If
+		   passed true, it will instead assign z-indexes in normal flow order.
+		*/
+		zIndex: function(reverse) {
+			var $items = this.$element.find(this.options.selectors.item),
+			    length = $items.length,
+			    i = 0,
+			    z = reverse ? 0 : $items.length - 1;
+			
+			while (i < length) {
+				$items.eq(i).css('z-index', z);
+				z = z + (reverse ? 1 : -1);
+				i++;
+			}
 		}
 	});
 	
