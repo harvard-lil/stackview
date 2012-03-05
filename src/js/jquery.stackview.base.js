@@ -12,6 +12,7 @@
 	
 	events = {
 		init: 'stackview.init',
+		item_added: 'stackview.itemadded',
 		page_load: 'stackview.pageload'
 	};
 	
@@ -122,6 +123,24 @@
 	};
 	
 	/*
+	   #normalize_item(StackView, object)
+	
+	   Takes an item and returns a normalized object suited for rendering to
+	   the item template.
+	*/
+	utils.normalize_item = function(stack, item) {
+		return {
+			heat: utils.get_heat(item.shelfrank),
+			book_height: utils.get_height(stack, item),
+			book_thickness: utils.get_thickness(stack, item),
+			link: utils.normalize_link(item),
+			title: item.title,
+			author: utils.get_author(item),
+			year: item.pub_date
+		};
+	};
+	
+	/*
 	   #render_items(StackView, array [, jQuery]) - Private
 	
 	   Takes a StackView instance, an array of result items, and an optional
@@ -135,17 +154,11 @@
 		             $placeholder :
 		             stack.$element.find(stack.options.selectors.item_list);
 		    
-		
 		$.each(docs, function(i, item) {
-			var $item = $(tmpl(StackView.templates.book, {
-				heat: utils.get_heat(item.shelfrank),
-				book_height: utils.get_height(stack, item),
-				book_thickness: utils.get_thickness(stack, item),
-				link: utils.normalize_link(item),
-				title: item.title,
-				author: utils.get_author(item),
-				year: item.pub_date
-			}));
+			var $item = $(tmpl(
+				StackView.templates.book,
+				utils.normalize_item(stack, item)
+			));
 			
 			$item.data('stackviewItem', item);
 			$pivot[action]($item);
@@ -465,6 +478,47 @@
 				}
 				that.$element.trigger(events.page_load, [data]);
 			});
+		},
+		
+		/*
+		   #add([index,] item)
+		
+		   Adds the specified item to the stack, at the given index if
+		   provided or at the end (bottom) of the stack if index is not given.
+		*/
+		add: function() {
+			var $items = this.$element.find(this.options.selectors.item),
+			    index, item, action, $pivot, $item;
+			
+			if (typeof(arguments[0]) === 'number') {
+				index = arguments[0];
+				item = arguments[1];
+			}
+			else {
+				index = $items.length;
+				item = arguments[0];
+			}
+
+			if (index > $items.length || index < 0) {
+				return;
+			}
+			else if (index === $items.length) {
+				$pivot = $items.last();
+				action = 'after';
+			}
+			else {
+				$pivot = $items.eq(index);
+				action = 'before';
+			}
+			
+			$item = $(tmpl(
+				StackView.templates.book,
+				utils.normalize_item(this, item)
+			));
+			$item.data('stackviewItem', item);
+			$pivot[action]($item);
+			utils.reverse_flow(this);
+			this.$element.trigger(events.item_added);
 		}
 	});
 	
@@ -488,7 +542,7 @@
 				new StackView(el, method);
 			}
 			else if (obj[method]) {
-				var methodResponse = obj[method](args);
+				var methodResponse = obj[method].apply(obj, args);
 				
 				if (response === undefined && methodResponse !== undefined) {
 					response = methodResponse;

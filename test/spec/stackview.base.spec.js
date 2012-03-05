@@ -1,4 +1,13 @@
 var opts = StackView.defaults;
+var item = {
+	title: "Lorem Ipsum",
+	creator: [ "Cicero" ],
+	measurement_page_numeric: 345,
+	measurement_height_numeric: 33,
+	shelfrank: 50,
+	pub_date: 1997,
+	link: "http://www.example.org"
+};
 // "inlineData" defined in mocks/static.js
 
 // Helper, adapted from:
@@ -20,7 +29,7 @@ describe('Stack View Base', function() {
 		$stack = $('#stack');
 	});
 	
-	describe('#init()', function() {
+	describe('#init(options)', function() {
 		beforeEach(function() {
 			spyOnEvent($stack, 'stackview.init');
 		});
@@ -221,6 +230,52 @@ describe('Stack View Base', function() {
 					expect($('.stackview-placeholder')).not.toExist();
 				});
 			});
+		});
+	});
+
+	describe('#add(item)', function() {
+		beforeEach(function() {
+			$stack = $('#stack').stackView({ data: inlineData });
+			spyOnEvent($stack, 'stackview.itemadded')
+			$stack.stackView('add', item);
+		});
+		
+		it('render the item at the end (bottom) of the stack', function() {
+			var $last = $stack.find(opts.selectors.item).last();
+			expect($last.data('stackviewItem')).toEqual(item);
+		});
+		
+		it('should fire the item-added event', function() {
+			expect('stackview.itemadded').toHaveBeenTriggeredOn($stack);
+		});
+		
+		it('should return the jQuery object for chaining', function() {
+			expect($stack.stackView('add', item)).toEqual($stack);
+		});
+	});
+	
+	describe('#add(index, item)', function() {
+		beforeEach(function() {
+			$stack = $('#stack').stackView({ data: inlineData });
+		});
+		
+		it('should add the item at the specified index', function() {
+			$stack.stackView('add', 8, item);
+			var $element = $stack.find(opts.selectors.item).eq(8);
+			expect($element.data('stackviewItem')).toEqual(item);
+		});
+
+		it('should add to the end if index === item-list length', function() {
+			var length = $stack.find(opts.selectors.item).length;
+			$stack.stackView('add', length, item);
+			var $element = $stack.find(opts.selectors.item).eq(length);
+			expect($element.data('stackviewItem')).toEqual(item);
+		});
+		
+		it('should do nothing if index is negative or too large', function() {
+			$stack.stackView('add', 51, item);
+			$stack.stackView('add', -1, item);
+			expect($stack.find(opts.selectors.item).length).toEqual(50);
 		});
 	});
 });
