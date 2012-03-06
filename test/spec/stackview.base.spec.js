@@ -278,6 +278,68 @@ describe('Stack View Base', function() {
 		});
 	});
 	
+	describe('#remove(index)', function() {
+		beforeEach(function() {
+			$stack = $('#stack').stackView({ data: inlineData });
+		});
+		
+		it('should remove the item at the specified index', function() {
+			var el = $stack.find(opts.selectors.item).get(8);
+			$stack.stackView('remove', 8);
+			expect($stack.find(opts.selectors.item).get(8)).not.toEqual(el);
+		});
+		
+		it('should do nothing if index is out of bounds', function() {
+			var el = $stack.find(opts.selectors.item).get(8);
+			$stack.stackView('remove', -1);
+			$stack.stackView('remove', 999);
+			expect($stack.find(opts.selectors.item).get(8)).toEqual(el);
+		});
+		
+		it('should fire the item-removed event, passing the item object', function() {
+			var data = $stack.find(opts.selectors.item).eq(8).data('stackviewItem'),
+			    param;
+			
+			runs(function() {
+				$stack.bind('stackview.itemremoved', function(event, item) {
+					param = item;
+				});
+				$stack.stackView('remove', 8);
+			});
+			
+			waitsFor(function() {
+				return param != null;
+			}, 5000);
+			
+			runs(function() {
+				expect(data).toEqual(param);
+			});
+		});
+		
+		it('should return the removed jQuery object', function() {
+			var el = $stack.find(opts.selectors.item).get(8);
+			expect($stack.stackView('remove', 8).get(0)).toEqual(el);
+		});
+	});
+	
+	describe('#remove(item)', function() {
+		beforeEach(function() {
+			$stack = $('#stack').stackView({ data: inlineData });
+		});
+		
+		it('should remove the element corresponding to the item object', function() {
+			var $el = $stack.find(opts.selectors.item).eq(8);
+			$stack.stackView('remove', $el.data('stackviewItem'));
+			expect($stack.find(opts.selectors.item).get(8)).not.toEqual($el.get(0));
+		});
+		
+		it('should do nothing if the object is not in the stack', function() {
+			var $el = $stack.find(opts.selectors.item).eq(8);
+			$stack.stackView('remove', {});
+			expect($stack.find(opts.selectors.item).get(8)).toEqual($el.get(0));
+		});
+	});
+	
 	describe('#getData()', function() {
 		beforeEach(function() {
 			$stack = $('#stack').stackView({ data: inlineData });

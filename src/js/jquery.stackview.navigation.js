@@ -49,15 +49,19 @@
 		
 		$stack.find(stack.options.selectors.num_items).text(num_found);
 		
-	}).delegate('.stackview', 'stackview.itemadded', function(event) {
-		var $stack = $(event.target),
-		    stack = $stack.data('stackviewObject'),
-		    $items = $stack.find(stack.options.selectors.item);
+	}).delegate(
+		'.stackview',
+		'stackview.itemadded stackview.itemremoved',
+		function(event) {
+			var $stack = $(event.target),
+			    stack = $stack.data('stackviewObject'),
+			    $items = $stack.find(stack.options.selectors.item);
 		
-		if (stack.options.data) {
-			$stack.find(stack.options.selectors.num_items).text($items.length);
+			if (stack.options.data) {
+				$stack.find(stack.options.selectors.num_items).text($items.length);
+			}
 		}
-	});
+	);
 	
 	
 })(jQuery);

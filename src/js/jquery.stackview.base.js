@@ -13,6 +13,7 @@
 	events = {
 		init: 'stackview.init',
 		item_added: 'stackview.itemadded',
+		item_removed: 'stackview.itemremoved',
 		page_load: 'stackview.pageload'
 	};
 	
@@ -504,6 +505,42 @@
 			this.zIndex();
 			this.$element.trigger(events.item_added);
 		},
+		
+		/*
+		   #remove(number | object)
+		
+		   If a number is given, it removes the item at that index. If an
+		   object is given, this method finds the element that represents that
+		   item and removes it.
+		*/
+		remove: function(arg) {
+			var $items = this.$element.find(this.options.selectors.item),
+			    $removed, data, index;
+			
+			if (typeof(arg) === 'number') {
+				index = arg;
+			}
+			else {
+				$items.each(function(i, el) {
+					var $el = $(el);
+					
+					if ($el.data('stackviewItem') === arg) {
+						index = i;
+						return false;
+					}
+				});
+			}
+			
+			if (index == null || index < 0 || index >= $items.length) {
+				return;
+			}
+			
+			$removed = $items.eq(index).detach();
+			data = $removed.data('stackviewItem');
+			this.$element.trigger(events.item_removed, [data]);
+			return $removed;
+		},
+		
 		
 		/*
 		   #getData()
