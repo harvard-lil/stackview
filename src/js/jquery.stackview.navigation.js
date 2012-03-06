@@ -48,6 +48,15 @@
 		    num_found = data.num_found ? data.num_found : data.length;
 		
 		$stack.find(stack.options.selectors.num_items).text(num_found);
+		
+	}).delegate('.stackview', 'stackview.itemadded', function(event) {
+		var $stack = $(event.target),
+		    stack = $stack.data('stackviewObject'),
+		    $items = $stack.find(stack.options.selectors.item);
+		
+		if (stack.options.data) {
+			$stack.find(stack.options.selectors.num_items).text($items.length);
+		}
 	});
 	
 	
