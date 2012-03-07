@@ -12,6 +12,8 @@
 	
 	events = {
 		init: 'stackview.init',
+		item_added: 'stackview.itemadded',
+		item_removed: 'stackview.itemremoved',
 		page_load: 'stackview.pageload'
 	};
 	
@@ -122,6 +124,24 @@
 	};
 	
 	/*
+	   #normalize_item(StackView, object)
+	
+	   Takes an item and returns a normalized object suited for rendering to
+	   the item template.
+	*/
+	utils.normalize_item = function(stack, item) {
+		return {
+			heat: utils.get_heat(item.shelfrank),
+			book_height: utils.get_height(stack, item),
+			book_thickness: utils.get_thickness(stack, item),
+			link: utils.normalize_link(item),
+			title: item.title,
+			author: utils.get_author(item),
+			year: item.pub_date
+		};
+	};
+	
+	/*
 	   #render_items(StackView, array [, jQuery]) - Private
 	
 	   Takes a StackView instance, an array of result items, and an optional
@@ -135,17 +155,11 @@
 		             $placeholder :
 		             stack.$element.find(stack.options.selectors.item_list);
 		    
-		
 		$.each(docs, function(i, item) {
-			var $item = $(tmpl(StackView.templates.book, {
-				heat: utils.get_heat(item.shelfrank),
-				book_height: utils.get_height(stack, item),
-				book_thickness: utils.get_thickness(stack, item),
-				link: utils.normalize_link(item),
-				title: item.title,
-				author: utils.get_author(item),
-				year: item.pub_date
-			}));
+			var $item = $(tmpl(
+				StackView.templates.book,
+				utils.normalize_item(stack, item)
+			));
 			
 			$item.data('stackviewItem', item);
 			$pivot[action]($item);
@@ -248,22 +262,6 @@
 					callback(data);
 				}
 			});
-		}
-	};
-	
-	/*
-	   #reverse_flow(StackView) - Private
-	
-	   Takes all items in a StackView instance and gives them a descending
-	   z-index.This makes them overlap in the reverse order of normal page
-	   flow. Items that appear first in source (higher on the stack) overlap
-	   those that appear later.
-	*/
-	utils.reverse_flow = function(stack) {
-		var $items = stack.$element.find(stack.options.selectors.item);
-		
-		for (var i = $items.length - 1, z = 0; i >= 0; i--, z++) {
-			$items.eq(i).css('z-index', z);
 		}
 	};
 
@@ -376,7 +374,7 @@
 		
 		   Sets up the initial states of a stack.  Including:
 		     - Creating the HTML skeleton.
-		     - Binding reverse_flow to the pageload event.
+		     - Binding zIndex ordering to the pageload event.
 		     - Loading the first page.
 		     - Firing the init event.
 		*/
@@ -389,7 +387,7 @@
 				}))
 				.addClass('stackview')
 				.bind(events.page_load, function() {
-					utils.reverse_flow(that);
+					that.zIndex();
 				});
 			
 			this.$element.data('stackviewObject', this);
@@ -465,6 +463,121 @@
 				}
 				that.$element.trigger(events.page_load, [data]);
 			});
+		},
+		
+		/*
+		   #add([number,] object)
+		
+		   Adds the specified item object to the stack, at the given index if
+		   provided or at the end (bottom) of the stack if index is not given.
+		*/
+		add: function() {
+			var $items = this.$element.find(this.options.selectors.item),
+			    index, item, action, $pivot, $item;
+			
+			if (typeof(arguments[0]) === 'number') {
+				index = arguments[0];
+				item = arguments[1];
+			}
+			else {
+				index = $items.length;
+				item = arguments[0];
+			}
+
+			if (index > $items.length || index < 0) {
+				return;
+			}
+			else if (index === $items.length) {
+				$pivot = $items.last();
+				action = 'after';
+			}
+			else {
+				$pivot = $items.eq(index);
+				action = 'before';
+			}
+			
+			$item = $(tmpl(
+				StackView.templates.book,
+				utils.normalize_item(this, item)
+			));
+			$item.data('stackviewItem', item);
+			$pivot[action]($item);
+			this.zIndex();
+			this.$element.trigger(events.item_added);
+		},
+		
+		/*
+		   #remove(number | object)
+		
+		   If a number is given, it removes the item at that index. If an
+		   object is given, this method finds the element that represents that
+		   item and removes it.
+		*/
+		remove: function(arg) {
+			var $items = this.$element.find(this.options.selectors.item),
+			    $found, data, index;
+			
+			if (typeof(arg) === 'number') {
+				$found = $items.eq(arg);
+			}
+			else if (arg.nodeType || arg.jquery){
+				$found = $(arg);
+			}
+			else {
+				$items.each(function(i, el) {
+					var $el = $(el);
+					
+					if ($el.data('stackviewItem') === arg) {
+						$found = $el;
+						return false;
+					}
+				});
+			}
+			
+			if ($found == null || !$found.length) {
+				return;
+			}
+			
+			$found.detach();
+			data = $found.data('stackviewItem');
+			this.$element.trigger(events.item_removed, [data]);
+			return $found;
+		},
+		
+		
+		/*
+		   #getData()
+		
+		   Returns an array of all the item objects currently in the stack.
+		*/
+		getData: function() {
+			var data = [];
+			
+			this.$element.find(this.options.selectors.item).each(function() {
+				data.push($(this).data('stackviewItem'));
+			});
+			
+			return data;
+		},
+		
+		/*
+		   #zIndex(boolean)
+		
+		   Reverses the natural flow order of the stack items by giving those
+		   earlier in the source (higher on the stack) a higher z-index.  If
+		   passed true, it will instead assign z-indexes in normal flow order.
+		*/
+		zIndex: function(reverse) {
+			var $items = this.$element.find(this.options.selectors.item),
+			    length = $items.length,
+			    i = 0,
+			    z = reverse ? 0 : $items.length - 1;
+			
+			while (i < length) {
+				$items.eq(i).css('z-index', z);
+				z = z + (reverse ? 1 : -1);
+				i++;
+			}
 		}
 	});
 	
@@ -488,7 +601,7 @@
 				new StackView(el, method);
 			}
 			else if (obj[method]) {
-				var methodResponse = obj[method](args);
+				var methodResponse = obj[method].apply(obj, args);
 				
 				if (response === undefined && methodResponse !== undefined) {
 					response = methodResponse;

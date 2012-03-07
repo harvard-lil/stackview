@@ -24,6 +24,7 @@
 		    $items = $stack.find(stack.options.selectors.item_list),
 		    delta = $stack.height() * stack.options.navigationPercent / 100;
 		
+		stack.num_found_delta = 0;
 		$stack.prepend(tmpl(StackView.templates.navigation, {
 			empty: stack.options.search_type === 'loc_sort_order'
 		}));
@@ -45,10 +46,25 @@
 	}).delegate('.stackview', 'stackview.pageload', function(event, data) {
 		var $stack = $(event.target),
 		    stack = $stack.data('stackviewObject'),
-		    num_found = data.num_found ? data.num_found : data.length;
+		    num_found = data.num_found ? parseInt(data.num_found, 10) : data.length,
+		    num;
+
+		stack.num_found = num_found;
+		num = num_found + stack.num_found_delta;
+		$stack.find(stack.options.selectors.num_items).text(num);
 		
-		$stack.find(stack.options.selectors.num_items).text(num_found);
-	});
-	
-	
+	}).delegate(
+		'.stackview',
+		'stackview.itemadded stackview.itemremoved',
+		function(event) {
+			var $stack = $(event.target),
+			    stack = $stack.data('stackviewObject'),
+			    $items = $stack.find(stack.options.selectors.item),
+			    num;
+
+			stack.num_found_delta += (event.namespace === 'itemadded' ? 1 : -1);
+			num = stack.num_found + stack.num_found_delta;
+			$stack.find(stack.options.selectors.num_items).text(num);
+		}
+	);
 })(jQuery);
