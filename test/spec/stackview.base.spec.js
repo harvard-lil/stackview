@@ -339,6 +339,30 @@ describe('Stack View Base', function() {
 			expect($stack.find(opts.selectors.item).get(8)).toEqual($el.get(0));
 		});
 	});
+
+	describe('#remove(element)', function() {
+		beforeEach(function() {
+			$stack = $('#stack').stackView({ data: inlineData });
+		});
+
+		it('should remove the item corresponding to the element', function() {
+			var $el = $stack.find(opts.selectors.item).eq(8);
+			$stack.stackView('remove', $el.get(0));
+			expect($stack.find(opts.selectors.item).get(8)).not.toEqual($el.get(0));
+		});
+	});
+
+	describe('#remove(jQuery)', function() {
+		beforeEach(function() {
+			$stack = $('#stack').stackView({ data: inlineData });
+		});
+
+		it('should remove the item corresponding to the jQuery object', function() {
+			var $el = $stack.find(opts.selectors.item).eq(8);
+			$stack.stackView('remove', $el);
+			expect($stack.find(opts.selectors.item).get(8)).not.toEqual($el.get(0));
+		});
+	});
 	
 	describe('#getData()', function() {
 		beforeEach(function() {

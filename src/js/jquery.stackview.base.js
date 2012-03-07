@@ -515,30 +515,33 @@
 		*/
 		remove: function(arg) {
 			var $items = this.$element.find(this.options.selectors.item),
-			    $removed, data, index;
+			    $found, data, index;
 			
 			if (typeof(arg) === 'number') {
-				index = arg;
+				$found = $items.eq(arg);
+			}
+			else if (arg.nodeType || arg.jquery){
+				$found = $(arg);
 			}
 			else {
 				$items.each(function(i, el) {
 					var $el = $(el);
 					
 					if ($el.data('stackviewItem') === arg) {
-						index = i;
+						$found = $el;
 						return false;
 					}
 				});
 			}
 			
-			if (index == null || index < 0 || index >= $items.length) {
+			if ($found == null || !$found.length) {
 				return;
 			}
 			
-			$removed = $items.eq(index).detach();
-			data = $removed.data('stackviewItem');
+			$found.detach();
+			data = $found.data('stackviewItem');
 			this.$element.trigger(events.item_removed, [data]);
-			return $removed;
+			return $found;
 		},
 		
 		
