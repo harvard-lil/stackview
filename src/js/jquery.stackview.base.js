@@ -8,7 +8,8 @@
 	var events,
 	    plugin = 'stackView',
 	    StackView,
-	    utils = {};
+	    utils = {},
+	    types = {};
 	
 	events = {
 		init: 'stackview.init',
@@ -339,28 +340,61 @@
 	*/
 	$.extend(StackView, {
 		defaults: {
-			url: 'basic.json',
+			cache_ttl: 60,
 			data: '',
-			jsonp: false,
-			items_per_page: 10,
-			page_multiple: 0.20,
 			height_multiple: 12.5,
-			search_type: 'keyword',
+			id: null,
+			items_per_page: 10,
+			jsonp: false,
+			max_height_percentage: 100,
+			max_item_height: 39,
+			max_pages: 540,
+			min_height_percentage: 59,
+			min_item_height: 20,
+			min_pages: 200,
+			page_multiple: 0.20,
 			query: '',
 			ribbon: 'Stack View',
-			id: null,
-			min_pages: 200,
-			max_pages: 540,
-			min_item_height: 20,
-			max_item_height: 39,
-			min_height_percentage: 59,
-			max_height_percentage: 100,
-			cache_ttl: 60,
+			search_type: 'keyword',
 			selectors: {
 				item: '.stack-item',
 				item_list: '.stack-items',
 				ribbon: '.ribbon'
-			}
+			},
+			url: 'basic.json'
+		},
+
+		/*
+		   StackView.registerType(object)
+
+		   Registers an item type to be used by the stack. A Type object
+		   has the following properties:
+
+		   name: string
+		     A unique, identifying name of the item type.
+
+		   match: function(obj) -> obj
+		     A function that takes a stack item and returns true if the
+		     item matches this type. Example:
+
+		       match: function(item) { return item.type === 'book' }
+
+		   adapter: function(obj) -> obj
+		     This function allows the user to make transformations to the
+		     item data before rendering it to the template.  It takes a raw
+		     stack item that matches the match function.  It should return
+		     an object to render against "template."  If no changes to the raw
+		     data need to be made, the simplest value for this can be:
+
+		       adapter: function(item) { return item; }
+
+		   template: string
+		     A microtemplating template to render for this type in the stack.
+		     Receives as its data the return value from "adapter."
+
+		*/
+		registerType: function(obj) {
+
 		}
 	});
 	
