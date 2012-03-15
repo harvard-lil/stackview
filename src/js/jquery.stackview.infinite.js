@@ -17,26 +17,28 @@
 		var $stack = $(event.target),
 		    stack = $stack.data('stackviewObject'),
 		    opts = stack.options,
-		    $items, opts, lastItemTop, triggerPoint, scrollCheck;
+		    $itemList, $items, opts, lastItemTop, triggerPoint, scrollCheck;
 
-		$items = $stack.find(opts.selectors.item_list);
-		lastItemTop = $items.find(opts.selectors.item).last().position().top;
-		lastItemTop += $items.scrollTop();
+		$itemList = $stack.find(opts.selectors.item_list);
+		$items = $stack.find(opts.selectors.item);
+
+		lastItemTop = $items.length ? $items.last().position().top : 0;
+		lastItemTop += $itemList.scrollTop();
 		triggerPoint = lastItemTop - $stack.height() - opts.infiniteScrollDistance;
 		
 		scrollCheck = function() {
 			if (opts.search_type === 'loc_sort_order' &&
-			    $items.scrollTop() <= opts.infiniteScrollDistance) {
-				$items.unbind('scroll.stackview');
+			    $itemList.scrollTop() <= opts.infiniteScrollDistance) {
+				$itemList.unbind('scroll.stackview');
 				$stack.stackView('prev_page');
 			}
-			else if ($items.scrollTop() >= triggerPoint) {
-				$items.unbind('scroll.stackview');
+			else if ($itemList.scrollTop() >= triggerPoint) {
+				$itemList.unbind('scroll.stackview');
 				$stack.stackView('next_page');
 			}
 		};
 		
-		$items.bind('scroll.stackview', scrollCheck);
+		$itemList.bind('scroll.stackview', scrollCheck);
 		scrollCheck();
 	};
 	

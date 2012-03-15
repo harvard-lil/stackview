@@ -65,25 +65,6 @@ describe('Stack View Base', function() {
 				}, 'pageload event to fire', 5000);
 			});
 			
-			it('should give heights to the items', function() {
-				var height = $stack.find(opts.selectors.item).height(),
-				    min = opts.min_pages * opts.page_multiple - 1,
-				    max = opts.max_pages * opts.page_multiple + 1;
-				
-				expect(height).toBeGreaterThan(min);
-				expect(height).toBeLessThan(max);
-			});
-			
-			it('should give widths to the items', function() {
-				var listWidth = $stack.find(opts.selectors.item_list).width() - scrollbarWidth(),
-				    width = $stack.find(opts.selectors.item).width(),
-				    min = Math.floor(listWidth * opts.min_height_percentage / 100) - 1,
-				    max = Math.floor(listWidth * opts.max_height_percentage / 100) + 1;
-				
-				expect(width).toBeGreaterThan(min);
-				expect(width).toBeLessThan(max);
-			});
-			
 			it('should add a stackview class to the element for style scoping', function() {
 				expect($stack).toHaveClass('stackview');
 			});

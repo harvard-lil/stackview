@@ -3,7 +3,8 @@ JS_SOURCES = src/js/microtemplating.js\
              src/js/jquery.stackview.infinite.js\
              src/js/jquery.stackview.navigation.js\
              src/js/jquery.stackview.stackcache.js\
-             src/js/jquery.stackview.templates.js
+             src/js/jquery.stackview.templates.js\
+             src/js/types/book.js
 
 SCSS_SOURCE = src/scss/jquery.stackview.scss
 JS_OUTPUT = lib/jquery.stackview.min.js

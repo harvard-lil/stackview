@@ -7,7 +7,7 @@ var fakeType = {
 		return item.type === 'fake'
 	},
 
-	adapter: function(item) {
+	adapter: function(item, options) {
 		item.value = item.value.toUpperCase();
 		return item;
 	},
@@ -27,6 +27,8 @@ var fakeItem = {
 StackView.registerType(fakeType);
 
 describe('Stack View Item Types', function() {
+	var $stack;
+
 	beforeEach(function() {
 		loadFixtures('default.html');
 	});
@@ -55,6 +57,33 @@ describe('Stack View Item Types', function() {
 				data: [fakeItem]
 			});
 			expect($('.fake-item')).toHaveText('I AM A FAKE ITEM.');
+		});
+	});
+
+	describe('Book specifics', function() {
+		beforeEach(function() {
+			$stack = $('#stack').stackView({
+				data: inlineData
+			});
+		});
+
+		it('should give heights to the books', function() {
+			var height = $stack.find(opts.selectors.item).height(),
+			    min = opts.book.min_pages * opts.book.page_multiple - 1,
+			    max = opts.book.max_pages * opts.book.page_multiple + 1;
+			
+			expect(height).toBeGreaterThan(min);
+			expect(height).toBeLessThan(max);
+		});
+		
+		it('should give widths to the books', function() {
+			var listWidth = $stack.find(opts.selectors.item_list).width() - scrollbarWidth(),
+			    width = $stack.find(opts.selectors.item).width(),
+			    min = Math.floor(listWidth * opts.book.min_height_percentage / 100) - 1,
+			    max = Math.floor(listWidth * opts.book.max_height_percentage / 100) + 1;
+			
+			expect(width).toBeGreaterThan(min);
+			expect(width).toBeLessThan(max);
 		});
 	});
 });
