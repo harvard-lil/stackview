@@ -8,7 +8,6 @@
 	var events,
 	    plugin = 'stackView',
 	    StackView,
-	    utils = {},
 	    types = {};
 	
 	events = {
@@ -21,7 +20,7 @@
 	/*
 	   #get_type
 	*/
-	utils.get_type = function(item) {
+	var get_type = function(item) {
 		var type;
 
 		$.each(types, function(key, val) {
@@ -42,14 +41,14 @@
 	   appends it to the stack's item list. If [placeholder] is passed in the
 	   items take the its spot in the DOM.
 	*/
-	utils.render_items = function(stack, docs, $placeholder) {
+	var render_items = function(stack, docs, $placeholder) {
 		var action = $placeholder ? 'before' : 'append',
 		    $pivot = $placeholder ?
 		             $placeholder :
 		             stack.$element.find(stack.options.selectors.item_list);
 		
 		$.each(docs, function(i, item) {
-			var type = utils.get_type(item),
+			var type = get_type(item),
 			    $item;
 
 			if (type == null) {
@@ -60,18 +59,6 @@
 			$item.data('stackviewItem', item);
 			$pivot[action]($item);
 		});
-
-		/*
-		$.each(docs, function(i, item) {
-			var $item = $(tmpl(
-				StackView.templates.book,
-				utils.normalize_item(stack, item)
-			));
-			
-			$item.data('stackviewItem', item);
-			$pivot[action]($item);
-		});
-		*/
 
 		if ($placeholder) {
 			$placeholder.remove();
@@ -86,7 +73,7 @@
 	   If the Stack uses loc_sort_order, this adjusts the query for that case.
 	   Returns a plain object with key:value params to be used by $.param.
 	*/
-	utils.calculate_params = function(stack) {
+	var calculate_params = function(stack) {
 		var opts = stack.options,
 		    params;
 		
@@ -146,8 +133,8 @@
 	   instance.  When the page is finished fetching, the callback is
 	   invoked, passing in the array of items.
 	*/
-	utils.fetch_page = function(stack, callback) {
-		var params = utils.calculate_params(stack),
+	var fetch_page = function(stack, callback) {
+		var params = calculate_params(stack),
 				querystring = $.param(params),
 				cachedResult;
 
@@ -196,7 +183,7 @@
 	};
 	
 	/* Static properties and functions */
-	$.extend(StackView, {
+	$.extend(true, StackView, {
 
 			/*
 		   The default options for a StackView instance.
@@ -264,7 +251,19 @@
 		},
 
 		/*
-		   StackView.registerType(object)
+	     StackView.get_heat(number)
+	
+	      Takes a value between 0 and 100 and returns a number to be used with
+	      heat classes to indicate popularity.
+		*/
+		utils: {
+			get_heat: function(scaled_value) {
+				return scaled_value === 100 ? 10 : Math.floor(scaled_value / 10) + 1;
+			}
+		},
+
+		/*
+		   StackView.register_type(object)
 
 		   Registers an item type to be used by the stack. A Type object
 		   has the following properties:
@@ -293,8 +292,17 @@
 		     Receives as its data the return value from "adapter."
 
 		*/
-		registerType: function(obj) {
+		register_type: function(obj) {
 			types[obj.name] = obj;
+		},
+
+		/*
+		   StackView.get_types()
+
+		   Returns the hash of item types.
+		*/
+		get_types: function() {
+			return types;
 		}
 	});
 	
@@ -346,7 +354,7 @@
 			
 			this.direction = 'down';
 			if (opts.data) {
-				utils.render_items(this, opts.data.docs ? opts.data.docs : opts.data);
+				render_items(this, opts.data.docs ? opts.data.docs : opts.data);
 				this.finished.down = true;
 				this.$element.trigger(events.page_load, [opts.data]);
 			}
@@ -354,8 +362,8 @@
 				this.$element
 					.find(opts.selectors.item_list)
 					.append($placeholder);
-				utils.fetch_page(this, function(data) {
-					utils.render_items(that, data.docs, $placeholder);
+				fetch_page(this, function(data) {
+					render_items(that, data.docs, $placeholder);
 					if (parseInt(data.start, 10) === -1) {
 						that.finished.down = true;
 					}
@@ -383,10 +391,10 @@
 			
 			this.direction = 'up';
 			this.$element.find(opts.selectors.item_list).prepend($placeholder);
-			utils.fetch_page(this, function(data) {
+			fetch_page(this, function(data) {
 				var oldTop = $oldMarker.position().top;
 				
-				utils.render_items(that, data.docs, $placeholder);
+				render_items(that, data.docs, $placeholder);
 				if (that.page > 1) {
 					that.$element.find(opts.selectors.item_list).animate({
 						'scrollTop': '+=' + ($oldMarker.position().top - oldTop)
@@ -430,7 +438,7 @@
 				action = 'before';
 			}
 			
-			type = utils.get_type(item);
+			type = get_type(item);
 			if (type == null) {
 				return;
 			}

@@ -4,7 +4,7 @@ var fakeType = {
 	name: 'fake',
 
 	match: function(item) {
-		return item.type === 'fake'
+		return item.format === 'fake'
 	},
 
 	adapter: function(item, options) {
@@ -16,7 +16,7 @@ var fakeType = {
 };
 
 var fakeItem = {
-	type: 'fake',
+	format: 'fake',
 	value: 'I am a fake item.'
 };
 
@@ -24,7 +24,7 @@ var fakeItem = {
    Register the type once, rather than in a beforeEach,
    since it's a static function.
 */
-StackView.registerType(fakeType);
+StackView.register_type(fakeType);
 
 describe('Stack View Item Types', function() {
 	var $stack;
@@ -33,7 +33,7 @@ describe('Stack View Item Types', function() {
 		loadFixtures('default.html');
 	});
 
-	describe('#registerType(object)', function() {
+	describe('#register_type(object)', function() {
 		it('should render the new item type', function() {
 			$('#stack').stackView({
 				data: [fakeItem]
@@ -44,7 +44,7 @@ describe('Stack View Item Types', function() {
 		it('should not render objects that do not match a type', function() {
 			$('#stack').stackView({
 				data: [{
-					type: 'not-a-fake-item',
+					format: 'not-a-fake-item',
 					value: 'I should never appear'
 				}]
 			});
@@ -60,15 +60,19 @@ describe('Stack View Item Types', function() {
 		});
 	});
 
-	describe('Book specifics', function() {
+	describe('Book type', function() {
 		beforeEach(function() {
 			$stack = $('#stack').stackView({
-				data: inlineData
+				data: [realItems.book]
 			});
 		});
 
+		it('should contain an item of the book type', function() {
+			expect($stack.find(opts.selectors.book).length).toEqual(1);
+		});
+
 		it('should give heights to the books', function() {
-			var height = $stack.find(opts.selectors.item).height(),
+			var height = $stack.find(opts.selectors.book).height(),
 			    min = opts.book.min_pages * opts.book.page_multiple - 1,
 			    max = opts.book.max_pages * opts.book.page_multiple + 1;
 			
@@ -78,12 +82,24 @@ describe('Stack View Item Types', function() {
 		
 		it('should give widths to the books', function() {
 			var listWidth = $stack.find(opts.selectors.item_list).width() - scrollbarWidth(),
-			    width = $stack.find(opts.selectors.item).width(),
+			    width = $stack.find(opts.selectors.book).width(),
 			    min = Math.floor(listWidth * opts.book.min_height_percentage / 100) - 1,
 			    max = Math.floor(listWidth * opts.book.max_height_percentage / 100) + 1;
 			
 			expect(width).toBeGreaterThan(min);
 			expect(width).toBeLessThan(max);
+		});
+	});
+
+	describe('Videofilm type', function() {
+		beforeEach(function() {
+			$stack = $('#stack').stackView({
+				data: [realItems.videofilm]
+			});
+		})
+
+		it('should contain an item of the videofilm type', function() {
+			expect($stack.find(opts.selectors.videofilm).length).toEqual(1);
 		});
 	});
 });

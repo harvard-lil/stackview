@@ -1,5 +1,7 @@
 (function($, window, undefined) {
 	/*
+	   Extend StackView defaults to include options for this item type.
+
 	   max_height_percentage
 	      Books with the maximum height will render as this percentage
 	      width in the stack.
@@ -27,6 +29,9 @@
 		 page_multiple
 		    A number that when multiplied by the number of pages in a book
 		    gives us the total pixel height to be rendered.
+
+		 selectors.book
+		    Item selector specific to the book type.
 	*/
 	$.extend(true, window.StackView.defaults, {
 		book: {
@@ -37,6 +42,10 @@
 			min_height: 20,
 			min_pages: 200,
 			page_multiple: 0.20
+		},
+
+		selectors: {
+			book: '.stack-book'
 		}
 	});
 
@@ -58,16 +67,6 @@
 		    scale = (value - start_min) / (start_range);
 		
 		return end_min + scale * end_range;
-	};
-
-	/*
-	   #get_heat(number) - Private
-	
-	   Takes a value between 0 and 100 and returns a number to be used with
-	   heat classes to indicate popularity.
-	*/
-	var get_heat = function(scaled_value) {
-		return scaled_value === 100 ? 10 : Math.floor(scaled_value / 10) + 1;
 	};
 
 	/*
@@ -150,16 +149,16 @@
 	/*
 	   Book type definition.
 	*/
-	window.StackView.registerType({
+	window.StackView.register_type({
 		name: 'book',
 
 		match: function(item) {
-			return item.pub_date && item.title && item.creator;
+			return (item.format && item.format === 'book') || !item.format;
 		},
 
 		adapter: function(item, options) {
 			return {
-				heat: get_heat(item.shelfrank),
+				heat: window.StackView.utils.get_heat(item.shelfrank),
 				book_height: get_height(options, item),
 				book_thickness: get_thickness(options, item),
 				link: normalize_link(item),
@@ -171,7 +170,7 @@
 
 		template: '\
 			<li class="stack-item stack-book heat<%= heat %>" style="width:<%= book_height %>; height:<%= book_thickness %>;">\
-				<a href="<%= link %>" target="_newtab">\
+				<a href="<%= link %>" target="_blank">\
 					<span class="spine-text">\
 						<span class="spine-title"><%= title %></span>\
 						<span class="spine-author"><%= author %></span>\

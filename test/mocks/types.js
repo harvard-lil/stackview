@@ -1,5 +1,17 @@
 var realItems = {
-	video: {
+	book: {
+		"title": "Creativity: Flow and the Psychology of Discovery and Invention",
+		"creator": [
+			"Mihaly Csikszentmihalyi"
+		],
+		"measurement_page_numeric": "464",
+		"measurement_height_numeric": 20,
+		"shelfrank": 70,
+		"pub_date": "1997",
+		"link": "http://www.amazon.com/Creativity-Flow-Psychology-Discovery-Invention/dp/0060928204%3FSubscriptionId%3DAKIAJG4QJUEVWRHMZ5ZA%26tag%3Dshel0c-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0060928204"
+  },
+  
+	videofilm: {
 		"pub_location": "Burbank, Calif.",
 		"publisher": "Warner Home Video",
 		"creator": [
