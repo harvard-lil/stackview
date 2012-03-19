@@ -114,4 +114,16 @@ describe('Stack View Item Types', function() {
 			expect($stack.find(opts.selectors.serial).length).toEqual(1);
 		});
 	});
+
+	describe('Webpage type', function() {
+		beforeEach(function() {
+			$stack = $('#stack').stackView({
+				data: [realItems.webpage]
+			});
+		});
+
+		it('should contain an item of the webpage type', function() {
+			expect($stack.find(opts.selectors.webpage).length).toEqual(1);
+		});
+	});	
 });

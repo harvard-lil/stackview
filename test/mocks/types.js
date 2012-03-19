@@ -96,5 +96,35 @@ var realItems = {
 		"language": "English",
 		"title_link_friendly": "whos-afraid-of-virginia-woolf",
 		"measurement_page_numeric": 1
-	}
+	},
+
+	webpage: {
+  	"rsrc_value": [
+  		"http:\/\/en.wikipedia.org\/wiki\/A_Fire_Upon_the_Deep"
+  	],
+  	"format": "webpage",
+  	"shelfrank": 35,
+  	"publisher": "Wikipedia",
+  	"ut_score": 0,
+  	"id": "20378806-c964-11e0-8aa7-001b213b96d8",
+  	"rsrc_key": [
+  		"Wikipedia"
+  	],
+  	"title": "A Fire Upon the Deep",
+  	"desc_subject_uncontrolled": [
+  		"1992 novels",
+  		"Hugo Award Winners for Best Novel",
+  		"Transhumanist books",
+  		"Usenet",
+  		"Novels by Vernor Vinge",
+  		"1990s science fiction novels"
+  	],
+  	"source": "wikipedia_org",
+  	"dataset_tag": "wikipedia_org_20110428",
+  	"title_link_friendly": "a-fire-upon-the-deep",
+  	"language": "English",
+  	"id_isbn": [
+  		"0312851820"
+  	]
+  }
 }
