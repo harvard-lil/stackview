@@ -65,8 +65,20 @@
 	}
 }
 
+@mixin sound-decoration($bg, $border) {
+	.sound-edge {
+		background-color:$bg;
+	}
+
+	.sound-cover {
+		background:$bg;
+		border-color:$border;
+	}
+}
+
 @mixin decorations($bg, $border) {
 	@include book-decoration($bg, $border);
 	@include videofilm-decoration($bg, $border);
 	@include serial-decoration($bg, $border);
+	@include sound-decoration($bg, $border);
 }

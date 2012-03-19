@@ -57,6 +57,38 @@ var realItems = {
   	"language": "English",
   	"title_link_friendly": "wired"
   },
+
+  soundrecording: {
+  	"pub_location": "Hollywood, Calif.",
+  	"measurement_height_numeric": 4,
+  	"pub_date": "1987",
+  	"aggregation_checkout": 67,
+  	"shelfrank": 57,
+  	"holding_libs": [
+  		"Lamont",
+  		"Loeb Music"
+  	],
+  	"format": "Sound Recording",
+  	"measurement_page": "2",
+  	"ut_score": 0,
+  	"creator": [
+  		"Rollins, Sonny."
+  	],
+  	"publisher": "Blue Note",
+  	"id": "fbc3ae2a-8e06-11e0-a7fd-001b213b96d8",
+  	"title": "A night at the Village Vanguard",
+  	"desc_subject_lcsh": [
+  		"Saxophone music (Jazz)",
+  		"Jazz 1951-1960."
+  	],
+  	"source": "harvard_edu",
+  	"id_inst": "002338802",
+  	"id_oclc": "43428569",
+  	"dataset_tag": "harvard_edu_20110601",
+  	"title_link_friendly": "a-night-at-the-village-vanguard",
+  	"measurement_page_numeric": 2,
+  	"measurement_height": "4 3\/4 in."
+  },
   
 	videofilm: {
 		"pub_location": "Burbank, Calif.",

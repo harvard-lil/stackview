@@ -125,5 +125,17 @@ describe('Stack View Item Types', function() {
 		it('should contain an item of the webpage type', function() {
 			expect($stack.find(opts.selectors.webpage).length).toEqual(1);
 		});
+	});
+
+	describe('Soundrecording type', function() {
+		beforeEach(function() {
+			$stack = $('#stack').stackView({
+				data: [realItems.soundrecording]
+			});
+		});
+
+		it('should contain an item of the soundrecording type', function() {
+			expect($stack.find(opts.selectors.soundrecording).length).toEqual(1);
+		});
 	});	
 });

@@ -176,6 +176,13 @@
   background: #ccebff;
   border-color: #aaddff;
 }
+.heat1 .sound-edge {
+  background-color: #ccebff;
+}
+.heat1 .sound-cover {
+  background: #ccebff;
+  border-color: #aaddff;
+}
 
 .heat2 a {
   background-color: #aaddff;
@@ -200,6 +207,13 @@
   border-color: #88cfff;
 }
 .heat2 .serial-cover {
+  background: #aaddff;
+  border-color: #88cfff;
+}
+.heat2 .sound-edge {
+  background-color: #aaddff;
+}
+.heat2 .sound-cover {
   background: #aaddff;
   border-color: #88cfff;
 }
@@ -230,6 +244,13 @@
   background: #77c9ff;
   border-color: #59b6ef;
 }
+.heat3 .sound-edge {
+  background-color: #77c9ff;
+}
+.heat3 .sound-cover {
+  background: #77c9ff;
+  border-color: #59b6ef;
+}
 
 .heat4 a {
   background-color: #44b4ff;
@@ -252,6 +273,13 @@
   border-color: #11a0ff;
 }
 .heat4 .serial-cover {
+  background: #44b4ff;
+  border-color: #11a0ff;
+}
+.heat4 .sound-edge {
+  background-color: #44b4ff;
+}
+.heat4 .sound-cover {
   background: #44b4ff;
   border-color: #11a0ff;
 }
@@ -280,6 +308,13 @@
   background: #22a7ff;
   border-color: #008fee;
 }
+.heat5 .sound-edge {
+  background-color: #22a7ff;
+}
+.heat5 .sound-cover {
+  background: #22a7ff;
+  border-color: #008fee;
+}
 
 .heat6 a {
   background-color: #0099ff;
@@ -302,6 +337,13 @@
   border-color: #007acc;
 }
 .heat6 .serial-cover {
+  background: #0099ff;
+  border-color: #007acc;
+}
+.heat6 .sound-edge {
+  background-color: #0099ff;
+}
+.heat6 .sound-cover {
   background: #0099ff;
   border-color: #007acc;
 }
@@ -330,6 +372,13 @@
   background: #0085dd;
   border-color: #0066aa;
 }
+.heat7 .sound-edge {
+  background-color: #0085dd;
+}
+.heat7 .sound-cover {
+  background: #0085dd;
+  border-color: #0066aa;
+}
 
 .heat8 a {
   background-color: #0070bb;
@@ -352,6 +401,13 @@
   border-color: #004777;
 }
 .heat8 .serial-cover {
+  background: #0070bb;
+  border-color: #004777;
+}
+.heat8 .sound-edge {
+  background-color: #0070bb;
+}
+.heat8 .sound-cover {
   background: #0070bb;
   border-color: #004777;
 }
@@ -380,6 +436,13 @@
   background: #005c99;
   border-color: #002944;
 }
+.heat9 .sound-edge {
+  background-color: #005c99;
+}
+.heat9 .sound-cover {
+  background: #005c99;
+  border-color: #002944;
+}
 
 .heat10 a {
   background-color: #004777;
@@ -402,6 +465,13 @@
   border-color: #001522;
 }
 .heat10 .serial-cover {
+  background: #004777;
+  border-color: #001522;
+}
+.heat10 .sound-edge {
+  background-color: #004777;
+}
+.heat10 .sound-cover {
   background: #004777;
   border-color: #001522;
 }
@@ -585,6 +655,98 @@
   height: 3px;
   border-width: 1px;
   border-style: solid;
+  -o-transform-origin: 0 100%;
+  -ms-transform-origin: 0 100%;
+  -moz-transform-origin: 0 100%;
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -webkit-transform: skew(-70deg, 0);
+  -moz-transform: skew(-70deg, 0);
+  -o-transform: skew(-70deg, 0);
+  -ms-transform: skew(-70deg, 0);
+  transform: skew(-70deg, 0);
+}
+
+.stack-soundrecording {
+  height: 30px;
+  width: 280px;
+  margin: 0 0 1px 0;
+}
+.stack-soundrecording:before {
+  content: url("images/icon-note.png");
+  position: absolute;
+  left: 10px;
+  top: 6px;
+}
+.stack-soundrecording > a {
+  border-width: 1px;
+  border-style: solid;
+  border-left: 3px solid rgba(225, 225, 225, 0.6);
+  border-right: 3px solid rgba(225, 225, 225, 0.6);
+}
+.stack-soundrecording .spine-text {
+  left: 35px;
+}
+.stack-soundrecording .spine-title {
+  height: 30px;
+  line-height: 30px;
+  font-size: 12px;
+}
+.stack-soundrecording .spine-year {
+  right: 7px;
+}
+
+.sound-edge {
+  position: absolute;
+  top: 0;
+  bottom: -2px;
+  left: 100%;
+  width: 5px;
+  border: 2px solid rgba(225, 225, 225, 0.6);
+  border-radius: 0 2px 2px 0;
+  -o-transform-origin: 0 100%;
+  -ms-transform-origin: 0 100%;
+  -moz-transform-origin: 0 100%;
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+  -webkit-transform: skew(0, -20deg);
+  -moz-transform: skew(0, -20deg);
+  -o-transform: skew(0, -20deg);
+  -ms-transform: skew(0, -20deg);
+  transform: skew(0, -20deg);
+}
+.sound-edge:before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1px;
+  display: block;
+  content: "";
+  z-index: 5;
+  width: 1px;
+  background: rgba(250, 250, 250, 0.5);
+}
+.sound-edge:after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 3px;
+  display: block;
+  content: "";
+  z-index: 5;
+  width: 1px;
+  background: rgba(250, 250, 250, 0.5);
+}
+
+.sound-cover {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  right: -1px;
+  height: 1px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
   -o-transform-origin: 0 100%;
   -ms-transform-origin: 0 100%;
   -moz-transform-origin: 0 100%;
