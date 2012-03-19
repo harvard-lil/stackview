@@ -4,6 +4,8 @@
 	margin:0;
 
 	> a {
+		border-radius:3px 0 0 3px;
+
 		&, &:hover, &:focus {
 			background-image:url(images/serials.png);
 		}
