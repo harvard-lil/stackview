@@ -53,7 +53,20 @@
 	}
 }
 
+@mixin serial-decoration($bg, $border) {
+	.serial-edge {
+		background-color:$bg;
+		border-color:$border;
+	}
+
+	.serial-cover {
+		background:$bg;
+		border-color:$border;
+	}
+}
+
 @mixin decorations($bg, $border) {
 	@include book-decoration($bg, $border);
 	@include videofilm-decoration($bg, $border);
+	@include serial-decoration($bg, $border);
 }

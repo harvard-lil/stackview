@@ -102,4 +102,16 @@ describe('Stack View Item Types', function() {
 			expect($stack.find(opts.selectors.videofilm).length).toEqual(1);
 		});
 	});
+
+	describe('Serial type', function() {
+		beforeEach(function() {
+			$stack = $('#stack').stackView({
+				data: [realItems.serial]
+			});
+		});
+
+		it('should contain an item of the serial type', function() {
+			expect($stack.find(opts.selectors.serial).length).toEqual(1);
+		});
+	});
 });

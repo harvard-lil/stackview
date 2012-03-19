@@ -5,6 +5,7 @@ JS_SOURCES = src/js/microtemplating.js\
              src/js/jquery.stackview.stackcache.js\
              src/js/jquery.stackview.templates.js\
              src/js/types/book.js\
+             src/js/types/serial.js\
              src/js/types/videofilm.js
 
 SCSS_SOURCE = src/scss/jquery.stackview.scss

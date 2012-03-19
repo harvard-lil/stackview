@@ -2,8 +2,8 @@
 	/*
 	   Extend StackView defaults to include options for this item type.
 
-	   selectors.book
-	      Item selector specific to the book type.
+	   selectors.videofilm
+	      Item selector specific to the videofilm type.
 	*/
 	$.extend(true, window.StackView.defaults, {
 		selectors: {
