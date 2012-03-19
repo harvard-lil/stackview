@@ -7,7 +7,6 @@
 .stackview {
   font-family: "Helvetica Neue", sans-serif;
   position: relative;
-  width: 440px;
   height: 520px;
   padding: 0 0 0 65px;
   overflow: hidden;
@@ -21,8 +20,11 @@
   list-style: none;
   height: 100%;
   overflow: auto;
-  width: 440px;
+  width: 100%;
   padding-right: 40px;
+  position: relative;
+  z-index: 2;
+  -webkit-overflow-scrolling: touch;
 }
 .stack-items:before {
   background: url("images/bookEnd-prev.png");
@@ -31,8 +33,7 @@
   width: 212px;
   height: 114px;
   position: relative;
-  z-index: 99998;
-  /* Must be bigger than the # of elements in stack */
+  z-index: 9999;
 }
 .stack-items:after {
   content: "";
@@ -50,13 +51,14 @@
   border-radius: 3px;
   height: 40px;
   position: relative;
-  z-index: 2;
+  z-index: 9997;
 }
 
 .stack-item {
   position: relative;
   display: block;
   margin: 0 0 2px 0;
+  -webkit-transform: translate3d(0, 0, 0);
 }
 .stack-item a {
   display: block;
@@ -167,7 +169,7 @@
 
 .stack-cover {
   position: absolute;
-  z-index: 3;
+  z-index: 4;
   height: 2px;
   border-width: 1px;
   border-style: solid;
@@ -176,7 +178,6 @@
   left: 0;
   right: 5px;
   border-radius: 4px 0 0 50px;
-  overflow: visible;
   -o-transform-origin: 0 100%;
   -ms-transform-origin: 0 100%;
   -moz-transform-origin: 0 100%;
@@ -191,12 +192,11 @@
 
 .stackview .ribbon {
   position: absolute;
-  z-index: 99999;
-  /* Must be bigger than the # of elements in stack */
+  z-index: 3;
   left: 55px;
   right: 10px;
   top: 52px;
-  padding: 8px 10px 8px 22px;
+  padding: 8px 10px 8px 12px;
   min-height: 25px;
   font-size: 20px;
   line-height: 1.25;
@@ -226,7 +226,7 @@
    coldest = heat1
 *******************/
 .stackview .heat1 a {
-  backround-color: #ccebff;
+  background-color: #ccebff;
   background-image: url("images/superGloss.png");
   color: #222;
   text-shadow: 0 1px 0 #fff;
@@ -391,4 +391,7 @@
   margin: 10px 0;
   color: #09f;
   text-shadow: 0 1px 0 #ddd;
+}
+.stack-navigation.empty .num-found {
+  visibility: hidden;
 }
