@@ -71,6 +71,9 @@
   background-image: url("images/highGloss.png");
   text-decoration: none;
 }
+.stack-item > a:visited, .stack-item > a:hover, .stack-item > a:active {
+  color: #fff;
+}
 
 .spine-text {
   position: absolute;
@@ -157,6 +160,9 @@
   text-shadow: 0 1px 0 #fff;
   border-color: #aaddff;
 }
+.heat1 a:visited, .heat1 a:hover, .heat1 a:active {
+  color: #222;
+}
 .heat1 .stack-pages {
   border-color: #aaddff;
 }
@@ -191,6 +197,9 @@
   text-shadow: 0 1px 0 #ddf1ff;
   border-color: #88cfff;
 }
+.heat2 a:visited, .heat2 a:hover, .heat2 a:active {
+  color: #222;
+}
 .heat2 .stack-pages {
   border-color: #88cfff;
 }
@@ -224,6 +233,9 @@
   color: #111;
   text-shadow: 0 1px 0 #adf;
   border-color: #59b6ef;
+}
+.heat3 a:visited, .heat3 a:hover, .heat3 a:active {
+  color: #111;
 }
 .heat3 .stack-pages {
   border-color: #59b6ef;
@@ -863,6 +875,9 @@
   font-size: 11px;
   padding: 0 10px 0 55px;
   max-width: 100%;
+}
+.stack-webpage > a:visited, .stack-webpage > a:hover, .stack-webpage > a:active {
+  color: #555;
 }
 .stack-webpage > a:before {
   content: url("images/icon-home.png");

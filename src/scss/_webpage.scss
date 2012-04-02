@@ -13,6 +13,10 @@
 		padding:0 10px 0 55px;
 		max-width:100%;
 
+		&:visited, &:hover, &:active {
+			color:#555;
+		}
+
 		&:before {
 			content:url('images/icon-home.png');
 			position:absolute;

@@ -77,6 +77,10 @@
 			background-image:url('images/highGloss.png');
 			text-decoration:none;
 		}
+
+		&:visited, &:hover, &:active {
+			color:#fff;
+		}
 	}
 }
 

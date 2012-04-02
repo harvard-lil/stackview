@@ -15,6 +15,10 @@
 		color:#222;
 		text-shadow:0 1px 0 #fff;
 		border-color:$border;
+
+		&:visited, &:hover, &:active {
+			color:#222;
+		}
 	}
 	
 	@include decorations($bg, $border);
@@ -30,6 +34,10 @@
 		color:#222;
 		text-shadow:0 1px 0 #ddf1ff;
 		border-color:$border;
+
+		&:visited, &:hover, &:active {
+			color:#222;
+		}
 	}
 	
 	@include decorations($bg, $border);
@@ -45,6 +53,10 @@
 		color:#111;
 		text-shadow:0 1px 0 #adf;
 		border-color:$border;
+
+		&:visited, &:hover, &:active {
+			color:#111;
+		}
 	}
 	
 	@include decorations($bg, $border);
