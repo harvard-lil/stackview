@@ -680,7 +680,7 @@
 }
 
 .stack-soundrecording {
-  height: 30px;
+  height: 25px;
   width: 280px;
   margin: 0 0 1px 0;
 }
@@ -688,7 +688,7 @@
   content: url("images/icon-note.png");
   position: absolute;
   left: 10px;
-  top: 6px;
+  top: 4px;
 }
 .stack-soundrecording > a {
   border-width: 1px;
@@ -700,8 +700,8 @@
   left: 35px;
 }
 .stack-soundrecording .spine-title {
-  height: 30px;
-  line-height: 30px;
+  height: 25px;
+  line-height: 25px;
   font-size: 12px;
 }
 .stack-soundrecording .spine-year {
