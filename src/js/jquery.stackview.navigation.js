@@ -9,7 +9,8 @@
 	    StackView = window.StackView;
 	
 	$.extend(true, StackView.defaults, {
-		transitionDuration: 200,
+		transitionDuration: 500,
+		transitionEasing: 'easeOutQuad',
 		navigationPercent: 80,
 		selectors: {
 			downstream: '.downstream',
@@ -33,13 +34,13 @@
 			.delegate(stack.options.selectors.downstream, 'click', function() {
 				$items.animate({
 					scrollTop: '+=' +  delta
-				}, stack.options.transitionDuration);
+				}, stack.options.transitionDuration, stack.options.transitionEasing);
 				return false;
 			})
 			.delegate(stack.options.selectors.upstream, 'click', function() {
 				$items.animate({
 					scrollTop: '-=' +  delta
-				}, stack.options.transitionDuration);
+				}, stack.options.transitionDuration, stack.options.transitionEasing);
 				return false;
 			});
 			

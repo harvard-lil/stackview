@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-        <title>Stack View Preview</title>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>Stack View Preview</title>
         
 		<link rel="stylesheet" href="../lib/jquery.stackview.css">
-    </head>
-    <body>
-        <div class="static"></div>
+	</head>
+	<body>
+		<div class="static"></div>
 		<div class="dynamic"></div>
+		<div class="types"></div>
+		<div class="mini"></div>
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 		<script src="../lib/jquery.stackview.min.js"></script>
 		<script src="mocks/static.js"></script>
+		<script src="mocks/types.js"></script>
+
 		<script>
 			$(function() {
 				$('.static').stackView({
@@ -23,6 +27,19 @@
 				$('.dynamic').stackView({
 					url: 'mocks/json.php',
 					ribbon: 'Dynamic Data from json.php'
+				});
+
+				var typeItems = $.map(realItems, function(val, key) {
+					return val;
+				});
+				$('.types').stackView({
+					data: typeItems,
+					ribbon: 'Item Types'
+				});
+				
+				$('.mini').css('width', StackView.defaults.ministack.breakpoint).stackView({
+					data: inlineData,
+					ribbon: 'Ministack'
 				});
 			});
 		</script>
