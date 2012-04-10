@@ -10,6 +10,7 @@
 		<div class="static"></div>
 		<div class="dynamic"></div>
 		<div class="types"></div>
+		<div class="mini"></div>
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 		<script src="../lib/jquery.stackview.min.js"></script>
@@ -34,7 +35,12 @@
 				$('.types').stackView({
 					data: typeItems,
 					ribbon: 'Item Types'
-				})
+				});
+				
+				$('.mini').css('width', StackView.defaults.ministack.breakpoint).stackView({
+					data: inlineData,
+					ribbon: 'Ministack'
+				});
 			});
 		</script>
     </body>

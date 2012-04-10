@@ -908,7 +908,7 @@
 .stack-webpage > a {
   display: inline-block;
   position: relative;
-  border-radius: 6px 0 2px 0;
+  border-radius: 6px 0 1px 0;
   border-width: 1px;
   border-style: solid;
   color: #555;
@@ -974,7 +974,7 @@
   display: block;
   position: absolute;
   top: -3px;
-  bottom: 2px;
+  bottom: 1px;
   right: -8px;
   width: 6px;
   -webkit-transform: skew(0, -20deg);
@@ -984,4 +984,42 @@
   transform: skew(0, -20deg);
   border-width: 0 1px 1px 0;
   border-style: solid;
+}
+
+.stackview-mini .spine-text {
+  left: 5px;
+  margin-top: -5px;
+}
+.stackview-mini .spine-title {
+  font-size: 11px;
+}
+.stackview-mini .spine-author {
+  display: none;
+}
+.stackview-mini .spine-year {
+  font-size: 8px;
+  padding: 0;
+  line-height: 12px;
+  height: 12px;
+  margin-top: -6px;
+  width: 24px;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+.stackview-mini .stack-items:before, .stackview-mini .stack-items:after {
+  width: 106px;
+  height: 57px;
+  background-size: contain;
+}
+.stackview-mini .stack-items:after {
+  margin-top: -4px;
+}
+.stackview-mini .ribbon {
+  top: 20px;
+  padding: 4px 5px 4px 14px;
+  min-height: 20px;
+  font-size: 16px;
 }
