@@ -76,9 +76,17 @@
 	}
 }
 
+@mixin webpage-decoration($bg, $border) {
+	.webpage-top, .webpage-edge {
+		background:$bg;
+		border-color:$border;
+	}
+}
+
 @mixin decorations($bg, $border) {
 	@include book-decoration($bg, $border);
 	@include videofilm-decoration($bg, $border);
 	@include serial-decoration($bg, $border);
 	@include sound-decoration($bg, $border);
+	@include webpage-decoration($bg, $border);
 }

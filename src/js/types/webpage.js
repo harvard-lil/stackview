@@ -34,6 +34,8 @@
 						<span class="url-publisher"><%= publisher %>:</span>\
 						<span class="url-title"><%= title %></span>\
 					</span>\
+					<span class="webpage-top"></span>\
+					<span class="webpage-edge"></span>\
 				</a>\
 			</li>'
 	});

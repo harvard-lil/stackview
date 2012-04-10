@@ -4,31 +4,18 @@
 
 	> a {
 		display:inline-block;
-		border-radius:10px 10px 0 0;
+		position:relative;
+		border-radius:6px 0 2px 0;
 		border-width:1px;
 		border-style:solid;
 		color:#555;
 		text-shadow:none;
 		font-size:11px;
-		padding:0 10px 0 55px;
+		padding:0 10px;
 		max-width:100%;
 
 		&:visited, &:hover, &:active {
 			color:#555;
-		}
-
-		&:before {
-			content:url('images/icon-home.png');
-			position:absolute;
-			left:32px;
-			top:14px;
-		}
-
-		&:after {
-			content:url('images/icon-refresh.png');
-			position:absolute;
-			left:11px;
-			top:15px;
 		}
 	}
 }
@@ -62,3 +49,34 @@
 .url-title {
 	white-space:nowrap;
 }
+
+.webpage-top {
+	content:'';
+	display:block;
+	position:absolute;
+	top:-5px;
+	left:4px;
+	right:-5px;
+	height:3px;
+	border-width:1px;
+	border-style:solid;
+	@include skew(-70deg, 0);
+	border-radius:0 5px 0 5px;
+	z-index:2;
+}
+
+.webpage-edge {
+	content:'';
+	display:block;
+	position:absolute;
+	top:-3px;
+	bottom:2px;
+	right:-8px;
+	width:6px;
+	@include skew(0, -20deg);
+	border-width:0 1px 1px 0;
+	border-style:solid;
+}
+
+
+
