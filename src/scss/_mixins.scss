@@ -22,6 +22,19 @@
 	transform:skew($x, $y);
 }
 
+@mixin user-select($val) {
+	-webkit-user-select:$val;
+	-moz-user-select:$val;
+	-ms-user-select:$val;
+	user-select:$val;
+}
+
+@mixin tap-highlight-color($val) {
+	-webkit-tap-highlight-color:$val;
+	-moz-tap-highlight-color:$val;
+	tap-highlight-color:$val;
+}
+
 @mixin book-decoration($bg, $border) {
 	.stack-pages {
 		border-color:$border;
@@ -33,14 +46,47 @@
 	}
 }
 
-@mixin user-select($val) {
-	-webkit-user-select:$val;
-	-moz-user-select:$val;
-	-ms-user-select:$val;
-	user-select:$val;
+@mixin videofilm-decoration($bg, $border) {
+	.videofilm-cover {
+		background:$bg;
+		border-color:$border;
+	}
 }
 
-@mixin tap-highlight-color($val) {
-	-webkit-tap-highlight-color:$val;
-	tap-highlight-color:$val;
+@mixin serial-decoration($bg, $border) {
+	.serial-edge {
+		background-color:$bg;
+		border-color:$border;
+	}
+
+	.serial-cover {
+		background:$bg;
+		border-color:$border;
+	}
+}
+
+@mixin sound-decoration($bg, $border) {
+	.sound-edge {
+		background-color:$bg;
+	}
+
+	.sound-cover {
+		background:$bg;
+		border-color:$border;
+	}
+}
+
+@mixin webpage-decoration($bg, $border) {
+	.webpage-top, .webpage-edge {
+		background:$bg;
+		border-color:$border;
+	}
+}
+
+@mixin decorations($bg, $border) {
+	@include book-decoration($bg, $border);
+	@include videofilm-decoration($bg, $border);
+	@include serial-decoration($bg, $border);
+	@include sound-decoration($bg, $border);
+	@include webpage-decoration($bg, $border);
 }

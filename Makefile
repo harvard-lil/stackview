@@ -1,9 +1,16 @@
 JS_SOURCES = src/js/microtemplating.js\
+             src/js/jquery.easing.1.3.js\
              src/js/jquery.stackview.base.js \
              src/js/jquery.stackview.infinite.js\
              src/js/jquery.stackview.navigation.js\
+             src/js/jquery.stackview.ministack.js\
              src/js/jquery.stackview.stackcache.js\
-             src/js/jquery.stackview.templates.js
+             src/js/jquery.stackview.templates.js\
+             src/js/types/book.js\
+             src/js/types/serial.js\
+             src/js/types/soundrecording.js\
+             src/js/types/videofilm.js\
+             src/js/types/webpage.js
 
 SCSS_SOURCE = src/scss/jquery.stackview.scss
 JS_OUTPUT = lib/jquery.stackview.min.js

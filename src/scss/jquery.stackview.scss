@@ -63,24 +63,23 @@
 .stack-item {
 	position:relative;
 	display:block;
-	margin:0 0 2px 0;
 	-webkit-transform:translate3d(0,0,0);
 	
-	a {
+	> a {
 		display:block;
 		text-decoration:none;
 		height:100%;
-		background:url('images/gloss.png') repeat-x 0 47%;
 		color:#fff;
-		border-width:1px 2px;
-		border-style:solid;
 		white-space:nowrap;
-		overflow:hidden;
-		border-radius:3px / 20px;
+		background:url('images/gloss.png') repeat-x 0 47%;
 		
 		&:hover, &:focus {
 			background-image:url('images/highGloss.png');
 			text-decoration:none;
+		}
+
+		&:visited, &:hover, &:active {
+			color:#fff;
 		}
 	}
 }
@@ -88,12 +87,6 @@
 .spine-text {
 	position:absolute;
 	z-index:2;
-	height:40px;
-	line-height:40px;
-	top:50%;
-	margin-top:-7px;
-	left:15px;
-	right:24px;
 	overflow:hidden;
 	display:block;
 }
@@ -132,51 +125,6 @@
 	border-color:#e6dec4;
 	text-shadow:none;
 	color:#555;
-	@include rotate(-90deg);
-}
-
-.stack-pages {
-	position:absolute;
-	z-index:4;
-	display:block;
-	width:10px;
-	right:-6px;
-	top:0;
-	bottom:-4px;
-	border-width:3px 0 3px 2px;
-	border-style:solid;
-	border-radius:4px 0 0 4px / 20px 0 0 20px;
-	@include transform-origin(0 100%);
-	@include skew(0deg,-20deg);
-	
-	&:after {
-		position:absolute;
-		content:"";
-		left:0;
-		right:2px;
-		top:0;
-		bottom:0;
-		background:#f5f2e8;
-		border-radius:3px 0 0 3px / 20px 0 0 20px;
-		border-width:2px 1px 2px 0px;
-		border-style:solid;
-		border-color:#aaa #e5e5e5 #007acc #ddd;
-	}
-}
-
-.stack-cover {
-	position:absolute;
-	z-index:4;
-	height:2px;
-	border-width:1px;
-	border-style:solid;
-	border-right-width:2px;
-	top:-4px;
-	left:0;
-	right:5px;
-	border-radius:4px 0 0 50px;
-	@include transform-origin(0 100%);
-	@include skew(-70deg, 0deg);
 }
 
 .stackview .ribbon {
@@ -206,6 +154,14 @@
 	}
 }
 
-
 @import "heatmap";
 @import "navigation";
+
+/* Types */
+@import "book";
+@import "serial";
+@import "soundrecording";
+@import "videofilm";
+@import "webpage";
+
+@import "ministack";
