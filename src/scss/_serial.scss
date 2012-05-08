@@ -1,0 +1,50 @@
+.stack-serial {
+	width:343px;
+	height:39px;
+	margin:0;
+
+	> a {
+		border-radius:3px 0 0 3px;
+
+		&, &:hover, &:focus {
+			background-image:url(images/serials.png);
+		}
+	}
+
+	.spine-text {
+		left:15px;
+		top:0;
+		bottom:0;
+		width:200px;
+	}
+
+	.spine-title {
+		height:39px;
+		line-height:39px;
+		font-size:12px;
+	}
+}
+
+.serial-edge {
+	position:absolute;
+	right:-17px;
+	bottom:0;
+	width:17px;
+	height:38px;
+	background:url(images/serials-edge.png) 0 0 no-repeat;
+	border-width:2px 0;
+	@include transform-origin(0 100%);
+	@include skew(0deg, -20deg);
+}
+
+.serial-cover {
+	position:absolute;
+	top:-5px;
+	left:0;
+	right:-2px;
+	height:3px;
+	border-width:1px;
+	border-style:solid;
+	@include transform-origin(0 100%);
+	@include skew(-70deg, 0);
+}

@@ -8,7 +8,7 @@
 	var events,
 	    plugin = 'stackView',
 	    StackView,
-	    utils = {};
+	    types = {};
 	
 	events = {
 		init: 'stackview.init',
@@ -18,127 +18,19 @@
 	};
 	
 	/*
-	   #translate(number, number, number, number, number) - Private
-	
-	   Takes a value (the first argument) and two ranges of numbers. Translates
-	   this value from the first range to the second range.  E.g.:
-	
-	   translate(0, 0, 10, 50, 100) returns 50.
-	   translate(10, 0, 10, 50, 100) returns 100.
-	   translate(5, 0, 10, 50, 100) returns 75.
-	
-	   http://stackoverflow.com/questions/1969240/mapping-a-range-of-values-to-another
+	   #get_type
 	*/
-	utils.translate = function(value, start_min, start_max, end_min, end_max) {
-		var start_range = start_max - start_min,
-		    end_range = end_max - end_min,
-		    scale = (value - start_min) / (start_range);
-		
-		return end_min + scale * end_range;
-	};
-	
+	var get_type = function(item) {
+		var type;
 
-	/*
-	   #get_heat(number) - Private
-	
-	   Takes a value between 0 and 100 and returns a number to be used with
-	   heat classes to indicate popularity.
-	*/
-	utils.get_heat = function(scaled_value) {
-		return scaled_value === 100 ? 10 : Math.floor(scaled_value / 10) + 1;
-	};
-	
-	/*
-	   #get_height(StackView, object) - Private
-	
-	   Takes a StackView instance and a book object. Returns a normalized
-	   book height percentage, taking into account the minimum height,
-	   maximum height, height multiple, and translating them onto the
-	   percentage range specified in the stack options.
-	*/
-	utils.get_height = function(stack, book) {
-		var opts = stack.options,
-		    height = parseInt(book.measurement_height_numeric, 10),
-		    min = opts.min_item_height,
-		    max = opts.max_item_height;
-		
-		if (isNaN(height)) {
-			height = min;
-		}
-		height = Math.min(Math.max(height, min), max);
-		height = utils.translate(
-			height,
-			opts.min_item_height, opts.max_item_height,
-			opts.min_height_percentage, opts.max_height_percentage
-		);
-		return height + '%';
-	};
-	
-	/*
-	   #get_thickness(StackView, object) - Private
-	
-	   Takes a StackView instance and a book object. Returns a normalized
-	   book thickness using the number of book pages, taking into account
-	   the minimum pages, maximum pages, and pages multiple.
-	*/
-	utils.get_thickness = function(stack, book) {
-		var thickness = parseInt(book.measurement_page_numeric, 10),
-		    min = stack.options.min_pages,
-		    max = stack.options.max_pages,
-		    multiple = stack.options.page_multiple;
-		
-		if (isNaN(thickness)) {
-			thickness = min;
-		}
-		thickness = Math.min(Math.max(thickness, min), max) * multiple;
-		return thickness + 'px';
-	};
-	
-	/*
-	   #normalize_link(object) - Private
-	
-	   Takes an item and returns the item's link, taking into account
-	   workarounds that may come from inconsistent data structure.
-	*/
-	utils.normalize_link = function(item) {
-		//workaround for link construction from LibraryCloud
-		return item.title_link_friendly ?
-			'../shelflife/book/' + item.title_link_friendly + '/' + item.id :
-			item.link;
-	};
-	
-	/*
-	   #get_author(object) - Private
-	
-	   Takes an item and returns the item's author, taking the first
-	   author if an array of authors is defined.
-	*/
-	utils.get_author = function(item) {
-		var author = item.creator && item.creator.length ? item.creator[0] : '';
-		
-		if(/^([^,]*)/.test(author)) {
-			author = author.match(/^[^,]*/);
-		}
-		
-		return author;
-	};
-	
-	/*
-	   #normalize_item(StackView, object)
-	
-	   Takes an item and returns a normalized object suited for rendering to
-	   the item template.
-	*/
-	utils.normalize_item = function(stack, item) {
-		return {
-			heat: utils.get_heat(item.shelfrank),
-			book_height: utils.get_height(stack, item),
-			book_thickness: utils.get_thickness(stack, item),
-			link: utils.normalize_link(item),
-			title: item.title,
-			author: utils.get_author(item),
-			year: item.pub_date
-		};
+		$.each(types, function(key, val) {
+			if (val.match(item)) {
+				type = val;
+				return false;
+			}
+		});
+
+		return type;
 	};
 	
 	/*
@@ -149,25 +41,29 @@
 	   appends it to the stack's item list. If [placeholder] is passed in the
 	   items take the its spot in the DOM.
 	*/
-	utils.render_items = function(stack, docs, $placeholder) {
+	var render_items = function(stack, docs, $placeholder) {
 		var action = $placeholder ? 'before' : 'append',
 		    $pivot = $placeholder ?
 		             $placeholder :
 		             stack.$element.find(stack.options.selectors.item_list);
-		    
+		
 		$.each(docs, function(i, item) {
-			var $item = $(tmpl(
-				StackView.templates.book,
-				utils.normalize_item(stack, item)
-			));
-			
+			var type = get_type(item),
+			    $item;
+
+			if (type == null) {
+				return true;
+			}
+
+			$item = $(tmpl(type.template, type.adapter(item, stack.options)));
 			$item.data('stackviewItem', item);
 			$pivot[action]($item);
 		});
-		
+
 		if ($placeholder) {
 			$placeholder.remove();
 		}
+		
 	};
 	
 	/*
@@ -177,7 +73,7 @@
 	   If the Stack uses loc_sort_order, this adjusts the query for that case.
 	   Returns a plain object with key:value params to be used by $.param.
 	*/
-	utils.calculate_params = function(stack) {
+	var calculate_params = function(stack) {
 		var opts = stack.options,
 		    params;
 		
@@ -237,8 +133,8 @@
 	   instance.  When the page is finished fetching, the callback is
 	   invoked, passing in the array of items.
 	*/
-	utils.fetch_page = function(stack, callback) {
-		var params = utils.calculate_params(stack),
+	var fetch_page = function(stack, callback) {
+		var params = calculate_params(stack),
 				querystring = $.param(params),
 				cachedResult;
 
@@ -286,81 +182,127 @@
 		this.init();
 	};
 	
-	/*
-	   The default options for a StackView instance.
-	
-	   url
-	      The URL to send requests to for item data.
-	   data
-	      An alternative to URL, used for static data. Accepts a typical
-	      URL response object or a simple array of item objects.
-	   jsonp
-	      If true, the URL will expect a JSONP request. callback=? will be
-	      added to the request parameters.
-	   items_per_page
-	      The number of items to request each page.
-	   page_multiple
-	      A number that when multiplied by the number of pages in a book
-	      gives us the total pixel height to be rendered.
-	   search_type
-	      The type of search to be performed by the script at URL. This is
-	      passed to the script as the search_type parameter.
-	   query
-	      The query passed to the script at URL.  Passed as the
-	      query parameter.
-	   ribbon
-	      The text of the ribbon at the top of the stack.
-	   id
-	      When using a search type of loc_sort_order, this is the id of
-	      the item that the search centers around.
-	   min_pages
-	      The minimum number of pages that a book will render as,
-	      regardless of the true number of pages.
-	   max_pages
-	      The maximum number of pages that a book will render as,
-	      regardless of the true number of pages.
-	   min_item_height
-	      The minimum height in centimeters that an item will render as,
-	      regardless of the true height of the item.
-	   max_item_height
-	      The maximum height in centimeters that an item will render as,
-	      regardless of the true height of the item.
-	   min_height_percentage
-	      Books with the minimum height will render as this percentage
-	      width in the stack.
-	   max_height_percentage
-	      Books with the maximum height will render as this percentage
-	      width in the stack.
-	   cache_ttl
-	      How long a request will stay in cache.
-	   selectors
-	      A number of selectors that are frequently used by the code to
-	      identify key structures.
-	*/
-	$.extend(StackView, {
+	/* Static properties and functions */
+	$.extend(true, StackView, {
+
+			/*
+		   The default options for a StackView instance.
+		
+		   cache_ttl
+		      How long a request will stay in cache.
+
+		   data
+		      An alternative to URL, used for static data. Accepts a typical
+		      URL response object or a simple array of item objects.
+
+		   id
+		      When using a search type of loc_sort_order, this is the id of
+		      the item that the search centers around.
+
+		   items_per_page
+		      The number of items to request each page.
+
+		   jsonp
+		      If true, the URL will expect a JSONP request. callback=? will be
+		      added to the request parameters.
+
+		   query
+		      The query passed to the script at URL.  Passed as the
+		      query parameter.
+
+		   ribbon
+		      The text of the ribbon at the top of the stack.
+
+		   search_type
+		      The type of search to be performed by the script at URL. This is
+		      passed to the script as the search_type parameter.
+
+		   selectors
+		      A number of selectors that are frequently used by the code to
+		      identify key structures.
+
+		      item
+		         A single item in the stack.
+
+		      item_list
+		         Container around all of the stack items.
+
+		      ribbon
+		         The text ribbon at the top of the stack.
+
+		   url
+		      The URL to send requests to for item data.
+		*/
 		defaults: {
-			url: 'basic.json',
+			cache_ttl: 60,
 			data: '',
-			jsonp: false,
+			id: null,
 			items_per_page: 10,
-			page_multiple: 0.20,
-			height_multiple: 12.5,
-			search_type: 'keyword',
+			jsonp: false,
 			query: '',
 			ribbon: 'Stack View',
-			id: null,
-			min_pages: 200,
-			max_pages: 540,
-			min_item_height: 20,
-			max_item_height: 39,
-			min_height_percentage: 59,
-			max_height_percentage: 100,
-			cache_ttl: 60,
+			search_type: 'keyword',
 			selectors: {
 				item: '.stack-item',
 				item_list: '.stack-items',
 				ribbon: '.ribbon'
+			},
+			url: 'basic.json'
+		},
+
+		/*
+	     StackView.get_heat(number)
+	
+	      Takes a value between 0 and 100 and returns a number to be used with
+	      heat classes to indicate popularity.
+		*/
+		utils: {
+			get_heat: function(scaled_value) {
+				return scaled_value === 100 ? 10 : Math.floor(scaled_value / 10) + 1;
 			}
+		},
+
+		/*
+		   StackView.register_type(object)
+
+		   Registers an item type to be used by the stack. A Type object
+		   has the following properties:
+
+		   name: string
+		     A unique, identifying name of the item type.
+
+		   match: function(obj) -> obj
+		     A function that takes a stack item and returns true if the
+		     item matches this type. Example:
+
+		       match: function(item) { return item.type === 'book' }
+
+		   adapter: function(obj, obj) -> obj
+		     This function allows the user to make transformations to the
+		     item data before rendering it to the template.  It takes as
+		     parameters a raw item that matches the match function and the
+		     options from the StackView instance.  It should return an object
+		     to render against "template."  If no changes to the raw data need
+		     to be made, the simplest value for this can be:
+
+		       adapter: function(item) { return item; }
+
+		   template: string
+		     A microtemplating template to render for this type in the stack.
+		     Receives as its data the return value from "adapter."
+
+		*/
+		register_type: function(obj) {
+			types[obj.name] = obj;
+		},
+
+		/*
+		   StackView.get_types()
+
+		   Returns the hash of item types.
+		*/
+		get_types: function() {
+			return types;
 		}
 	});
 	
@@ -412,7 +354,7 @@
 			
 			this.direction = 'down';
 			if (opts.data) {
-				utils.render_items(this, opts.data.docs ? opts.data.docs : opts.data);
+				render_items(this, opts.data.docs ? opts.data.docs : opts.data);
 				this.finished.down = true;
 				this.$element.trigger(events.page_load, [opts.data]);
 			}
@@ -420,8 +362,8 @@
 				this.$element
 					.find(opts.selectors.item_list)
 					.append($placeholder);
-				utils.fetch_page(this, function(data) {
-					utils.render_items(that, data.docs, $placeholder);
+				fetch_page(this, function(data) {
+					render_items(that, data.docs, $placeholder);
 					if (parseInt(data.start, 10) === -1) {
 						that.finished.down = true;
 					}
@@ -449,10 +391,10 @@
 			
 			this.direction = 'up';
 			this.$element.find(opts.selectors.item_list).prepend($placeholder);
-			utils.fetch_page(this, function(data) {
+			fetch_page(this, function(data) {
 				var oldTop = $oldMarker.position().top;
 				
-				utils.render_items(that, data.docs, $placeholder);
+				render_items(that, data.docs, $placeholder);
 				if (that.page > 1) {
 					that.$element.find(opts.selectors.item_list).animate({
 						'scrollTop': '+=' + ($oldMarker.position().top - oldTop)
@@ -473,7 +415,7 @@
 		*/
 		add: function() {
 			var $items = this.$element.find(this.options.selectors.item),
-			    index, item, action, $pivot, $item;
+			    index, item, type, action, $pivot, $item;
 			
 			if (typeof(arguments[0]) === 'number') {
 				index = arguments[0];
@@ -496,10 +438,12 @@
 				action = 'before';
 			}
 			
-			$item = $(tmpl(
-				StackView.templates.book,
-				utils.normalize_item(this, item)
-			));
+			type = get_type(item);
+			if (type == null) {
+				return;
+			}
+			$item = $(tmpl(type.template, type.adapter(item, this.options)));
+
 			$item.data('stackviewItem', item);
 			$pivot[action]($item);
 			this.zIndex();

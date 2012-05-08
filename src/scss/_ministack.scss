@@ -1,0 +1,43 @@
+.stackview-mini {
+	.spine-text {
+		left:5px;
+		margin-top:-5px;
+	}
+
+	.spine-title {
+		font-size:11px;
+	}
+
+	.spine-author {
+		display:none;
+	}
+
+	.spine-year {
+		font-size:8px;
+		padding:0;
+		line-height:12px;
+		height:12px;
+		margin-top:-6px;
+		width:24px;
+		@include rotate(0deg)
+	}
+
+	.stack-items {
+		&:before, &:after {
+			width:106px;
+			height:57px;
+			background-size:contain;
+		}
+
+		&:after {
+			margin-top:-4px;
+		}
+	}
+
+	.ribbon {
+		top:20px;
+		padding:4px 5px 4px 14px;
+		min-height:20px;
+		font-size:16px;
+	}
+}
