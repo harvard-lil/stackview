@@ -57,10 +57,6 @@
 .stack-item {
   position: relative;
   display: block;
-<<<<<<< HEAD
-  margin: 0 0 2px 0;
-=======
->>>>>>> develop
   -webkit-transform: translate3d(0, 0, 0);
 }
 .stack-item > a {
@@ -120,73 +116,6 @@
   border-color: #e6dec4;
   text-shadow: none;
   color: #555;
-<<<<<<< HEAD
-  -webkit-transform: rotate(-90deg);
-  -moz-transform: rotate(-90deg);
-  -o-transform: rotate(-90deg);
-  -ms-transform: rotate(-90deg);
-  transform: rotate(-90deg);
-}
-
-.stack-pages {
-  position: absolute;
-  z-index: 4;
-  display: block;
-  width: 10px;
-  right: -6px;
-  top: 0;
-  bottom: -4px;
-  border-width: 3px 0 3px 2px;
-  border-style: solid;
-  border-radius: 4px 0 0 4px/20px 0 0 20px;
-  -o-transform-origin: 0 100%;
-  -ms-transform-origin: 0 100%;
-  -moz-transform-origin: 0 100%;
-  -webkit-transform-origin: 0 100%;
-  transform-origin: 0 100%;
-  -webkit-transform: skew(0deg, -20deg);
-  -moz-transform: skew(0deg, -20deg);
-  -o-transform: skew(0deg, -20deg);
-  -ms-transform: skew(0deg, -20deg);
-  transform: skew(0deg, -20deg);
-}
-.stack-pages:after {
-  position: absolute;
-  content: "";
-  left: 0;
-  right: 2px;
-  top: 0;
-  bottom: 0;
-  background: #f5f2e8;
-  border-radius: 3px 0 0 3px/20px 0 0 20px;
-  border-width: 2px 1px 2px 0px;
-  border-style: solid;
-  border-color: #aaa #e5e5e5 #007acc #ddd;
-}
-
-.stack-cover {
-  position: absolute;
-  z-index: 4;
-  height: 2px;
-  border-width: 1px;
-  border-style: solid;
-  border-right-width: 2px;
-  top: -4px;
-  left: 0;
-  right: 5px;
-  border-radius: 4px 0 0 50px;
-  -o-transform-origin: 0 100%;
-  -ms-transform-origin: 0 100%;
-  -moz-transform-origin: 0 100%;
-  -webkit-transform-origin: 0 100%;
-  transform-origin: 0 100%;
-  -webkit-transform: skew(-70deg, 0deg);
-  -moz-transform: skew(-70deg, 0deg);
-  -o-transform: skew(-70deg, 0deg);
-  -ms-transform: skew(-70deg, 0deg);
-  transform: skew(-70deg, 0deg);
-=======
->>>>>>> develop
 }
 
 .stackview .ribbon {
@@ -224,11 +153,7 @@
    hottest = heat10
    coldest = heat1
 *******************/
-<<<<<<< HEAD
-.stackview .heat1 a {
-=======
 .heat1 a {
->>>>>>> develop
   background-color: #ccebff;
   background-image: url("images/superGloss.png");
   color: #222;
@@ -646,8 +571,6 @@
 .stack-navigation.empty .num-found {
   visibility: hidden;
 }
-<<<<<<< HEAD
-=======
 
 /* Types */
 .stack-book {
@@ -1100,4 +1023,3 @@
   min-height: 20px;
   font-size: 16px;
 }
->>>>>>> develop
