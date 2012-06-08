@@ -35,12 +35,11 @@
 	*/
 	$.extend(true, window.StackView.defaults, {
 		book: {
-			max_height_percentage: 100,
 			max_height: 39,
 			max_pages: 540,
-			min_height_percentage: 59,
 			min_height: 20,
 			min_pages: 200,
+			height_multiple: 12,
 			page_multiple: 0.20
 		},
 
@@ -80,20 +79,14 @@
 	var get_height = function(options, book) {
 		var height = parseInt(book.measurement_height_numeric, 10),
 		    min = options.book.min_height,
-		    max = options.book.max_height;
+		    max = options.book.max_height
+		    multiple = options.book.height_multiple;;
 		
 		if (isNaN(height)) {
 			height = min;
 		}
-		height = Math.min(Math.max(height, min), max);
-		height = translate(
-			height,
-			options.book.min_height,
-			options.book.max_height,
-			options.book.min_height_percentage,
-			options.book.max_height_percentage
-		);
-		return height + '%';
+		height = Math.min(Math.max(height, min), max) * multiple;
+		return height + 'px';
 	};
 
 	/*
