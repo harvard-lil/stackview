@@ -34,7 +34,7 @@
 			return {
 				heat: window.StackView.utils.get_heat(item.shelfrank),
 				/* TODO: How should video widths be calculated? */
-				height: '65%',
+				height: '300px',
 				title: item.title,
 				year: item.pub_date,
 				link: normalize_link(item)
