@@ -113,9 +113,9 @@
 	right:3px;
 	width:28px;
 	height:18px;
-	line-height:18px;
+	line-height:16px;
 	background:#f9fceb;
-	font-size:9.5px;
+	font-size:9px;
 	font-family:monospace;
 	border-radius:2px;
 	text-align:center;
@@ -124,7 +124,8 @@
 	border-style:dotted;
 	border-color:#e6dec4;
 	text-shadow:none;
-	color:#555;
+	color:#333;
+	opacity:.8;
 }
 
 .stackview .ribbon {
@@ -132,11 +133,11 @@
 	z-index:3;
 	left:55px;
 	right:10px;
-	top:52px;
-	padding:8px 10px 8px 12px;
-	min-height:25px;
-	font-size:20px;
-	line-height:1.25;
+	top:12px;
+	padding:5px 10px 5px 12px;
+	min-height:20px;
+	font-size:16px;
+	line-height:18px;
 	background:rgba(252,221,94,.85);
 	color:#035;
 	border:1px solid #fe4;
@@ -146,7 +147,7 @@
 	&:after {
 		content:"";
 		position:absolute;
-		bottom:-10px;
+		bottom:-11px;
 		left:0;
 		background:url('images/ribbonTab.png') no-repeat 0 0;
 		width:10px;

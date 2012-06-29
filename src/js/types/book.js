@@ -39,8 +39,8 @@
 			max_pages: 540,
 			min_height: 20,
 			min_pages: 200,
-			height_multiple: 12,
-			page_multiple: 0.20
+			height_multiple: 13.8,
+			page_multiple: 0.17
 		},
 
 		selectors: {
