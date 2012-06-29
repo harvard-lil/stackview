@@ -37,7 +37,8 @@
 		width:205px;
 		height:64px;
 		position:relative;
-		z-index:9999; // Needs to be bigger than # of books.
+		z-index:9999; // Needs to be bigger than # of books (not now).
+		margin-bottom:-10px;
 	}
 	
 	&:after {
@@ -46,7 +47,7 @@
 		width:205px;
 		height:64px;
 		background:url('images/bookEnd-next.png');
-		margin:-7px 0 0 0;
+		margin-top:-11px;
 	}
 }
 

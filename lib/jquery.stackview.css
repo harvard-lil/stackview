@@ -30,18 +30,19 @@
   background: url("images/bookEnd-prev.png");
   content: "";
   display: block;
-  width: 212px;
-  height: 114px;
+  width: 205px;
+  height: 64px;
   position: relative;
   z-index: 9999;
+  margin-bottom: -10px;
 }
 .stack-items:after {
   content: "";
   display: block;
-  width: 212px;
-  height: 114px;
+  width: 205px;
+  height: 64px;
   background: url("images/bookEnd-next.png");
-  margin: -7px 0 0 0;
+  margin-top: -11px;
 }
 
 .stackview-placeholder {
