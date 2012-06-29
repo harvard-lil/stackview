@@ -34,8 +34,8 @@
 		background:url('images/bookEnd-prev.png');
 		content:"";
 		display:block;
-		width:212px;
-		height:114px;
+		width:205px;
+		height:64px;
 		position:relative;
 		z-index:9999; // Needs to be bigger than # of books.
 	}
@@ -43,8 +43,8 @@
 	&:after {
 		content:"";
 		display:block;
-		width:212px;
-		height:114px;
+		width:205px;
+		height:64px;
 		background:url('images/bookEnd-next.png');
 		margin:-7px 0 0 0;
 	}
