@@ -130,6 +130,7 @@
   min-height: 20px;
   font-size: 16px;
   line-height: 18px;
+  background: #dd0;
   background: rgba(252, 221, 94, 0.85);
   color: #035;
   border: 1px solid #fe4;
@@ -544,6 +545,12 @@
   height: 43px;
   text-indent: -999em;
   overflow: hidden;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .stack-navigation .upstream {
   background: url("images/nav.png") 0 -87px no-repeat;
