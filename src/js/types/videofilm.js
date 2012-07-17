@@ -11,18 +11,6 @@
 		}
 	});
 
-	/*
-	   #normalize_link(object) - Private
-	
-	   Takes an item and returns the item's link, taking into account
-	   workarounds that may come from inconsistent data structure.
-	*/
-	var normalize_link = function(item) {
-		// TODO: How should this be normalized? Can we just drop normalization
-		// in favor of other systems modifying or redefining types?
-		return item.title ? item.title : '#'
-	};
-
 	window.StackView.register_type({
 		name: 'videofilm',
 
@@ -37,7 +25,7 @@
 				height: '300px',
 				title: item.title,
 				year: item.pub_date,
-				link: normalize_link(item)
+				link: item.link
 			};
 		},
 
