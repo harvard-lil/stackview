@@ -47,7 +47,7 @@
 	}).delegate('.stackview', 'stackview.pageload', function(event, data) {
 		var $stack = $(event.target),
 		    stack = $stack.data('stackviewObject'),
-		    num_found = data.num_found ? parseInt(data.num_found, 10) : data.length,
+		    num_found = data.num_found != null ? parseInt(data.num_found, 10) : data.length,
 		    num;
 
 		stack.num_found = num_found;
