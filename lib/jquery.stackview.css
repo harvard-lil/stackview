@@ -75,6 +75,10 @@
   color: #fff;
 }
 
+.stack-item-empty {
+  padding: 10px 10px 15px 5px;
+}
+
 .spine-text {
   position: absolute;
   z-index: 2;

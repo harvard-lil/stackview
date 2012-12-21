@@ -63,7 +63,22 @@
 		if ($placeholder) {
 			$placeholder.remove();
 		}
-		
+	};
+
+	/*
+		 #check_empty(StackView, number) - Private
+
+		 If count is 0, check_empty renders the empty message to the stack
+		 passed in.
+	*/
+	var check_empty = function(stack, count) {
+		if (count) return;
+
+		stack.$element.find(stack.options.selectors.item_list).append(
+			tmpl(StackView.templates.empty, {
+				message: stack.options.emptyMessage
+			})
+		);
 	};
 	
 	/*
@@ -195,6 +210,9 @@
 		      An alternative to URL, used for static data. Accepts a typical
 		      URL response object or a simple array of item objects.
 
+		   emptyMessage
+		   		Text shown to users when the stack contains no items.
+
 		   id
 		      When using a search type of loc_sort_order, this is the id of
 		      the item that the search centers around.
@@ -236,6 +254,7 @@
 		defaults: {
 			cache_ttl: 60,
 			data: '',
+			emptyMessage: 'No items found.',
 			id: null,
 			items_per_page: 10,
 			jsonp: false,
@@ -354,7 +373,14 @@
 			
 			this.direction = 'down';
 			if (opts.data) {
-				render_items(this, opts.data.docs ? opts.data.docs : opts.data);
+				if (opts.data.docs) {
+					render_items(this, opts.data.docs);
+					check_empty(this, opts.data.num_found);
+				}
+				else {
+					render_items(this, opts.data);
+					check_empty(this, opts.data.length);
+				}
 				this.finished.down = true;
 				this.$element.trigger(events.page_load, [opts.data]);
 			}
@@ -363,6 +389,7 @@
 					.find(opts.selectors.item_list)
 					.append($placeholder);
 				fetch_page(this, function(data) {
+					check_empty(that, data.num_found);
 					render_items(that, data.docs, $placeholder);
 					if (parseInt(data.start, 10) === -1) {
 						that.finished.down = true;

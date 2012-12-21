@@ -25,6 +25,8 @@
 					<span class="stack-cover" />\
 				</a>\
 			</li>',
+
+		empty: '<li class="stack-item-empty"><%= message %></li>',
 		
 		placeholder: '<li class="stackview-placeholder"></li>'
 	}
