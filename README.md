@@ -2,7 +2,7 @@
 
 The jQuery virtual stack plugin
 
-Check out the [Project Page](http://librarylab.law.harvard.edu/projects/stackview/demo) for more information.
+Check out the [Project Page](http://librarylab.law.harvard.edu/stackview/demo) for more information.
 
 ## Development
 
