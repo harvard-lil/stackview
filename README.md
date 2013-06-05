@@ -4,6 +4,9 @@ The jQuery virtual stack plugin
 
 Check out the [Project Page](http://librarylab.law.harvard.edu/stackview/demo) for more information.
 
+## Getting Started
+Download [jquery.stackview.min.js](./lib/jquery.stackview.min.js)
+
 ## Development
 
 A single concatenated and minified `jquery.stackview.min.js` file containing Stack View and all its dependencies is located in `/lib`.  Developers making changes to the project should do so in `/src/js` and compile the minified file by running `make js`.  If any files in `/src` are added or renamed, they should be added to this list of source files in `Makefile`.
