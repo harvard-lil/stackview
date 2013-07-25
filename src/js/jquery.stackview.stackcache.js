@@ -1,7 +1,7 @@
 window.stackCache = (function(window, undefined){
-  
+
   var cache = {},
-    
+
     // "Borrowed" from Modernizr
     use_localStorage = window.JSON && (function(){
       try {
@@ -10,14 +10,14 @@ window.stackCache = (function(window, undefined){
         return false;
       }
     })();
-  
+
   // Expose these methods.
   return {
     set: set,
     get: get,
     remove: remove
   };
-  
+
   // Set a key-value pair with optional TTL.
   function set( key, value, ttl ) {
     var expires = ttl && new Date( +new Date() + ttl * 1000 ),
@@ -25,7 +25,7 @@ window.stackCache = (function(window, undefined){
         expires: +expires,
         value: value
       };
-    
+
     if ( use_localStorage ) {
       try {
         localStorage[ key ] = JSON.stringify( obj );
@@ -36,12 +36,12 @@ window.stackCache = (function(window, undefined){
       cache[ key ] = obj;
     }
   };
-  
+
   // Get a value if it exists and hasn't expired.
   function get( key ) {
     var obj,
       val;
-    
+
     if ( use_localStorage ) {
       obj = localStorage[ key ];
       if ( obj ) {
@@ -50,7 +50,7 @@ window.stackCache = (function(window, undefined){
     } else {
       obj = cache[ key ];
     }
-    
+
     if ( obj ) {
       if ( obj.expires && obj.expires < +new Date() ) {
         remove( key );
@@ -58,10 +58,10 @@ window.stackCache = (function(window, undefined){
         val = obj.value;
       }
     }
-    
+
     return val;
   };
-  
+
   // Remove a key-value pair.
   function remove( key ) {
     if ( use_localStorage ) {
@@ -70,5 +70,5 @@ window.stackCache = (function(window, undefined){
       delete cache[ key ];
     }
   };
-  
+
 })(window);
