@@ -55,7 +55,13 @@
         return true;
       }
 
-      $item = $(tmpl(type.template, type.adapter(item, stack.options)));
+      // When rendering a horizontal stack, use the horizontal templates
+      if (stack.options.horizontal){
+        var horizontalType = StackView.get_types()['book_h'];
+        $item = $(tmpl(horizontalType.template, type.adapter(item, stack.options)));
+      } else {
+        $item = $(tmpl(type.template, type.adapter(item, stack.options)));
+      }
       $item.data('stackviewItem', item);
       $pivot[action]($item);
     });
@@ -247,6 +253,7 @@
         item_list: '.stack-items',
         ribbon: '.ribbon'
       },
+      horizontal: false,
       url: 'basic.json'
     },
 
@@ -327,10 +334,15 @@
         .html(tmpl(StackView.templates.scaffold, {
           ribbon: this.options.ribbon
         }))
-        .addClass('stackview')
-        .bind(events.page_load, function() {
+        .addClass('stackview');
+      if (this.options.horizontal) {
+        this.$element.addClass('stackview-horizontal');
+      } else{
+        // only run the zIndex() function if not running a horizontal stack
+        this.$element.bind(events.page_load, function() {
           that.zIndex();
         });
+      }
 
       this.$element.data('stackviewObject', this);
       this.$element.trigger(events.init);
@@ -442,11 +454,17 @@
       if (type == null) {
         return;
       }
-      $item = $(tmpl(type.template, type.adapter(item, this.options)));
+      // When rendering a horizontal stack, use the horizontal templates
+      if (stack.options.horizontal){
+        var horizontalType = StackView.get_types()['book_h'];
+        $item = $(tmpl(horizontalType.template, type.adapter(item, stack.options)));
+      } else {
+        $item = $(tmpl(type.template, type.adapter(item, stack.options)));
+        this.zIndex();
+      }
 
       $item.data('stackviewItem', item);
       $pivot[action]($item);
-      this.zIndex();
       this.$element.trigger(events.item_added);
     },
 
