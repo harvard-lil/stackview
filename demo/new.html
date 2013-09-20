@@ -1,0 +1,256 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>StackView Horizontal</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+<!-- stackview.css to style the stack -->
+<link rel="stylesheet" href="../lib/jquery.stackview.css" type="text/css" />
+
+<!-- stackview.js and all js dependencies -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/jquery.stackview.js"></script>
+
+</head>
+
+<body>
+
+<h2>rendered demo</h2>
+<div id='horizontal-demo'></div>
+
+<h2>Block demo</h2>
+<div class='stackview stackview-horizontal' style='width: 800px'>
+  <ul class='stack-horizontal'>
+    <li class='book-horizontal stack-book'>
+      <a href="http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638" target="_blank">
+        <span class="spine-text">
+          <span class="spine-title">Blankets </span>
+          <span class="spine-author">Craig Thompson </span>
+        </span>
+        <span class="spine-year">2003 </span>
+        <span class="stack-pages"> </span>
+        <span class="stack-cover"> </span>
+      </a>
+    </li>
+    <li class='book-horizontal stack-book'>
+      <a href="http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638" target="_blank">
+        <span class="spine-text">
+          <span class="spine-title">Blankets </span>
+          <span class="spine-author">Craig Thompson </span>
+        </span>
+        <span class="spine-year">2003 </span>
+        <span class="stack-pages"> </span>
+        <span class="stack-cover"> </span>
+      </a>
+    </li>
+    <li class='book-horizontal'>
+      <a href="http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638" target="_blank">
+        <span class="spine-text">
+          <span class="spine-title">Blankets </span>
+          <span class="spine-author">Craig Thompson </span>
+        </span>
+        <span class="spine-year">2003 </span>
+        <span class="stack-pages"> </span>
+        <span class="stack-cover"> </span>
+      </a>
+    </li>
+  </ul>
+</div>
+<h2>Javascript-less demo</h2>
+
+<div id="basic-stack" class="stackview">
+  <div class="stack-navigation">
+    <div class="upstream"> Up</div>
+    <div class="num-found">
+        <span>2</span>
+        <br>
+        items
+    </div>
+    <div class="downstream"> Down</div>
+  </div>
+
+  <div class="ribbon">Stack View</div>
+
+  <ul class="stack-items">
+    <li class="stack-item stack-book heat2" style="width: 85.26315789473684%; height: 43.2px; z-index: 11;">
+      <a href="http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638" target="_blank">
+        <span class="spine-text">
+          <span class="spine-title">Blankets</span>
+          <span class="spine-author">Craig Thompson</span>
+        </span>
+        <span class="spine-year">2003</span>
+        <span class="stack-pages"></span>
+        <span class="stack-cover"></span>
+      </a>
+    </li>
+    <li class="stack-item stack-book heat7" style="width: 84.21052631578948%; height: 16px; z-index: 10;">
+      <a href="http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009098946" target="_blank">
+        <span class="spine-text">
+          <span class="spine-title">Persepolis</span>
+          <span class="spine-author">Marjane Satrapi</span>
+        </span>
+        <span class="spine-year">2003</span>
+        <span class="stack-pages"></span>
+        <span class="stack-cover"></span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+<h2>Standard Basic Stack</h2>
+<div id="basic-stack"></div>
+
+<script type="text/javascript">
+    $(function () {
+      var data =
+      {"start": "-1", "limit": "0", "num_found": "2", "docs":
+      [
+        {
+            "title": "Blankets",
+            "creator": [
+                "Craig Thompson"
+            ],
+            "measurement_page_numeric": 582,
+            "measurement_height_numeric": 25,
+            "shelfrank": 13,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638"
+        },
+        {
+            "title": "Persepolis",
+            "creator": [
+                "Marjane Satrapi"
+            ],
+            "measurement_page_numeric": 153,
+            "measurement_height_numeric": 24,
+            "shelfrank": 64,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009098946"
+        },
+        {
+            "title": "Blankets",
+            "creator": [
+                "Craig Thompson"
+            ],
+            "measurement_page_numeric": 582,
+            "measurement_height_numeric": 25,
+            "shelfrank": 13,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638"
+        },
+        {
+            "title": "Persepolis",
+            "creator": [
+                "Marjane Satrapi"
+            ],
+            "measurement_page_numeric": 153,
+            "measurement_height_numeric": 24,
+            "shelfrank": 64,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009098946"
+        },
+        {
+            "title": "Blankets",
+            "creator": [
+                "Craig Thompson"
+            ],
+            "measurement_page_numeric": 582,
+            "measurement_height_numeric": 25,
+            "shelfrank": 13,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638"
+        },
+        {
+            "title": "Persepolis",
+            "creator": [
+                "Marjane Satrapi"
+            ],
+            "measurement_page_numeric": 153,
+            "measurement_height_numeric": 24,
+            "shelfrank": 64,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009098946"
+        },
+        {
+            "title": "Blankets",
+            "creator": [
+                "Craig Thompson"
+            ],
+            "measurement_page_numeric": 582,
+            "measurement_height_numeric": 25,
+            "shelfrank": 13,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638"
+        },
+        {
+            "title": "Persepolis",
+            "creator": [
+                "Marjane Satrapi"
+            ],
+            "measurement_page_numeric": 153,
+            "measurement_height_numeric": 24,
+            "shelfrank": 64,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009098946"
+        },
+        {
+            "title": "Blankets",
+            "creator": [
+                "Craig Thompson"
+            ],
+            "measurement_page_numeric": 582,
+            "measurement_height_numeric": 25,
+            "shelfrank": 13,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638"
+        },
+        {
+            "title": "Persepolis",
+            "creator": [
+                "Marjane Satrapi"
+            ],
+            "measurement_page_numeric": 153,
+            "measurement_height_numeric": 24,
+            "shelfrank": 64,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009098946"
+        },
+        {
+            "title": "Blankets",
+            "creator": [
+                "Craig Thompson"
+            ],
+            "measurement_page_numeric": 582,
+            "measurement_height_numeric": 25,
+            "shelfrank": 13,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638"
+        },
+        {
+            "title": "Persepolis",
+            "creator": [
+                "Marjane Satrapi"
+            ],
+            "measurement_page_numeric": 153,
+            "measurement_height_numeric": 24,
+            "shelfrank": 64,
+            "pub_date": "2003",
+            "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009098946"
+        }
+      ]
+      };
+
+      $('#basic-stack').stackView({data: data});
+
+      $('#horizontal-demo').stackView({data: data, horizontal: true, decorations: false});
+
+    });
+</script>
+</body>
+</html>

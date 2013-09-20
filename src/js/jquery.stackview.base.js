@@ -254,6 +254,7 @@
         ribbon: '.ribbon'
       },
       horizontal: false,
+      decorations: true,
       url: 'basic.json'
     },
 
@@ -330,11 +331,21 @@
     init: function() {
       var that = this;
 
-      this.$element
-        .html(tmpl(StackView.templates.scaffold, {
-          ribbon: this.options.ribbon
-        }))
-        .addClass('stackview');
+      /*
+       *  When decorations == false, use the decorationless scaffold
+       */
+      if (this.options.decorations) {
+        this.$element
+          .html(tmpl(StackView.templates.scaffold, {
+            ribbon: this.options.ribbon
+          }));
+      } else {
+        this.$element.html(tmpl(StackView.templates.scaffoldnodecorations));
+      }
+      this.$element.addClass('stackview');
+      /* When 'horizontal' : true
+       * add the  stackview-horizontal class to enable special css
+       */
       if (this.options.horizontal) {
         this.$element.addClass('stackview-horizontal');
       } else{

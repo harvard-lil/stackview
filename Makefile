@@ -15,6 +15,7 @@ JS_SOURCES = src/js/microtemplating.js\
 
 SCSS_SOURCE = src/scss/jquery.stackview.scss
 JS_OUTPUT = lib/jquery.stackview.min.js
+JS_DEBUG_OUTPUT = lib/jquery.stackview.debug.js
 CSS_OUTPUT = lib/jquery.stackview.css
 CSS_OUTPUT_STYLE = expanded
 
@@ -28,7 +29,7 @@ js:
 	rm -f temp.js
 
 debug-js:
-	cat $(JS_SOURCES) > lib/jquery.stackview.js
+	cat $(JS_SOURCES) > $(JS_DEBUG_OUTPUT)
 
 css:
 	sass --style $(CSS_OUTPUT_STYLE) $(SCSS_SOURCE):$(CSS_OUTPUT)

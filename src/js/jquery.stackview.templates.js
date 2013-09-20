@@ -4,6 +4,8 @@
       <div class="ribbon"><%= ribbon %></div>\
       <ul class="stack-items" />',
 
+    scaffoldnodecorations: '<ul class="stack-items" />',
+
     navigation: '\
       <div class="stack-navigation<%= empty ? " empty" : ""%>">\
         <div class="upstream">Up</div>\
