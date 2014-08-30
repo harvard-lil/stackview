@@ -1,157 +1,157 @@
 /*
-	Stack View - The jQuery virtual stack plugin
-	by The Harvard Library Innovation Lab
-	
-	Dual licensed under MIT and GPL.
+    Stack View - The jQuery virtual stack plugin
+    by The Harvard Library Innovation Lab
+
+    Dual licensed under MIT and GPL.
 */
 
 @import "mixins";
 
 .stackview {
-	font-family:"Helvetica Neue", sans-serif;
-	position:relative;
-	height:520px;
-	padding:0 0 0 65px;
-	overflow:hidden;
-	
-	* {
-		margin:0;
-		padding:0;
-	}
+    font-family:"Helvetica Neue", sans-serif;
+    position:relative;
+    height:520px;
+    padding:0 0 0 65px;
+    overflow:hidden;
+
+    * {
+        margin:0;
+        padding:0;
+    }
 }
 
 .stack-items {
-	list-style:none;
-	height:100%;
-	overflow:auto;
-	width:100%;
-	padding-right:40px;
-	position:relative;
-	z-index:2;
-	-webkit-overflow-scrolling:touch;
-	
-	&:before {
-		background:url('images/bookEnd-prev.png');
-		content:"";
-		display:block;
-		width:212px;
-		height:114px;
-		position:relative;
-		z-index:9999; // Needs to be bigger than # of books.
-	}
-	
-	&:after {
-		content:"";
-		display:block;
-		width:212px;
-		height:114px;
-		background:url('images/bookEnd-next.png');
-		margin:-7px 0 0 0;
-	}
+    list-style:none;
+    height:100%;
+    overflow:auto;
+    width:100%;
+    padding-right:40px;
+    position:relative;
+    z-index:2;
+    -webkit-overflow-scrolling:touch;
+
+    &:before {
+        background:url('images/bookEnd-prev.png');
+        content:"";
+        display:block;
+        width:212px;
+        height:114px;
+        position:relative;
+        z-index:9999; // Needs to be bigger than # of books.
+    }
+
+    &:after {
+        content:"";
+        display:block;
+        width:212px;
+        height:114px;
+        background:url('images/bookEnd-next.png');
+        margin:-7px 0 0 0;
+    }
 }
 
 .stackview-placeholder {
-	width:250px;
-	background:url('images/placeholder.gif') no-repeat center center #ccd;
-	border:1px solid #bbb;
-	border-radius:3px;
-	height:40px;
-	position:relative;
-	z-index:9997;
+    width:250px;
+    background:url('images/placeholder.gif') no-repeat center center #ccd;
+    border:1px solid #bbb;
+    border-radius:3px;
+    height:40px;
+    position:relative;
+    z-index:9997;
 }
 
 .stack-item {
-	position:relative;
-	display:block;
-	-webkit-transform:translate3d(0,0,0);
-	
-	> a {
-		display:block;
-		text-decoration:none;
-		height:100%;
-		color:#fff;
-		white-space:nowrap;
-		background:url('images/gloss.png') repeat-x 0 47%;
-		
-		&:hover, &:focus {
-			background-image:url('images/highGloss.png');
-			text-decoration:none;
-		}
+    position:relative;
+    display:block;
+    -webkit-transform:translate3d(0,0,0);
 
-		&:visited, &:hover, &:active {
-			color:#fff;
-		}
-	}
+    > a {
+        display:block;
+        text-decoration:none;
+        height:100%;
+        color:#fff;
+        white-space:nowrap;
+        background:url('images/gloss.png') repeat-x 0 47%;
+
+        &:hover, &:focus {
+            background-image:url('images/highGloss.png');
+            text-decoration:none;
+        }
+
+        &:visited, &:hover, &:active {
+            color:#fff;
+        }
+    }
 }
 
 .spine-text {
-	position:absolute;
-	z-index:2;
-	overflow:hidden;
-	display:block;
+    position:absolute;
+    z-index:2;
+    overflow:hidden;
+    display:block;
 }
 
 .spine-title {
-	float:left;
-	font-size:13px;
-	line-height:13px;
-	vertical-align:middle;
+    float:left;
+    font-size:13px;
+    line-height:13px;
+    vertical-align:middle;
 }
 
 .spine-author {
-	float:right;
-	font-size:10px;
-	line-height:13px;
-	vertical-align:middle;
-	margin-right:6px;
+    float:right;
+    font-size:10px;
+    line-height:13px;
+    vertical-align:middle;
+    margin-right:6px;
 }
 
 .spine-year {
-	position:absolute;
-	z-index:3;
-	top:50%;
-	right:3px;
-	width:28px;
-	height:18px;
-	line-height:18px;
-	background:#f9fceb;
-	font-size:9.5px;
-	font-family:monospace;
-	border-radius:2px;
-	text-align:center;
-	margin-top:-9px;
-	border-width:0 1px;
-	border-style:dotted;
-	border-color:#e6dec4;
-	text-shadow:none;
-	color:#555;
+    position:absolute;
+    z-index:3;
+    top:50%;
+    right:3px;
+    width:28px;
+    height:18px;
+    line-height:18px;
+    background:#f9fceb;
+    font-size:9.5px;
+    font-family:monospace;
+    border-radius:2px;
+    text-align:center;
+    margin-top:-9px;
+    border-width:0 1px;
+    border-style:dotted;
+    border-color:#e6dec4;
+    text-shadow:none;
+    color:#555;
 }
 
 .stackview .ribbon {
-	position:absolute;
-	z-index:3;
-	left:55px;
-	right:10px;
-	top:52px;
-	padding:8px 10px 8px 12px;
-	min-height:25px;
-	font-size:20px;
-	line-height:1.25;
-	background:rgba(252,221,94,.85);
-	color:#035;
-	border:1px solid #fe4;
-	border-radius:2px;
-	@include user-select(none);
+    position:absolute;
+    z-index:3;
+    left:55px;
+    right:10px;
+    top:52px;
+    padding:8px 10px 8px 12px;
+    min-height:25px;
+    font-size:20px;
+    line-height:1.25;
+    background:rgba(252,221,94,.85);
+    color:#035;
+    border:1px solid #fe4;
+    border-radius:2px;
+    @include user-select(none);
 
-	&:after {
-		content:"";
-		position:absolute;
-		bottom:-10px;
-		left:0;
-		background:url('images/ribbonTab.png') no-repeat 0 0;
-		width:10px;
-		height:10px;
-	}
+    &:after {
+        content:"";
+        position:absolute;
+        bottom:-10px;
+        left:0;
+        background:url('images/ribbonTab.png') no-repeat 0 0;
+        width:10px;
+        height:10px;
+    }
 }
 
 @import "heatmap";
@@ -165,3 +165,4 @@
 @import "webpage";
 
 @import "ministack";
+@import "horizontalstack";

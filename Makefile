@@ -7,6 +7,7 @@ JS_SOURCES = src/js/microtemplating.js\
              src/js/jquery.stackview.stackcache.js\
              src/js/jquery.stackview.templates.js\
              src/js/types/book.js\
+             src/js/types/book-h.js\
              src/js/types/serial.js\
              src/js/types/soundrecording.js\
              src/js/types/videofilm.js\
@@ -14,6 +15,7 @@ JS_SOURCES = src/js/microtemplating.js\
 
 SCSS_SOURCE = src/scss/jquery.stackview.scss
 JS_OUTPUT = lib/jquery.stackview.min.js
+JS_DEBUG_OUTPUT = lib/jquery.stackview.debug.js
 CSS_OUTPUT = lib/jquery.stackview.css
 CSS_OUTPUT_STYLE = expanded
 
@@ -25,6 +27,9 @@ js:
 	cat $(JS_SOURCES) > temp.js
 	$(YUI) -o $(JS_OUTPUT) temp.js
 	rm -f temp.js
+
+debug-js:
+	cat $(JS_SOURCES) > $(JS_DEBUG_OUTPUT)
 
 css:
 	sass --style $(CSS_OUTPUT_STYLE) $(SCSS_SOURCE):$(CSS_OUTPUT)

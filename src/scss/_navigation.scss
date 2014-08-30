@@ -2,51 +2,51 @@
    NAVIGATION
 ***************/
 .stack-navigation {
-	position:absolute;
-	left:5px;
-	top:5px;
-	width:41px;
-	text-align:center;
-	
-	.upstream, .downstream {
-		height:43px;
-		text-indent:-999em;
-		overflow:hidden;
-	}
-	
-	.upstream {
-		background:url('images/nav.png') 0 -87px no-repeat;
-		
-		&:hover, &:focus {
-			background-position:0 -44px;
-		}
-		
-		&:active {
-			background-position:0 -1px;
-		}
-	}
-	
-	.downstream {
-		background:url('images/nav.png') 0 -130px no-repeat;
-		
-		&:hover, &:focus {
-			background-position:0 -173px;
-		}
-		
-		&:active {
-			background-position:0 -216px;
-		}
-	}
-	
-	.num-found {
-		font-size:15px;
-		line-height:16px;
-		margin:10px 0;
-		color:#09f;
-		text-shadow: 0 1px 0 #ddd;
-	}
-	
-	&.empty .num-found {
-		visibility:hidden;
-	}
+    position:absolute;
+    left:5px;
+    top:5px;
+    width:41px;
+    text-align:center;
+
+    .upstream, .downstream {
+        height:43px;
+        text-indent:-999em;
+        overflow:hidden;
+    }
+
+    .upstream {
+        background:url('images/nav.png') 0 -87px no-repeat;
+
+        &:hover, &:focus {
+            background-position:0 -44px;
+        }
+
+        &:active {
+            background-position:0 -1px;
+        }
+    }
+
+    .downstream {
+        background:url('images/nav.png') 0 -130px no-repeat;
+
+        &:hover, &:focus {
+            background-position:0 -173px;
+        }
+
+        &:active {
+            background-position:0 -216px;
+        }
+    }
+
+    .num-found {
+        font-size:15px;
+        line-height:16px;
+        margin:10px 0;
+        color:#09f;
+        text-shadow: 0 1px 0 #ddd;
+    }
+
+    &.empty .num-found {
+        visibility:hidden;
+    }
 }

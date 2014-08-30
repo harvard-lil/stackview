@@ -1,0 +1,162 @@
+.stackview-horizontal {
+    .stack-horizontal {
+      width: 100%;
+    }
+
+    .stack-items {
+        /* The UL tag that contains books.
+         * This element is also what creates the bookends 
+         * as before & after
+         */
+
+        &:before, &:after {
+            content: '';
+            height: 0;
+            width: 0;
+            display: none;
+        }
+    }
+
+    .stack-book {
+        margin: 0 2px 0 0;
+        position: relative;
+        display: inline-block;
+
+        // Temp styles
+        height: 400px;
+        width: 100px;
+        /*background-color: blue;*/
+        /*border: 4px solid black;*/
+        // end temp styles
+
+        > a {
+            border-width:2px 1px;
+            border-radius:20px / 5px; /* non-rotated was 3px / 20px */
+        }
+    }
+
+    .book-horizontal {
+      position: relative;
+      display: inline-block;
+      margin-top: 80px; /* allow for room for the book pages on top */
+
+      /* These are temporary styles that we're going to use to debug parts of the interface*/
+      /*border: 4px solid black;*/
+      height: 400px;
+      width: 100px;
+
+      > a {
+        display:block;
+        text-decoration:none;
+        width: 100%;
+        height: 100%;
+        color:#fff;
+        white-space:nowrap;
+      }
+    }
+
+    .spine-text {
+      // TODO: position this properly?
+      // make correct width, render, then rotate
+      // transform-origin to set pivot point
+      // this must fill the element to 
+      width: 100%;
+      height: 100%;
+      top: 10px;
+      left: auto;
+      right: auto;
+      position: relative;
+    }
+
+    .spine-title {
+        position: absolute;
+        font-size:24px;
+        left: 50%;
+        @include rotate(90deg);
+        @include transform-origin(left);
+    }
+
+    .spine-author {
+        position: absolute;
+        bottom: 29%;
+        left: 50%;
+        @include rotate(90deg);
+        @include transform-origin(left);
+    }
+
+    .spine-year {
+        // coppied from ministack
+        font-size:8px;
+        padding:0;
+        line-height:12px;
+        height:12px;
+        margin-top:-6px;
+        width:24px;
+        // my overrides
+        top: auto;
+        left: calc(50% - 12px);
+        right: auto;
+        bottom: 3px;
+        @include rotate(0deg)
+    }
+
+    // TODO make this at the top
+    .stack-pages {
+      width: 100%;
+      height: 30px;
+      top: -26px;
+      left: 12px;
+      border-width:0 3px 2px 3px;
+      border-radius: 0 0 15px 15px / 0 0 4px 4px ;
+
+      /*border-color: lightgray;*/
+      /*background-color: goldenrod;*/
+
+      @include transform-origin(100% 0);
+      @include skew(-24deg, 0deg);
+
+      &:after {
+          position:absolute;
+
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: -1px;
+
+          background:#f5f2e8;
+          border-radius:0 0 15px 15px  / 0 0 3px 3px;
+          border-width:1px 2px 0px 2px;
+          border-style:solid;
+          border-color: #e5e5e5 #007acc #ddd #aaa;
+      }
+    }
+
+  .stack-cover {
+      position:absolute;
+      top:0;
+      right:-15px;
+      left: auto; /*override*/
+      z-index:4;
+
+      width:11px;
+      height: 100%;
+
+      //background-color: lightblue;
+      //border-color: gray;
+      border-style:solid;
+      border-width:1px;
+      border-top-width:5px;
+      border-radius: 0 0 4px 50px;
+
+
+      @include transform-origin(left bottom);
+      @include skew(0deg, -65deg);
+  }
+
+    .ribbon {
+        top:20px;
+        padding:4px 5px 4px 14px;
+        min-height:20px;
+        font-size:16px;
+    }
+}
