@@ -28,6 +28,7 @@
 					.replace(/'(?=[^%]*%>)/g,"\t")
 					.split("'").join("\\'")
 					.split("\t").join("'")
+					.replace(/^[\r\t\n ]+/, '')
 					.replace(/<%=(.+?)%>/g, "',$1,'")
 					.split("<%").join("');")
 					.split("%>").join("p.push('")
