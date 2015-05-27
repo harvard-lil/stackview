@@ -95,7 +95,7 @@
 				params.query = [
 					'[',
 					stack.loc.low,
-					'%20TO%20',
+					' TO ',
 					stack.loc.high,
 					']'
 				].join('');
@@ -104,7 +104,7 @@
 				params.query = [
 					'[',
 					stack.loc.high + 1,
-					'%20TO%20',
+					' TO ',
 					stack.loc.high + opts.items_per_page + 1,
 					']'
 				].join('');
@@ -114,7 +114,7 @@
 				params.query = [
 					'[',
 					stack.loc.low - opts.items_per_page - 1,
-					'%20TO%20',
+					' TO ',
 					stack.loc.low - 1,
 					']'
 				].join('');
