@@ -83,7 +83,15 @@
 	}
 }
 
+@mixin generic-decoration($bg, $border) {
+	.item-colors {
+		background:$bg;
+		border-color:$border;
+	}
+}
+
 @mixin decorations($bg, $border) {
+	@include generic-decoration($bg, $border);
 	@include book-decoration($bg, $border);
 	@include videofilm-decoration($bg, $border);
 	@include serial-decoration($bg, $border);
