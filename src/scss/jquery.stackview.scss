@@ -125,6 +125,10 @@
 	border-color:#e6dec4;
 	text-shadow:none;
 	color:#555;
+
+	&:empty {
+		display: none;
+	}
 }
 
 .stackview .ribbon {
