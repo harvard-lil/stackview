@@ -21,7 +21,7 @@
 		adapter: function(item, options) {
 			return {
 				heat: window.StackView.utils.get_heat(item.shelfrank),
-				link: item.rsrc_value,
+				link: item.rsrc_value || item.link,
 				publisher: item.publisher,
 				title: item.title
 			};

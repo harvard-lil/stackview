@@ -20,7 +20,7 @@
 	var normalize_link = function(item) {
 		// TODO: How should this be normalized? Can we just drop normalization
 		// in favor of other systems modifying or redefining types?
-		return item.title ? item.title : '#'
+		return item.link || item.title || '#'
 	};
 
 	window.StackView.register_type({
