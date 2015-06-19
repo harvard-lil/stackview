@@ -21,7 +21,7 @@
 		adapter: function(item, options) {
 			return {
 				heat: window.StackView.utils.get_heat(item.shelfrank),
-				link: '#',
+				link: item.link || '#',
 				title: item.title,
 				year: item.pub_date
 			};
