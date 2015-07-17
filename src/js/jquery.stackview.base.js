@@ -168,7 +168,7 @@
 	StackView = function(elem, opts) {
 		this.element = elem;
 		this.$element = $(elem);
-		this.options = $.extend({}, StackView.defaults, opts);
+		this.options = $.extend(true, {}, StackView.defaults, opts);
 		this.page = 0;
 		this.finished = {
 			up: false,
