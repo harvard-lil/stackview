@@ -94,7 +94,7 @@ h1 {
 }
 
 h2 {
-	font-size:1.2em;	
+	font-size:1.2em;
 	color:#F60;
 }
 
@@ -137,7 +137,7 @@ pre {
 
 </head>
 
-<body>	
+<body>
 	<ul id="nav">
 		<li><a href="index.html">About</a></li>
 		<li><a href="documentation.html">Documentation</a></li>
@@ -152,11 +152,11 @@ pre {
 	    <h2>Requirements</h2>
 	    <p>Stack View requires <a href="http://jquery.com/">jQuery</a> and two additional plugins to enable further functionality.  These plugins are bundled with jquery.stackview.min.js and do not need to be included separately.</p>
 	    <ul>
-	    	<li>The <a href="http://brandonaaron.net/code/mousewheel/docs">mousewheel plugin</a> adds mouse wheel support to stack scrolling.</li>  
+	    	<li>The <a href="http://brandonaaron.net/code/mousewheel/docs">mousewheel plugin</a> adds mouse wheel support to stack scrolling.</li>
 	    	<li>The infiniteScroller plugin enables on-call dynamic loading of new books.</li>
 	    </ul>
 	    <p>A small set of images is also necessary for drawing the stack. They can be found in the lib/images directory.</p>
-	    
+
 	    <h2>How to Use</h2>
 	    <p>You can start by looking at the most <a href="basic.html">basic demo</a>.</p>
 	    <p>After including the required files, place a div in your html code where you would like Stack View to appear.</p>
@@ -206,7 +206,7 @@ var data = {
 		<p>This is the most basic example using PHP.
 		<pre class="code language-php">
 		$start = $_GET['start'];
-		
+
 		$docs = '[
 		    {
             "title": "Blankets",
@@ -220,12 +220,12 @@ var data = {
             "link": "http://holliscatalog.harvard.edu/?itemid=|library/m/aleph|009189638"
             }
         ]';
-        
+
         if($start > 0) {
             echo "{'start': '-1', 'num_found': '0', 'limit': '0', 'docs': ''}";
         }
         else {
-            echo "{'start': '0', 'limit': '0', 'num_found': '1', 'docs': $docs}"; 
+            echo "{'start': '0', 'limit': '0', 'num_found': '1', 'docs': $docs}";
         }
 		</pre>
 		<h2>Available Stack View Options</h2>
@@ -237,7 +237,7 @@ var data = {
 		<p>This option, when set to true, tells Stack View to send a JSONP request to the <b>url</b> specified. If using JSONP, make sure that the specified <b>url</b> accepts a callback and includes that callback as part of the JSONP response.
 		<br />Default is false.</p>
 		<h3>books_per_page</h3>
-		<p>How many books will be requested.  
+		<p>How many books will be requested.
 		<br />Default is 10.</p>
 		<h3>threshold</h3>
 		<p>How much screen space to fill with books.
@@ -250,7 +250,17 @@ var data = {
 		<br />Default is 12.</p>
 		<h3>search_type</h3>
 		<p>The type of search that the script from your url parameter should perform if a search is necessary.
-		<br />Default is keyword.</p>
+		<br />Accepted values are <b>keyword</b> and <b>loc_sort_order</b>. Default is keyword.
+		<br />
+		<br />Using <b>loc_sort_order</b> tells the plug-in to fetch ranges of items as the user scrolls
+		up and down the stack. This is useful when you want to emulate infinite scrolling.
+		The ranges are calculated based on the id for first and last element on the stack.
+		For example, if the id of the first items on the stack is 100 the plug in will request "query=[120 TO 130]"
+		from the backend as the user scrolls down and "query=[90 to 100]" as the user scrolls up. If your ids
+		are not numeric the plug in will assume the id is 0 and will request offsets instead. For example,
+		let's say that the id of the first element in the stack is "bid123x" the plug in will request
+		"query=[10 to 20]" as the user scrolls down and "query=[-10 to 0]" as the user scrolls up.
+	  </p>
 		<h3>query</h3>
 		<p>The query that the script from your url should use if performing a search.
 		<br />Default is nothing.<p>
