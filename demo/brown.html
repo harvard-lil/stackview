@@ -25,7 +25,7 @@
 <script type="text/javascript">
 		$(document).ready(function(){
 		  var id = "b3130393"; // we start with this book
-		  var verbose = (location.search.indexOf("verbose") != -1) ? "&verbose" : "";
+			var verbose = ""; // use "&verbose" to display LC call numbers
 			var josiahRootUrl = "https://search.library.brown.edu/";
 		  var url = josiahRootUrl + "api/items/shelf_items?id=" + id + verbose;
 		  var options = {url: url, search_type: "loc_sort_order", ribbon: "", jsonp: true};
