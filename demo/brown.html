@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>StackView Basic</title>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+<!-- stackview.css to style the stack -->
+<link rel="stylesheet" href="../lib/jquery.stackview.css" type="text/css" />
+
+<!-- stackview.js and all js dependencies -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="../lib/jquery.stackview.min.js"></script>
+
+</head>
+
+<body>
+<p>Demo of StackLife using data from the Brown University Library</p>
+
+<div id="basic-stack"></div>
+
+<script type="text/javascript">
+		$(document).ready(function(){
+		  var id = "b3130393"; // we start with this book
+			var verbose = ""; // use "&verbose" to display LC call numbers
+			var josiahRootUrl = "https://search.library.brown.edu/";
+		  var url = josiahRootUrl + "api/items/shelf_items?id=" + id + verbose;
+		  var options = {url: url, search_type: "loc_sort_order", ribbon: "", jsonp: true};
+		  $('#basic-stack').stackView(options);
+		});
+</script>
+
+</body>
+</html>
