@@ -14,7 +14,7 @@ Styles are written in [Sass](http://sass-lang.com) and compiled to CSS.  Sass fi
 sass --watch --style expanded src/scss/:lib/
 ```
 
-Tests are written using [Jasmine](http://pivotal.github.com/jasmine/) and can be run by opening `/test/index.html`.
+Tests are written using [Jasmine](https://jasmine.github.io/) and can be run by opening `/test/index.html`.
 
 ## License
 
